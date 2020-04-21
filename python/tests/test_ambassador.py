@@ -17,6 +17,7 @@ import t_loadbalancer
 import t_logservice
 import t_lua_scripts
 import t_mappingtests
+import t_no_ui
 import t_optiontests
 import t_plain
 import t_ratelimit
@@ -32,6 +33,7 @@ import t_consul
 import t_envoy_logs
 import t_ingress
 import t_listeneridletimeout
+import t_cluster_tag
 
 # pytest will find this because Runner is a toplevel callable object in a file
 # that pytest is willing to look inside.

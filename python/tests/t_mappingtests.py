@@ -2,6 +2,7 @@ from kat.harness import variants, Query
 
 from abstract_tests import AmbassadorTest, HTTP
 from abstract_tests import MappingTest, OptionTest, ServiceType
+from kat.utils import namespace_manifest
 
 # This is the place to add new MappingTests.
 
@@ -91,6 +92,42 @@ spec:
             if r.backend:
                 assert r.backend.name == self.target.path.k8s, (r.backend.name, self.target.path.k8s)
                 assert r.backend.request.headers['x-envoy-original-path'][0] == f'/{self.name}/'
+
+# Disabled SimpleMappingIngressDefaultBackend since adding a default fallback mapping would break other
+# assertions, expecting to 404 if mappings don't match in Plain.
+# class SimpleMappingIngressDefaultBackend(MappingTest):
+#
+#     parent: AmbassadorTest
+#     target: ServiceType
+#
+#     @classmethod
+#     def variants(cls):
+#         for st in variants(ServiceType):
+#             yield cls(st, name="{self.target.name}")
+#
+#     def manifests(self) -> str:
+#         return f"""
+# apiVersion: extensions/v1beta1
+# kind: Ingress
+# metadata:
+#   annotations:
+#     kubernetes.io/ingress.class: ambassador
+#     getambassador.io/ambassador-id: plain
+#   name: {self.name.lower()}
+# spec:
+#   backend:
+#     serviceName: {self.target.path.k8s}
+#     servicePort: 80
+# """
+#
+#     def queries(self):
+#         yield Query(self.parent.url(self.name))
+#
+#     def check(self):
+#         for r in self.results:
+#             if r.backend:
+#                 assert r.backend.name == self.target.path.k8s, (r.backend.name, self.target.path.k8s)
+#                 assert r.backend.request.headers['x-envoy-original-path'][0] == f'/{self.name}'
 
 
 class SimpleIngressWithAnnotations(MappingTest):
@@ -694,17 +731,9 @@ class SameMappingDifferentNamespaces(AmbassadorTest):
         self.target = HTTP()
 
     def manifests(self) -> str:
-        return super().manifests() + self.format('''
----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: same-mapping-1
----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: same-mapping-2
+        return namespace_manifest('same-mapping-1') + \
+            namespace_manifest('same-mapping-2') + \
+            self.format('''
 ---
 apiVersion: getambassador.io/v2
 kind: Mapping
@@ -725,7 +754,7 @@ spec:
   ambassador_id: {self.ambassador_id}
   prefix: /{self.name}-2/
   service: {self.target.path.fqdn}.default
-''')
+''') + super().manifests()
 
     def queries(self):
         yield Query(self.url(self.name + "-1/"))

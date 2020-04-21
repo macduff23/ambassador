@@ -2,7 +2,6 @@ package main
 
 import (
 	"bytes"
-	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -18,7 +17,7 @@ import (
 // Connect the daemon to a cluster
 func (d *Daemon) Connect(
 	p *supervisor.Process, out *Emitter, rai *RunAsInfo,
-	context, namespace string, kargs []string,
+	context, namespace, managerNs string, kargs []string,
 ) error {
 	// Sanity checks
 	if d.cluster != nil {
@@ -42,7 +41,7 @@ func (d *Daemon) Connect(
 		return nil
 	}
 
-	out.Println("Connecting...")
+	out.Printf("Connecting to traffic manager in namespace %s...\n", managerNs)
 	out.Send("connect", "Connecting...")
 	cluster, err := TrackKCluster(p, rai, context, namespace, kargs)
 	if err != nil {
@@ -78,7 +77,7 @@ func (d *Daemon) Connect(
 	out.Send("cluster.context", d.cluster.Context())
 	out.Send("cluster.server", d.cluster.Server())
 
-	tmgr, err := NewTrafficManager(p, d.cluster)
+	tmgr, err := NewTrafficManager(p, d.cluster, managerNs)
 	if err != nil {
 		out.Println()
 		out.Println("Unable to connect to the traffic manager in your cluster.")
@@ -97,7 +96,7 @@ func (d *Daemon) Connect(
 func (d *Daemon) Disconnect(p *supervisor.Process, out *Emitter) error {
 	// Sanity checks
 	if d.cluster == nil {
-		out.Println("Not connected")
+		out.Println("Not connected (use 'edgectl connect' to connect to your cluster)")
 		out.Send("disconnect", "Not connected")
 		return nil
 	}
@@ -121,17 +120,9 @@ func (d *Daemon) Disconnect(p *supervisor.Process, out *Emitter) error {
 }
 
 // checkBridge checks the status of teleproxy bridge by doing the equivalent of
-// curl -k https://kubernetes/api/. It's okay to create a new client each time
-// because we don't want to reuse connections.
+// curl -k https://kubernetes/api/.
 func checkBridge(p *supervisor.Process) error {
-	// A zero-value transport is (probably) okay because we set a tight overall
-	// timeout on the client
-	tr := &http.Transport{
-		// #nosec G402
-		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
-	}
-	client := http.Client{Timeout: 10 * time.Second, Transport: tr}
-	res, err := client.Get("https://kubernetes.default/api/")
+	res, err := hClient.Get("https://kubernetes.default/api/")
 	if err != nil {
 		return errors.Wrap(err, "get")
 	}
@@ -149,15 +140,16 @@ type TrafficManager struct {
 	crc            Resource
 	apiPort        int
 	sshPort        int
-	client         *http.Client
+	namespace      string
 	interceptables []string
 	totalClusCepts int
+	snapshotSent   bool
 }
 
 // NewTrafficManager returns a TrafficManager resource for the given
 // cluster if it has a Traffic Manager service.
-func NewTrafficManager(p *supervisor.Process, cluster *KCluster) (*TrafficManager, error) {
-	cmd := cluster.GetKubectlCmd(p, "get", "svc/telepresence-proxy", "deploy/telepresence-proxy")
+func NewTrafficManager(p *supervisor.Process, cluster *KCluster, managerNs string) (*TrafficManager, error) {
+	cmd := cluster.GetKubectlCmd(p, "get", "-n", managerNs, "svc/telepresence-proxy", "deploy/telepresence-proxy")
 	err := cmd.Run()
 	if err != nil {
 		return nil, errors.Wrap(err, "kubectl get svc/deploy telepresency-proxy")
@@ -171,16 +163,19 @@ func NewTrafficManager(p *supervisor.Process, cluster *KCluster) (*TrafficManage
 	if err != nil {
 		return nil, errors.Wrap(err, "get free port for ssh")
 	}
-	kpfArgStr := fmt.Sprintf("port-forward svc/telepresence-proxy %d:8022 %d:8081", sshPort, apiPort)
+	kpfArgStr := fmt.Sprintf("port-forward -n %s svc/telepresence-proxy %d:8022 %d:8081", managerNs, sshPort, apiPort)
 	kpfArgs := cluster.GetKubectlArgs(strings.Fields(kpfArgStr)...)
-	tm := &TrafficManager{apiPort: apiPort, sshPort: sshPort}
+	tm := &TrafficManager{
+		apiPort:   apiPort,
+		sshPort:   sshPort,
+		namespace: managerNs,
+	}
 
 	pf, err := CheckedRetryingCommand(p, "traffic-kpf", kpfArgs, cluster.RAI(), tm.check, 15*time.Second)
 	if err != nil {
 		return nil, err
 	}
 	tm.crc = pf
-	tm.client = &http.Client{Timeout: 10 * time.Second}
 	return tm, nil
 }
 
@@ -215,6 +210,25 @@ func (tm *TrafficManager) check(p *supervisor.Process) error {
 			tm.totalClusCepts += len(cepts)
 		}
 	}
+
+	if !tm.snapshotSent {
+		p.Log("trying to send snapshot")
+		tm.snapshotSent = true // don't try again, even if this fails
+		body, code, err := tm.request("GET", "snapshot", []byte{})
+		if err != nil || code != 200 {
+			p.Logf("snapshot request failed: %v", err)
+			return nil
+		}
+		resp, err := hClient.Post("http://teleproxy/api/tables/", "application/json", strings.NewReader(body))
+		if err != nil {
+			p.Logf("snapshot post failed: %v", err)
+			return nil
+		}
+		_, _ = ioutil.ReadAll(resp.Body)
+		resp.Body.Close()
+		p.Log("snapshot sent!")
+	}
+
 	return nil
 }
 
@@ -224,7 +238,7 @@ func (tm *TrafficManager) request(method, path string, data []byte) (result stri
 	if err != nil {
 		return
 	}
-	resp, err := tm.client.Do(req)
+	resp, err := hClient.Do(req)
 	if err != nil {
 		err = errors.Wrap(err, "get")
 		return

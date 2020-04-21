@@ -30,6 +30,7 @@
         "location": "--internal--",
         "name": "ir.ambassador",
         "namespace": "default",
+        "proper_case": false,  
         "readiness_probe": {
             "enabled": true,
             "prefix": "/ambassador/v0/check_ready",
@@ -88,7 +89,7 @@
             "_namespace": "default",
             "_port": 5000,
             "_referenced_by": [
-                "ratelimitv1withtlstest.default.1"
+                "rate-limit-tls.default.1"
             ],
             "_rkey": "cluster_rate_limit_tls_5000_otls_ratelimit_tls_context_default",
             "connect_timeout_ms": 3000,
@@ -99,7 +100,7 @@
             "ignore_cluster": false,
             "kind": "IRCluster",
             "lb_type": "round_robin",
-            "location": "ratelimitv1withtlstest.default.1",
+            "location": "rate-limit-tls.default.1",
             "name": "cluster_rate_limit_tls_5000_otls_ratelim-0",
             "namespace": "default",
             "service": "rate-limit-tls:5000",
@@ -114,8 +115,8 @@
                 "_active": true,
                 "_errored": false,
                 "_referenced_by": [
-                    "ratelimitv1withtlstest-http.default.1",
-                    "ratelimitv1withtlstest.default.1"
+                    "rate-limit-tls.default.1",
+                    "ratelimitv1withtlstest-http.default.1"
                 ],
                 "_rkey": "ratelimitv1withtlstest-http.default.1",
                 "alpn_protocols": "h2",
@@ -190,9 +191,9 @@
             "_active": true,
             "_errored": false,
             "_referenced_by": [
-                "ratelimitv1withtlstest.default.1"
+                "rate-limit-tls.default.1"
             ],
-            "_rkey": "ratelimitv1withtlstest.default.1",
+            "_rkey": "rate-limit-tls.default.1",
             "cluster": {
                 "_active": true,
                 "_errored": false,
@@ -201,7 +202,7 @@
                 "_namespace": "default",
                 "_port": 5000,
                 "_referenced_by": [
-                    "ratelimitv1withtlstest.default.1"
+                    "rate-limit-tls.default.1"
                 ],
                 "_rkey": "cluster_rate_limit_tls_5000_otls_ratelimit_tls_context_default",
                 "connect_timeout_ms": 3000,
@@ -212,7 +213,7 @@
                 "ignore_cluster": false,
                 "kind": "IRCluster",
                 "lb_type": "round_robin",
-                "location": "ratelimitv1withtlstest.default.1",
+                "location": "rate-limit-tls.default.1",
                 "name": "cluster_rate_limit_tls_5000_otls_ratelim-0",
                 "namespace": "default",
                 "service": "rate-limit-tls:5000",
@@ -227,8 +228,8 @@
                     "_active": true,
                     "_errored": false,
                     "_referenced_by": [
-                        "ratelimitv1withtlstest-http.default.1",
-                        "ratelimitv1withtlstest.default.1"
+                        "rate-limit-tls.default.1",
+                        "ratelimitv1withtlstest-http.default.1"
                     ],
                     "_rkey": "ratelimitv1withtlstest-http.default.1",
                     "alpn_protocols": "h2",
@@ -268,7 +269,7 @@
                 "_namespace": "default",
                 "_port": 5000,
                 "_referenced_by": [
-                    "ratelimitv1withtlstest.default.1"
+                    "rate-limit-tls.default.1"
                 ],
                 "_rkey": "cluster_rate_limit_tls_5000_otls_ratelimit_tls_context_default",
                 "connect_timeout_ms": 3000,
@@ -279,7 +280,7 @@
                 "ignore_cluster": false,
                 "kind": "IRCluster",
                 "lb_type": "round_robin",
-                "location": "ratelimitv1withtlstest.default.1",
+                "location": "rate-limit-tls.default.1",
                 "name": "cluster_rate_limit_tls_5000_otls_ratelim-0",
                 "namespace": "default",
                 "service": "rate-limit-tls:5000",
@@ -294,8 +295,8 @@
                     "_active": true,
                     "_errored": false,
                     "_referenced_by": [
-                        "ratelimitv1withtlstest-http.default.1",
-                        "ratelimitv1withtlstest.default.1"
+                        "rate-limit-tls.default.1",
+                        "ratelimitv1withtlstest-http.default.1"
                     ],
                     "_rkey": "ratelimitv1withtlstest-http.default.1",
                     "alpn_protocols": "h2",
@@ -320,7 +321,7 @@
                 ]
             },
             "kind": "IRRateLimit",
-            "location": "ratelimitv1withtlstest.default.1",
+            "location": "rate-limit-tls.default.1",
             "name": "rate_limit",
             "namespace": "default",
             "service": "rate-limit-tls:5000",
@@ -746,7 +747,7 @@
             "_namespace": "default",
             "_port": 5000,
             "_referenced_by": [
-                "ratelimitv1withtlstest.default.1"
+                "rate-limit-tls.default.1"
             ],
             "_rkey": "cluster_rate_limit_tls_5000_otls_ratelimit_tls_context_default",
             "connect_timeout_ms": 3000,
@@ -757,7 +758,7 @@
             "ignore_cluster": false,
             "kind": "IRCluster",
             "lb_type": "round_robin",
-            "location": "ratelimitv1withtlstest.default.1",
+            "location": "rate-limit-tls.default.1",
             "name": "cluster_rate_limit_tls_5000_otls_ratelim-0",
             "namespace": "default",
             "service": "rate-limit-tls:5000",
@@ -772,8 +773,8 @@
                 "_active": true,
                 "_errored": false,
                 "_referenced_by": [
-                    "ratelimitv1withtlstest-http.default.1",
-                    "ratelimitv1withtlstest.default.1"
+                    "rate-limit-tls.default.1",
+                    "ratelimitv1withtlstest-http.default.1"
                 ],
                 "_rkey": "ratelimitv1withtlstest-http.default.1",
                 "alpn_protocols": "h2",
@@ -826,9 +827,9 @@
         "_active": true,
         "_errored": false,
         "_referenced_by": [
-            "ratelimitv1withtlstest.default.1"
+            "rate-limit-tls.default.1"
         ],
-        "_rkey": "ratelimitv1withtlstest.default.1",
+        "_rkey": "rate-limit-tls.default.1",
         "cluster": {
             "_active": true,
             "_errored": false,
@@ -837,7 +838,7 @@
             "_namespace": "default",
             "_port": 5000,
             "_referenced_by": [
-                "ratelimitv1withtlstest.default.1"
+                "rate-limit-tls.default.1"
             ],
             "_rkey": "cluster_rate_limit_tls_5000_otls_ratelimit_tls_context_default",
             "connect_timeout_ms": 3000,
@@ -848,7 +849,7 @@
             "ignore_cluster": false,
             "kind": "IRCluster",
             "lb_type": "round_robin",
-            "location": "ratelimitv1withtlstest.default.1",
+            "location": "rate-limit-tls.default.1",
             "name": "cluster_rate_limit_tls_5000_otls_ratelim-0",
             "namespace": "default",
             "service": "rate-limit-tls:5000",
@@ -863,8 +864,8 @@
                 "_active": true,
                 "_errored": false,
                 "_referenced_by": [
-                    "ratelimitv1withtlstest-http.default.1",
-                    "ratelimitv1withtlstest.default.1"
+                    "rate-limit-tls.default.1",
+                    "ratelimitv1withtlstest-http.default.1"
                 ],
                 "_rkey": "ratelimitv1withtlstest-http.default.1",
                 "alpn_protocols": "h2",
@@ -904,7 +905,7 @@
             "_namespace": "default",
             "_port": 5000,
             "_referenced_by": [
-                "ratelimitv1withtlstest.default.1"
+                "rate-limit-tls.default.1"
             ],
             "_rkey": "cluster_rate_limit_tls_5000_otls_ratelimit_tls_context_default",
             "connect_timeout_ms": 3000,
@@ -915,7 +916,7 @@
             "ignore_cluster": false,
             "kind": "IRCluster",
             "lb_type": "round_robin",
-            "location": "ratelimitv1withtlstest.default.1",
+            "location": "rate-limit-tls.default.1",
             "name": "cluster_rate_limit_tls_5000_otls_ratelim-0",
             "namespace": "default",
             "service": "rate-limit-tls:5000",
@@ -930,8 +931,8 @@
                 "_active": true,
                 "_errored": false,
                 "_referenced_by": [
-                    "ratelimitv1withtlstest-http.default.1",
-                    "ratelimitv1withtlstest.default.1"
+                    "rate-limit-tls.default.1",
+                    "ratelimitv1withtlstest-http.default.1"
                 ],
                 "_rkey": "ratelimitv1withtlstest-http.default.1",
                 "alpn_protocols": "h2",
@@ -956,7 +957,7 @@
             ]
         },
         "kind": "IRRateLimit",
-        "location": "ratelimitv1withtlstest.default.1",
+        "location": "rate-limit-tls.default.1",
         "name": "rate_limit",
         "namespace": "default",
         "service": "rate-limit-tls:5000",
@@ -1035,8 +1036,8 @@
             "_active": true,
             "_errored": false,
             "_referenced_by": [
-                "ratelimitv1withtlstest-http.default.1",
-                "ratelimitv1withtlstest.default.1"
+                "rate-limit-tls.default.1",
+                "ratelimitv1withtlstest-http.default.1"
             ],
             "_rkey": "ratelimitv1withtlstest-http.default.1",
             "alpn_protocols": "h2",

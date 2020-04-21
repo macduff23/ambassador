@@ -526,8 +526,7 @@ class V2TCPListener(dict):
 class V2VirtualHost(dict):
     def __init__(self, config: 'V2Config', listener: 'V2Listener',
                  name: str, hostname: Optional[str], ctx: Optional[IRTLSContext],
-                 secure: bool, action: str, insecure_action: Optional[str],
-                 use_proxy_proto: bool) -> None:
+                 secure: bool, action: str, insecure_action: Optional[str]) -> None:
         super().__init__()
 
         self._config = config
@@ -541,7 +540,6 @@ class V2VirtualHost(dict):
         self._needs_redirect = False
 
         self["tls_context"] = V2TLSContext(ctx)
-        self["use_proxy_proto"] = use_proxy_proto
         self["routes"]: List['V2Route'] = []
 
     def needs_redirect(self) -> None:
@@ -568,8 +566,9 @@ class V2VirtualHost(dict):
 
         self["filter_chain_match"] = match
 
-        # If we're on Edge Stack, punch a hole for ACME challenges, for every listener.
-        if self._config.ir.edge_stack_allowed:
+        # If we're on Edge Stack and we're not an intercept agent, punch a hole for ACME
+        # challenges, for every listener.
+        if self._config.ir.edge_stack_allowed and not self._config.ir.agent_active:
             found_acme = False
 
             for route in self["routes"]:
@@ -612,9 +611,8 @@ class V2VirtualHost(dict):
         route_count = len(self["routes"])
         route_plural = "" if (route_count == 1) else "s"
 
-        return "<VHost %s ctx %s upp %s redir %s a %s ia %s %d route%s>" % \
-               (self._hostname, ctx_name, self["use_proxy_proto"],
-                self._needs_redirect, self._action, self._insecure_action,
+        return "<VHost %s ctx %s redir %s a %s ia %s %d route%s>" % \
+               (self._hostname, ctx_name, self._needs_redirect, self._action, self._insecure_action,
                 route_count, route_plural)
 
     def verbose_dict(self) -> dict:
@@ -626,7 +624,6 @@ class V2VirtualHost(dict):
             "_insecure_action": self._insecure_action,
             "_needs_redirect": self._needs_redirect,
             "tls_context": self["tls_context"],
-            "use_proxy_proto": self["use_proxy_proto"],
             "routes": self["routes"],
         }
 
@@ -651,6 +648,20 @@ class V2ListenerCollection:
     def items(self):
         return self.listeners.items()
 
+    def get(self, port: int, use_proxy_proto: bool) -> 'V2Listener':
+        set_upp = (not port in self)
+
+        v2listener = self[port]
+
+        if set_upp:
+            v2listener.use_proxy_proto = use_proxy_proto
+        elif v2listener.use_proxy_proto != use_proxy_proto:
+            raise Exception("listener for port %d has use_proxy_proto %s, requester wants upp %s" %
+                            (v2listener.use_proxy_proto, use_proxy_proto))
+
+        return v2listener
+
+
 class V2Listener(dict):
     def __init__(self, config: 'V2Config', service_port: int) -> None:
         super().__init__()
@@ -658,6 +669,7 @@ class V2Listener(dict):
         self.config = config
         self.service_port = service_port
         self.name = f"ambassador-listener-{self.service_port}"
+        self.use_proxy_proto = False
         self.access_log: List[dict] = []
         self.upgrade_configs: Optional[List[dict]] = None
         self.vhosts: Dict[str, V2VirtualHost] = {}
@@ -801,6 +813,15 @@ class V2Listener(dict):
             if req_hdrs:
                 self.base_http_config["tracing"]["request_headers_for_tags"] = req_hdrs
 
+        proper_case = self.config.ir.ambassador_module['proper_case']
+        
+        if proper_case:
+            proper_case_header = {'header_key_format': {'proper_case_words': {}}}
+            if 'http_protocol_options' in self.base_http_config:
+                self.base_http_config["http_protocol_options"].update(proper_case_header)
+            else:
+                self.base_http_config["http_protocol_options"] = proper_case_header
+
     def add_irlistener(self, listener: IRListener) -> None:
         if listener.service_port != self.service_port:
             # This is a problem.
@@ -814,7 +835,7 @@ class V2Listener(dict):
 
     # Weirdly, the action is optional but the insecure_action is not. This is not a typo.
     def make_vhost(self, name: str, hostname: str, context: Optional[IRTLSContext], secure: bool,
-                   action: Optional[str], insecure_action: str, use_proxy_proto: bool) -> None:
+                   action: Optional[str], insecure_action: str) -> None:
         self.config.ir.logger.debug("V2Listener %s: adding VHost %s for host %s, secure %s, insecure %s)" %
                                    (self.name, name, hostname, action, insecure_action))
 
@@ -825,8 +846,7 @@ class V2Listener(dict):
                 (context != vhost._ctx) or
                 (secure != vhost._secure) or
                 (action != vhost._action) or
-                (insecure_action != vhost._insecure_action) or
-                (use_proxy_proto != vhost["use_proxy_proto"])):
+                (insecure_action != vhost._insecure_action)):
                 raise Exception("V2Listener %s: trying to make vhost %s for %s but one already exists" %
                                 (self.name, name, hostname))
             else:
@@ -834,8 +854,7 @@ class V2Listener(dict):
 
         vhost = V2VirtualHost(config=self.config, listener=self,
                               name=name, hostname=hostname, ctx=context,
-                              secure=secure, action=action, insecure_action=insecure_action,
-                              use_proxy_proto=use_proxy_proto)
+                              secure=secure, action=action, insecure_action=insecure_action)
         self.vhosts[hostname] = vhost
 
         if not self.first_vhost:
@@ -869,7 +888,6 @@ class V2Listener(dict):
             # ...then build up the Envoy structures around it.
             filter_chain = {
                 "filter_chain_match": vhost["filter_chain_match"],
-                "use_proxy_proto": vhost["use_proxy_proto"],
             }
 
             if vhost["tls_context"]:
@@ -899,6 +917,12 @@ class V2Listener(dict):
 
             self.filter_chains.append(filter_chain)
 
+        if self.use_proxy_proto:
+            self.listener_filters.append({
+                'name': 'envoy.listener.proxy_protocol',
+                'config': {}
+            })
+
         if need_tcp_inspector:
             self.listener_filters.append({
                 'name': 'envoy.listener.tls_inspector',
@@ -917,6 +941,7 @@ class V2Listener(dict):
     def pretty(self) -> dict:
         return { "name": self.name,
                  "port": self.service_port,
+                 "use_proxy_proto": self.use_proxy_proto,
                  "vhosts": { k: v.pretty() for k, v in self.vhosts.items() } }
 
     @classmethod
@@ -947,8 +972,9 @@ class V2Listener(dict):
                 first_irlistener_by_port[irlistener.service_port] = irlistener
 
             logger.debug(f"V2Listeners: working on {irlistener.pretty()}")
-            # What port is this?
-            listener = listeners_by_port[irlistener.service_port]
+
+            # Grab a new V2Listener for this IRListener...
+            listener = listeners_by_port.get(irlistener.service_port, irlistener.use_proxy_proto)
             listener.add_irlistener(irlistener)
 
             # What VirtualHost hostname are we trying to work with here?
@@ -959,12 +985,11 @@ class V2Listener(dict):
                                 context=irlistener.context,
                                 secure=True,
                                 action=irlistener.secure_action,
-                                insecure_action=irlistener.insecure_action,
-                                use_proxy_proto=irlistener.use_proxy_proto)
+                                insecure_action=irlistener.insecure_action)
 
             if (irlistener.insecure_addl_port is not None) and (irlistener.insecure_addl_port > 0):
                 # Make sure we have a listener on the right port for this.
-                listener = listeners_by_port[irlistener.insecure_addl_port]
+                listener = listeners_by_port.get(irlistener.insecure_addl_port, irlistener.use_proxy_proto)
 
                 if irlistener.insecure_addl_port not in first_irlistener_by_port:
                     first_irlistener_by_port[irlistener.insecure_addl_port] = irlistener
@@ -978,8 +1003,7 @@ class V2Listener(dict):
                                         context=None,
                                         secure=False,
                                         action=None,
-                                        insecure_action=irlistener.insecure_action,
-                                        use_proxy_proto=irlistener.use_proxy_proto)
+                                        insecure_action=irlistener.insecure_action)
 
         logger.debug(f"V2Listeners: after IRListeners")
         cls.dump_listeners(logger, listeners_by_port)
@@ -993,21 +1017,20 @@ class V2Listener(dict):
                 first_vhost._hostname = '*'
                 first_vhost._name = f"{first_vhost._name}-forced-star"
 
-        if config.ir.edge_stack_allowed:
-            # If we're running Edge Stack, make sure we have a listener on port 8080, so that
-            # we have a place to stand for ACME.
+        if config.ir.edge_stack_allowed and not config.ir.agent_active:
+            # If we're running Edge Stack, and we're not an intercept agent, make sure we have
+            # a listener on port 8080, so that we have a place to stand for ACME.
 
             if 8080 not in listeners_by_port:
-                # Force a listener on 8080 with a VHost for '*' that rejects everything. The ACME
-                # hole-puncher will override the reject for ACME, and nothing else will get through.
-
-                logger.info(f"V2Listeners: listeners_by_port has no 8080, forcing Edge Stack listener on 8080")
-                listener = listeners_by_port[8080]
-
                 # Check for a listener on the main service port to see if the proxy proto
                 # is enabled.
                 main_listener = first_irlistener_by_port.get(config.ir.ambassador_module.service_port, None)
                 use_proxy_proto = main_listener.use_proxy_proto if main_listener else False
+
+                # Force a listener on 8080 with a VHost for '*' that rejects everything. The ACME
+                # hole-puncher will override the reject for ACME, and nothing else will get through.
+                logger.info(f"V2Listeners: listeners_by_port has no 8080, forcing Edge Stack listener on 8080")
+                listener = listeners_by_port.get(8080, use_proxy_proto)
 
                 # Remember, it is not a bug to have action=None. There is no secure action
                 # for this vhost.
@@ -1016,8 +1039,7 @@ class V2Listener(dict):
                                     context=None,
                                     secure=False,
                                     action=None,
-                                    insecure_action='Reject',
-                                    use_proxy_proto=use_proxy_proto)
+                                    insecure_action='Reject')
 
         # OK. We have all the listeners. Time to walk the routes (note that they are already ordered).
         for route in config.routes:
@@ -1117,8 +1139,8 @@ class V2Listener(dict):
                                 f"V2Listeners: {listener.name} {vhostname} {variant}: force Reject (rhosts {route_hostlist}, vhost {vhostname})")
                             action = "Reject"
                         elif (config.ir.edge_stack_allowed and
-                              (route["match"].get("prefix", None) == "/") and
-                              (route_precedence == -1000000)):
+                              (route_precedence == -1000000) and
+                              (route["match"].get("safe_regex", {}).get("regex", None) == "^/$")):
                             logger.debug(
                                 f"V2Listeners: {listener.name} {vhostname} {variant}: force Route for fallback Mapping")
                             action = "Route"
