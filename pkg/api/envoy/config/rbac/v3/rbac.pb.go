@@ -291,31 +291,31 @@ type isPermission_Rule interface {
 }
 
 type Permission_AndRules struct {
-	AndRules *Permission_Set `protobuf:"bytes,1,opt,name=and_rules,json=andRules,proto3,oneof"`
+	AndRules *Permission_Set `protobuf:"bytes,1,opt,name=and_rules,json=andRules,proto3,oneof" json:"and_rules,omitempty"`
 }
 type Permission_OrRules struct {
-	OrRules *Permission_Set `protobuf:"bytes,2,opt,name=or_rules,json=orRules,proto3,oneof"`
+	OrRules *Permission_Set `protobuf:"bytes,2,opt,name=or_rules,json=orRules,proto3,oneof" json:"or_rules,omitempty"`
 }
 type Permission_Any struct {
-	Any bool `protobuf:"varint,3,opt,name=any,proto3,oneof"`
+	Any bool `protobuf:"varint,3,opt,name=any,proto3,oneof" json:"any,omitempty"`
 }
 type Permission_Header struct {
-	Header *v3.HeaderMatcher `protobuf:"bytes,4,opt,name=header,proto3,oneof"`
+	Header *v3.HeaderMatcher `protobuf:"bytes,4,opt,name=header,proto3,oneof" json:"header,omitempty"`
 }
 type Permission_DestinationIp struct {
-	DestinationIp *v31.CidrRange `protobuf:"bytes,5,opt,name=destination_ip,json=destinationIp,proto3,oneof"`
+	DestinationIp *v31.CidrRange `protobuf:"bytes,5,opt,name=destination_ip,json=destinationIp,proto3,oneof" json:"destination_ip,omitempty"`
 }
 type Permission_DestinationPort struct {
-	DestinationPort uint32 `protobuf:"varint,6,opt,name=destination_port,json=destinationPort,proto3,oneof"`
+	DestinationPort uint32 `protobuf:"varint,6,opt,name=destination_port,json=destinationPort,proto3,oneof" json:"destination_port,omitempty"`
 }
 type Permission_Metadata struct {
-	Metadata *v32.MetadataMatcher `protobuf:"bytes,7,opt,name=metadata,proto3,oneof"`
+	Metadata *v32.MetadataMatcher `protobuf:"bytes,7,opt,name=metadata,proto3,oneof" json:"metadata,omitempty"`
 }
 type Permission_NotRule struct {
-	NotRule *Permission `protobuf:"bytes,8,opt,name=not_rule,json=notRule,proto3,oneof"`
+	NotRule *Permission `protobuf:"bytes,8,opt,name=not_rule,json=notRule,proto3,oneof" json:"not_rule,omitempty"`
 }
 type Permission_RequestedServerName struct {
-	RequestedServerName *v32.StringMatcher `protobuf:"bytes,9,opt,name=requested_server_name,json=requestedServerName,proto3,oneof"`
+	RequestedServerName *v32.StringMatcher `protobuf:"bytes,9,opt,name=requested_server_name,json=requestedServerName,proto3,oneof" json:"requested_server_name,omitempty"`
 }
 
 func (*Permission_AndRules) isPermission_Rule()            {}
@@ -520,28 +520,28 @@ type isPrincipal_Identifier interface {
 }
 
 type Principal_AndIds struct {
-	AndIds *Principal_Set `protobuf:"bytes,1,opt,name=and_ids,json=andIds,proto3,oneof"`
+	AndIds *Principal_Set `protobuf:"bytes,1,opt,name=and_ids,json=andIds,proto3,oneof" json:"and_ids,omitempty"`
 }
 type Principal_OrIds struct {
-	OrIds *Principal_Set `protobuf:"bytes,2,opt,name=or_ids,json=orIds,proto3,oneof"`
+	OrIds *Principal_Set `protobuf:"bytes,2,opt,name=or_ids,json=orIds,proto3,oneof" json:"or_ids,omitempty"`
 }
 type Principal_Any struct {
-	Any bool `protobuf:"varint,3,opt,name=any,proto3,oneof"`
+	Any bool `protobuf:"varint,3,opt,name=any,proto3,oneof" json:"any,omitempty"`
 }
 type Principal_Authenticated_ struct {
-	Authenticated *Principal_Authenticated `protobuf:"bytes,4,opt,name=authenticated,proto3,oneof"`
+	Authenticated *Principal_Authenticated `protobuf:"bytes,4,opt,name=authenticated,proto3,oneof" json:"authenticated,omitempty"`
 }
 type Principal_SourceIp struct {
-	SourceIp *v31.CidrRange `protobuf:"bytes,5,opt,name=source_ip,json=sourceIp,proto3,oneof"`
+	SourceIp *v31.CidrRange `protobuf:"bytes,5,opt,name=source_ip,json=sourceIp,proto3,oneof" json:"source_ip,omitempty"`
 }
 type Principal_Header struct {
-	Header *v3.HeaderMatcher `protobuf:"bytes,6,opt,name=header,proto3,oneof"`
+	Header *v3.HeaderMatcher `protobuf:"bytes,6,opt,name=header,proto3,oneof" json:"header,omitempty"`
 }
 type Principal_Metadata struct {
-	Metadata *v32.MetadataMatcher `protobuf:"bytes,7,opt,name=metadata,proto3,oneof"`
+	Metadata *v32.MetadataMatcher `protobuf:"bytes,7,opt,name=metadata,proto3,oneof" json:"metadata,omitempty"`
 }
 type Principal_NotId struct {
-	NotId *Principal `protobuf:"bytes,8,opt,name=not_id,json=notId,proto3,oneof"`
+	NotId *Principal `protobuf:"bytes,8,opt,name=not_id,json=notId,proto3,oneof" json:"not_id,omitempty"`
 }
 
 func (*Principal_AndIds) isPrincipal_Identifier()         {}
@@ -974,7 +974,8 @@ func (m *Permission) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *Permission_AndRules) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Permission_AndRules) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -994,7 +995,8 @@ func (m *Permission_AndRules) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Permission_OrRules) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Permission_OrRules) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1014,7 +1016,8 @@ func (m *Permission_OrRules) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Permission_Any) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Permission_Any) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1030,7 +1033,8 @@ func (m *Permission_Any) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Permission_Header) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Permission_Header) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1050,7 +1054,8 @@ func (m *Permission_Header) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Permission_DestinationIp) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Permission_DestinationIp) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1070,7 +1075,8 @@ func (m *Permission_DestinationIp) MarshalToSizedBuffer(dAtA []byte) (int, error
 	return len(dAtA) - i, nil
 }
 func (m *Permission_DestinationPort) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Permission_DestinationPort) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1081,7 +1087,8 @@ func (m *Permission_DestinationPort) MarshalToSizedBuffer(dAtA []byte) (int, err
 	return len(dAtA) - i, nil
 }
 func (m *Permission_Metadata) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Permission_Metadata) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1101,7 +1108,8 @@ func (m *Permission_Metadata) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Permission_NotRule) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Permission_NotRule) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1121,7 +1129,8 @@ func (m *Permission_NotRule) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Permission_RequestedServerName) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Permission_RequestedServerName) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1218,7 +1227,8 @@ func (m *Principal) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *Principal_AndIds) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Principal_AndIds) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1238,7 +1248,8 @@ func (m *Principal_AndIds) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Principal_OrIds) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Principal_OrIds) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1258,7 +1269,8 @@ func (m *Principal_OrIds) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Principal_Any) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Principal_Any) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1274,7 +1286,8 @@ func (m *Principal_Any) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Principal_Authenticated_) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Principal_Authenticated_) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1294,7 +1307,8 @@ func (m *Principal_Authenticated_) MarshalToSizedBuffer(dAtA []byte) (int, error
 	return len(dAtA) - i, nil
 }
 func (m *Principal_SourceIp) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Principal_SourceIp) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1314,7 +1328,8 @@ func (m *Principal_SourceIp) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Principal_Header) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Principal_Header) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1334,7 +1349,8 @@ func (m *Principal_Header) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Principal_Metadata) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Principal_Metadata) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1354,7 +1370,8 @@ func (m *Principal_Metadata) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Principal_NotId) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Principal_NotId) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -3092,6 +3109,7 @@ func (m *Principal_Authenticated) Unmarshal(dAtA []byte) error {
 func skipRbac(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
+	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -3123,10 +3141,8 @@ func skipRbac(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			return iNdEx, nil
 		case 1:
 			iNdEx += 8
-			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -3147,55 +3163,30 @@ func skipRbac(dAtA []byte) (n int, err error) {
 				return 0, ErrInvalidLengthRbac
 			}
 			iNdEx += length
-			if iNdEx < 0 {
-				return 0, ErrInvalidLengthRbac
-			}
-			return iNdEx, nil
 		case 3:
-			for {
-				var innerWire uint64
-				var start int = iNdEx
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return 0, ErrIntOverflowRbac
-					}
-					if iNdEx >= l {
-						return 0, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					innerWire |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				innerWireType := int(innerWire & 0x7)
-				if innerWireType == 4 {
-					break
-				}
-				next, err := skipRbac(dAtA[start:])
-				if err != nil {
-					return 0, err
-				}
-				iNdEx = start + next
-				if iNdEx < 0 {
-					return 0, ErrInvalidLengthRbac
-				}
-			}
-			return iNdEx, nil
+			depth++
 		case 4:
-			return iNdEx, nil
+			if depth == 0 {
+				return 0, ErrUnexpectedEndOfGroupRbac
+			}
+			depth--
 		case 5:
 			iNdEx += 4
-			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
+		if iNdEx < 0 {
+			return 0, ErrInvalidLengthRbac
+		}
+		if depth == 0 {
+			return iNdEx, nil
+		}
 	}
-	panic("unreachable")
+	return 0, io.ErrUnexpectedEOF
 }
 
 var (
-	ErrInvalidLengthRbac = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowRbac   = fmt.Errorf("proto: integer overflow")
+	ErrInvalidLengthRbac        = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowRbac          = fmt.Errorf("proto: integer overflow")
+	ErrUnexpectedEndOfGroupRbac = fmt.Errorf("proto: unexpected end of group")
 )

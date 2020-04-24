@@ -260,10 +260,10 @@ type isCheckResponse_HttpResponse interface {
 }
 
 type CheckResponse_DeniedResponse struct {
-	DeniedResponse *DeniedHttpResponse `protobuf:"bytes,2,opt,name=denied_response,json=deniedResponse,proto3,oneof"`
+	DeniedResponse *DeniedHttpResponse `protobuf:"bytes,2,opt,name=denied_response,json=deniedResponse,proto3,oneof" json:"denied_response,omitempty"`
 }
 type CheckResponse_OkResponse struct {
-	OkResponse *OkHttpResponse `protobuf:"bytes,3,opt,name=ok_response,json=okResponse,proto3,oneof"`
+	OkResponse *OkHttpResponse `protobuf:"bytes,3,opt,name=ok_response,json=okResponse,proto3,oneof" json:"ok_response,omitempty"`
 }
 
 func (*CheckResponse_DeniedResponse) isCheckResponse_HttpResponse() {}
@@ -629,7 +629,8 @@ func (m *CheckResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *CheckResponse_DeniedResponse) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *CheckResponse_DeniedResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -649,7 +650,8 @@ func (m *CheckResponse_DeniedResponse) MarshalToSizedBuffer(dAtA []byte) (int, e
 	return len(dAtA) - i, nil
 }
 func (m *CheckResponse_OkResponse) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *CheckResponse_OkResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1286,6 +1288,7 @@ func (m *CheckResponse) Unmarshal(dAtA []byte) error {
 func skipExternalAuth(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
+	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -1317,10 +1320,8 @@ func skipExternalAuth(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			return iNdEx, nil
 		case 1:
 			iNdEx += 8
-			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -1341,55 +1342,30 @@ func skipExternalAuth(dAtA []byte) (n int, err error) {
 				return 0, ErrInvalidLengthExternalAuth
 			}
 			iNdEx += length
-			if iNdEx < 0 {
-				return 0, ErrInvalidLengthExternalAuth
-			}
-			return iNdEx, nil
 		case 3:
-			for {
-				var innerWire uint64
-				var start int = iNdEx
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return 0, ErrIntOverflowExternalAuth
-					}
-					if iNdEx >= l {
-						return 0, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					innerWire |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				innerWireType := int(innerWire & 0x7)
-				if innerWireType == 4 {
-					break
-				}
-				next, err := skipExternalAuth(dAtA[start:])
-				if err != nil {
-					return 0, err
-				}
-				iNdEx = start + next
-				if iNdEx < 0 {
-					return 0, ErrInvalidLengthExternalAuth
-				}
-			}
-			return iNdEx, nil
+			depth++
 		case 4:
-			return iNdEx, nil
+			if depth == 0 {
+				return 0, ErrUnexpectedEndOfGroupExternalAuth
+			}
+			depth--
 		case 5:
 			iNdEx += 4
-			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
+		if iNdEx < 0 {
+			return 0, ErrInvalidLengthExternalAuth
+		}
+		if depth == 0 {
+			return iNdEx, nil
+		}
 	}
-	panic("unreachable")
+	return 0, io.ErrUnexpectedEOF
 }
 
 var (
-	ErrInvalidLengthExternalAuth = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowExternalAuth   = fmt.Errorf("proto: integer overflow")
+	ErrInvalidLengthExternalAuth        = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowExternalAuth          = fmt.Errorf("proto: integer overflow")
+	ErrUnexpectedEndOfGroupExternalAuth = fmt.Errorf("proto: unexpected end of group")
 )

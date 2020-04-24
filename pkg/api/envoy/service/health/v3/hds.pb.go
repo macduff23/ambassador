@@ -321,10 +321,10 @@ type isHealthCheckRequestOrEndpointHealthResponse_RequestType interface {
 }
 
 type HealthCheckRequestOrEndpointHealthResponse_HealthCheckRequest struct {
-	HealthCheckRequest *HealthCheckRequest `protobuf:"bytes,1,opt,name=health_check_request,json=healthCheckRequest,proto3,oneof"`
+	HealthCheckRequest *HealthCheckRequest `protobuf:"bytes,1,opt,name=health_check_request,json=healthCheckRequest,proto3,oneof" json:"health_check_request,omitempty"`
 }
 type HealthCheckRequestOrEndpointHealthResponse_EndpointHealthResponse struct {
-	EndpointHealthResponse *EndpointHealthResponse `protobuf:"bytes,2,opt,name=endpoint_health_response,json=endpointHealthResponse,proto3,oneof"`
+	EndpointHealthResponse *EndpointHealthResponse `protobuf:"bytes,2,opt,name=endpoint_health_response,json=endpointHealthResponse,proto3,oneof" json:"endpoint_health_response,omitempty"`
 }
 
 func (*HealthCheckRequestOrEndpointHealthResponse_HealthCheckRequest) isHealthCheckRequestOrEndpointHealthResponse_RequestType() {
@@ -1055,7 +1055,8 @@ func (m *HealthCheckRequestOrEndpointHealthResponse) MarshalToSizedBuffer(dAtA [
 }
 
 func (m *HealthCheckRequestOrEndpointHealthResponse_HealthCheckRequest) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *HealthCheckRequestOrEndpointHealthResponse_HealthCheckRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1075,7 +1076,8 @@ func (m *HealthCheckRequestOrEndpointHealthResponse_HealthCheckRequest) MarshalT
 	return len(dAtA) - i, nil
 }
 func (m *HealthCheckRequestOrEndpointHealthResponse_EndpointHealthResponse) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *HealthCheckRequestOrEndpointHealthResponse_EndpointHealthResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -2441,6 +2443,7 @@ func (m *HealthCheckSpecifier) Unmarshal(dAtA []byte) error {
 func skipHds(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
+	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -2472,10 +2475,8 @@ func skipHds(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			return iNdEx, nil
 		case 1:
 			iNdEx += 8
-			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -2496,55 +2497,30 @@ func skipHds(dAtA []byte) (n int, err error) {
 				return 0, ErrInvalidLengthHds
 			}
 			iNdEx += length
-			if iNdEx < 0 {
-				return 0, ErrInvalidLengthHds
-			}
-			return iNdEx, nil
 		case 3:
-			for {
-				var innerWire uint64
-				var start int = iNdEx
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return 0, ErrIntOverflowHds
-					}
-					if iNdEx >= l {
-						return 0, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					innerWire |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				innerWireType := int(innerWire & 0x7)
-				if innerWireType == 4 {
-					break
-				}
-				next, err := skipHds(dAtA[start:])
-				if err != nil {
-					return 0, err
-				}
-				iNdEx = start + next
-				if iNdEx < 0 {
-					return 0, ErrInvalidLengthHds
-				}
-			}
-			return iNdEx, nil
+			depth++
 		case 4:
-			return iNdEx, nil
+			if depth == 0 {
+				return 0, ErrUnexpectedEndOfGroupHds
+			}
+			depth--
 		case 5:
 			iNdEx += 4
-			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
+		if iNdEx < 0 {
+			return 0, ErrInvalidLengthHds
+		}
+		if depth == 0 {
+			return iNdEx, nil
+		}
 	}
-	panic("unreachable")
+	return 0, io.ErrUnexpectedEOF
 }
 
 var (
-	ErrInvalidLengthHds = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowHds   = fmt.Errorf("proto: integer overflow")
+	ErrInvalidLengthHds        = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowHds          = fmt.Errorf("proto: integer overflow")
+	ErrUnexpectedEndOfGroupHds = fmt.Errorf("proto: unexpected end of group")
 )

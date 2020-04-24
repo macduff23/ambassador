@@ -85,7 +85,7 @@ type isResourceMonitor_ConfigType interface {
 }
 
 type ResourceMonitor_TypedConfig struct {
-	TypedConfig *types.Any `protobuf:"bytes,3,opt,name=typed_config,json=typedConfig,proto3,oneof"`
+	TypedConfig *types.Any `protobuf:"bytes,3,opt,name=typed_config,json=typedConfig,proto3,oneof" json:"typed_config,omitempty"`
 }
 
 func (*ResourceMonitor_TypedConfig) isResourceMonitor_ConfigType() {}
@@ -218,7 +218,7 @@ type isTrigger_TriggerOneof interface {
 }
 
 type Trigger_Threshold struct {
-	Threshold *ThresholdTrigger `protobuf:"bytes,2,opt,name=threshold,proto3,oneof"`
+	Threshold *ThresholdTrigger `protobuf:"bytes,2,opt,name=threshold,proto3,oneof" json:"threshold,omitempty"`
 }
 
 func (*Trigger_Threshold) isTrigger_TriggerOneof() {}
@@ -475,7 +475,8 @@ func (m *ResourceMonitor) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *ResourceMonitor_TypedConfig) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *ResourceMonitor_TypedConfig) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -571,7 +572,8 @@ func (m *Trigger) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *Trigger_Threshold) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Trigger_Threshold) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1437,6 +1439,7 @@ func (m *OverloadManager) Unmarshal(dAtA []byte) error {
 func skipOverload(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
+	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -1468,10 +1471,8 @@ func skipOverload(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			return iNdEx, nil
 		case 1:
 			iNdEx += 8
-			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -1492,55 +1493,30 @@ func skipOverload(dAtA []byte) (n int, err error) {
 				return 0, ErrInvalidLengthOverload
 			}
 			iNdEx += length
-			if iNdEx < 0 {
-				return 0, ErrInvalidLengthOverload
-			}
-			return iNdEx, nil
 		case 3:
-			for {
-				var innerWire uint64
-				var start int = iNdEx
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return 0, ErrIntOverflowOverload
-					}
-					if iNdEx >= l {
-						return 0, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					innerWire |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				innerWireType := int(innerWire & 0x7)
-				if innerWireType == 4 {
-					break
-				}
-				next, err := skipOverload(dAtA[start:])
-				if err != nil {
-					return 0, err
-				}
-				iNdEx = start + next
-				if iNdEx < 0 {
-					return 0, ErrInvalidLengthOverload
-				}
-			}
-			return iNdEx, nil
+			depth++
 		case 4:
-			return iNdEx, nil
+			if depth == 0 {
+				return 0, ErrUnexpectedEndOfGroupOverload
+			}
+			depth--
 		case 5:
 			iNdEx += 4
-			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
+		if iNdEx < 0 {
+			return 0, ErrInvalidLengthOverload
+		}
+		if depth == 0 {
+			return iNdEx, nil
+		}
 	}
-	panic("unreachable")
+	return 0, io.ErrUnexpectedEOF
 }
 
 var (
-	ErrInvalidLengthOverload = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowOverload   = fmt.Errorf("proto: integer overflow")
+	ErrInvalidLengthOverload        = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowOverload          = fmt.Errorf("proto: integer overflow")
+	ErrUnexpectedEndOfGroupOverload = fmt.Errorf("proto: unexpected end of group")
 )

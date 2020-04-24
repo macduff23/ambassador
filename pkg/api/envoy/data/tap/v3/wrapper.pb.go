@@ -78,16 +78,16 @@ type isTraceWrapper_Trace interface {
 }
 
 type TraceWrapper_HttpBufferedTrace struct {
-	HttpBufferedTrace *HttpBufferedTrace `protobuf:"bytes,1,opt,name=http_buffered_trace,json=httpBufferedTrace,proto3,oneof"`
+	HttpBufferedTrace *HttpBufferedTrace `protobuf:"bytes,1,opt,name=http_buffered_trace,json=httpBufferedTrace,proto3,oneof" json:"http_buffered_trace,omitempty"`
 }
 type TraceWrapper_HttpStreamedTraceSegment struct {
-	HttpStreamedTraceSegment *HttpStreamedTraceSegment `protobuf:"bytes,2,opt,name=http_streamed_trace_segment,json=httpStreamedTraceSegment,proto3,oneof"`
+	HttpStreamedTraceSegment *HttpStreamedTraceSegment `protobuf:"bytes,2,opt,name=http_streamed_trace_segment,json=httpStreamedTraceSegment,proto3,oneof" json:"http_streamed_trace_segment,omitempty"`
 }
 type TraceWrapper_SocketBufferedTrace struct {
-	SocketBufferedTrace *SocketBufferedTrace `protobuf:"bytes,3,opt,name=socket_buffered_trace,json=socketBufferedTrace,proto3,oneof"`
+	SocketBufferedTrace *SocketBufferedTrace `protobuf:"bytes,3,opt,name=socket_buffered_trace,json=socketBufferedTrace,proto3,oneof" json:"socket_buffered_trace,omitempty"`
 }
 type TraceWrapper_SocketStreamedTraceSegment struct {
-	SocketStreamedTraceSegment *SocketStreamedTraceSegment `protobuf:"bytes,4,opt,name=socket_streamed_trace_segment,json=socketStreamedTraceSegment,proto3,oneof"`
+	SocketStreamedTraceSegment *SocketStreamedTraceSegment `protobuf:"bytes,4,opt,name=socket_streamed_trace_segment,json=socketStreamedTraceSegment,proto3,oneof" json:"socket_streamed_trace_segment,omitempty"`
 }
 
 func (*TraceWrapper_HttpBufferedTrace) isTraceWrapper_Trace()          {}
@@ -210,7 +210,8 @@ func (m *TraceWrapper) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *TraceWrapper_HttpBufferedTrace) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *TraceWrapper_HttpBufferedTrace) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -230,7 +231,8 @@ func (m *TraceWrapper_HttpBufferedTrace) MarshalToSizedBuffer(dAtA []byte) (int,
 	return len(dAtA) - i, nil
 }
 func (m *TraceWrapper_HttpStreamedTraceSegment) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *TraceWrapper_HttpStreamedTraceSegment) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -250,7 +252,8 @@ func (m *TraceWrapper_HttpStreamedTraceSegment) MarshalToSizedBuffer(dAtA []byte
 	return len(dAtA) - i, nil
 }
 func (m *TraceWrapper_SocketBufferedTrace) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *TraceWrapper_SocketBufferedTrace) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -270,7 +273,8 @@ func (m *TraceWrapper_SocketBufferedTrace) MarshalToSizedBuffer(dAtA []byte) (in
 	return len(dAtA) - i, nil
 }
 func (m *TraceWrapper_SocketStreamedTraceSegment) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *TraceWrapper_SocketStreamedTraceSegment) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -567,6 +571,7 @@ func (m *TraceWrapper) Unmarshal(dAtA []byte) error {
 func skipWrapper(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
+	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -598,10 +603,8 @@ func skipWrapper(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			return iNdEx, nil
 		case 1:
 			iNdEx += 8
-			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -622,55 +625,30 @@ func skipWrapper(dAtA []byte) (n int, err error) {
 				return 0, ErrInvalidLengthWrapper
 			}
 			iNdEx += length
-			if iNdEx < 0 {
-				return 0, ErrInvalidLengthWrapper
-			}
-			return iNdEx, nil
 		case 3:
-			for {
-				var innerWire uint64
-				var start int = iNdEx
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return 0, ErrIntOverflowWrapper
-					}
-					if iNdEx >= l {
-						return 0, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					innerWire |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				innerWireType := int(innerWire & 0x7)
-				if innerWireType == 4 {
-					break
-				}
-				next, err := skipWrapper(dAtA[start:])
-				if err != nil {
-					return 0, err
-				}
-				iNdEx = start + next
-				if iNdEx < 0 {
-					return 0, ErrInvalidLengthWrapper
-				}
-			}
-			return iNdEx, nil
+			depth++
 		case 4:
-			return iNdEx, nil
+			if depth == 0 {
+				return 0, ErrUnexpectedEndOfGroupWrapper
+			}
+			depth--
 		case 5:
 			iNdEx += 4
-			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
+		if iNdEx < 0 {
+			return 0, ErrInvalidLengthWrapper
+		}
+		if depth == 0 {
+			return iNdEx, nil
+		}
 	}
-	panic("unreachable")
+	return 0, io.ErrUnexpectedEOF
 }
 
 var (
-	ErrInvalidLengthWrapper = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowWrapper   = fmt.Errorf("proto: integer overflow")
+	ErrInvalidLengthWrapper        = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowWrapper          = fmt.Errorf("proto: integer overflow")
+	ErrUnexpectedEndOfGroupWrapper = fmt.Errorf("proto: unexpected end of group")
 )

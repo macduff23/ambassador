@@ -251,7 +251,7 @@ type isPrivateKeyProvider_ConfigType interface {
 }
 
 type PrivateKeyProvider_TypedConfig struct {
-	TypedConfig *types.Any `protobuf:"bytes,3,opt,name=typed_config,json=typedConfig,proto3,oneof"`
+	TypedConfig *types.Any `protobuf:"bytes,3,opt,name=typed_config,json=typedConfig,proto3,oneof" json:"typed_config,omitempty"`
 }
 
 func (*PrivateKeyProvider_TypedConfig) isPrivateKeyProvider_ConfigType() {}
@@ -725,18 +725,19 @@ type isCommonTlsContext_ValidationContextType interface {
 }
 
 type CommonTlsContext_ValidationContext struct {
-	ValidationContext *CertificateValidationContext `protobuf:"bytes,3,opt,name=validation_context,json=validationContext,proto3,oneof"`
+	ValidationContext *CertificateValidationContext `protobuf:"bytes,3,opt,name=validation_context,json=validationContext,proto3,oneof" json:"validation_context,omitempty"`
 }
 type CommonTlsContext_ValidationContextSdsSecretConfig struct {
-	ValidationContextSdsSecretConfig *SdsSecretConfig `protobuf:"bytes,7,opt,name=validation_context_sds_secret_config,json=validationContextSdsSecretConfig,proto3,oneof"`
+	ValidationContextSdsSecretConfig *SdsSecretConfig `protobuf:"bytes,7,opt,name=validation_context_sds_secret_config,json=validationContextSdsSecretConfig,proto3,oneof" json:"validation_context_sds_secret_config,omitempty"`
 }
 type CommonTlsContext_CombinedValidationContext struct {
-	CombinedValidationContext *CommonTlsContext_CombinedCertificateValidationContext `protobuf:"bytes,8,opt,name=combined_validation_context,json=combinedValidationContext,proto3,oneof"`
+	CombinedValidationContext *CommonTlsContext_CombinedCertificateValidationContext `protobuf:"bytes,8,opt,name=combined_validation_context,json=combinedValidationContext,proto3,oneof" json:"combined_validation_context,omitempty"`
 }
 
-func (*CommonTlsContext_ValidationContext) isCommonTlsContext_ValidationContextType()                {}
-func (*CommonTlsContext_ValidationContextSdsSecretConfig) isCommonTlsContext_ValidationContextType() {}
-func (*CommonTlsContext_CombinedValidationContext) isCommonTlsContext_ValidationContextType()        {}
+func (*CommonTlsContext_ValidationContext) isCommonTlsContext_ValidationContextType() {}
+func (*CommonTlsContext_ValidationContextSdsSecretConfig) isCommonTlsContext_ValidationContextType() {
+}
+func (*CommonTlsContext_CombinedValidationContext) isCommonTlsContext_ValidationContextType() {}
 
 func (m *CommonTlsContext) GetValidationContextType() isCommonTlsContext_ValidationContextType {
 	if m != nil {
@@ -1016,10 +1017,10 @@ type isDownstreamTlsContext_SessionTicketKeysType interface {
 }
 
 type DownstreamTlsContext_SessionTicketKeys struct {
-	SessionTicketKeys *TlsSessionTicketKeys `protobuf:"bytes,4,opt,name=session_ticket_keys,json=sessionTicketKeys,proto3,oneof"`
+	SessionTicketKeys *TlsSessionTicketKeys `protobuf:"bytes,4,opt,name=session_ticket_keys,json=sessionTicketKeys,proto3,oneof" json:"session_ticket_keys,omitempty"`
 }
 type DownstreamTlsContext_SessionTicketKeysSdsSecretConfig struct {
-	SessionTicketKeysSdsSecretConfig *SdsSecretConfig `protobuf:"bytes,5,opt,name=session_ticket_keys_sds_secret_config,json=sessionTicketKeysSdsSecretConfig,proto3,oneof"`
+	SessionTicketKeysSdsSecretConfig *SdsSecretConfig `protobuf:"bytes,5,opt,name=session_ticket_keys_sds_secret_config,json=sessionTicketKeysSdsSecretConfig,proto3,oneof" json:"session_ticket_keys_sds_secret_config,omitempty"`
 }
 
 func (*DownstreamTlsContext_SessionTicketKeys) isDownstreamTlsContext_SessionTicketKeysType() {}
@@ -1194,13 +1195,13 @@ type isSecret_Type interface {
 }
 
 type Secret_TlsCertificate struct {
-	TlsCertificate *TlsCertificate `protobuf:"bytes,2,opt,name=tls_certificate,json=tlsCertificate,proto3,oneof"`
+	TlsCertificate *TlsCertificate `protobuf:"bytes,2,opt,name=tls_certificate,json=tlsCertificate,proto3,oneof" json:"tls_certificate,omitempty"`
 }
 type Secret_SessionTicketKeys struct {
-	SessionTicketKeys *TlsSessionTicketKeys `protobuf:"bytes,3,opt,name=session_ticket_keys,json=sessionTicketKeys,proto3,oneof"`
+	SessionTicketKeys *TlsSessionTicketKeys `protobuf:"bytes,3,opt,name=session_ticket_keys,json=sessionTicketKeys,proto3,oneof" json:"session_ticket_keys,omitempty"`
 }
 type Secret_ValidationContext struct {
-	ValidationContext *CertificateValidationContext `protobuf:"bytes,4,opt,name=validation_context,json=validationContext,proto3,oneof"`
+	ValidationContext *CertificateValidationContext `protobuf:"bytes,4,opt,name=validation_context,json=validationContext,proto3,oneof" json:"validation_context,omitempty"`
 }
 
 func (*Secret_TlsCertificate) isSecret_Type()    {}
@@ -1483,7 +1484,8 @@ func (m *PrivateKeyProvider) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *PrivateKeyProvider_TypedConfig) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *PrivateKeyProvider_TypedConfig) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1847,7 +1849,8 @@ func (m *CommonTlsContext) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *CommonTlsContext_ValidationContext) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *CommonTlsContext_ValidationContext) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1867,7 +1870,8 @@ func (m *CommonTlsContext_ValidationContext) MarshalToSizedBuffer(dAtA []byte) (
 	return len(dAtA) - i, nil
 }
 func (m *CommonTlsContext_ValidationContextSdsSecretConfig) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *CommonTlsContext_ValidationContextSdsSecretConfig) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1887,7 +1891,8 @@ func (m *CommonTlsContext_ValidationContextSdsSecretConfig) MarshalToSizedBuffer
 	return len(dAtA) - i, nil
 }
 func (m *CommonTlsContext_CombinedValidationContext) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *CommonTlsContext_CombinedValidationContext) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -2110,7 +2115,8 @@ func (m *DownstreamTlsContext) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *DownstreamTlsContext_SessionTicketKeys) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *DownstreamTlsContext_SessionTicketKeys) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -2130,7 +2136,8 @@ func (m *DownstreamTlsContext_SessionTicketKeys) MarshalToSizedBuffer(dAtA []byt
 	return len(dAtA) - i, nil
 }
 func (m *DownstreamTlsContext_SessionTicketKeysSdsSecretConfig) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *DownstreamTlsContext_SessionTicketKeysSdsSecretConfig) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -2239,7 +2246,8 @@ func (m *Secret) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *Secret_TlsCertificate) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Secret_TlsCertificate) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -2259,7 +2267,8 @@ func (m *Secret_TlsCertificate) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Secret_SessionTicketKeys) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Secret_SessionTicketKeys) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -2279,7 +2288,8 @@ func (m *Secret_SessionTicketKeys) MarshalToSizedBuffer(dAtA []byte) (int, error
 	return len(dAtA) - i, nil
 }
 func (m *Secret_ValidationContext) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Secret_ValidationContext) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -4864,6 +4874,7 @@ func (m *Secret) Unmarshal(dAtA []byte) error {
 func skipCert(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
+	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -4895,10 +4906,8 @@ func skipCert(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			return iNdEx, nil
 		case 1:
 			iNdEx += 8
-			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -4919,55 +4928,30 @@ func skipCert(dAtA []byte) (n int, err error) {
 				return 0, ErrInvalidLengthCert
 			}
 			iNdEx += length
-			if iNdEx < 0 {
-				return 0, ErrInvalidLengthCert
-			}
-			return iNdEx, nil
 		case 3:
-			for {
-				var innerWire uint64
-				var start int = iNdEx
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return 0, ErrIntOverflowCert
-					}
-					if iNdEx >= l {
-						return 0, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					innerWire |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				innerWireType := int(innerWire & 0x7)
-				if innerWireType == 4 {
-					break
-				}
-				next, err := skipCert(dAtA[start:])
-				if err != nil {
-					return 0, err
-				}
-				iNdEx = start + next
-				if iNdEx < 0 {
-					return 0, ErrInvalidLengthCert
-				}
-			}
-			return iNdEx, nil
+			depth++
 		case 4:
-			return iNdEx, nil
+			if depth == 0 {
+				return 0, ErrUnexpectedEndOfGroupCert
+			}
+			depth--
 		case 5:
 			iNdEx += 4
-			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
+		if iNdEx < 0 {
+			return 0, ErrInvalidLengthCert
+		}
+		if depth == 0 {
+			return iNdEx, nil
+		}
 	}
-	panic("unreachable")
+	return 0, io.ErrUnexpectedEOF
 }
 
 var (
-	ErrInvalidLengthCert = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowCert   = fmt.Errorf("proto: integer overflow")
+	ErrInvalidLengthCert        = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowCert          = fmt.Errorf("proto: integer overflow")
+	ErrUnexpectedEndOfGroupCert = fmt.Errorf("proto: unexpected end of group")
 )

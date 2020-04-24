@@ -161,7 +161,7 @@ type isMetadataKey_PathSegment_Segment interface {
 }
 
 type MetadataKey_PathSegment_Key struct {
-	Key string `protobuf:"bytes,1,opt,name=key,proto3,oneof"`
+	Key string `protobuf:"bytes,1,opt,name=key,proto3,oneof" json:"key,omitempty"`
 }
 
 func (*MetadataKey_PathSegment_Key) isMetadataKey_PathSegment_Segment() {}
@@ -240,16 +240,16 @@ type isMetadataKind_Kind interface {
 }
 
 type MetadataKind_Request_ struct {
-	Request *MetadataKind_Request `protobuf:"bytes,1,opt,name=request,proto3,oneof"`
+	Request *MetadataKind_Request `protobuf:"bytes,1,opt,name=request,proto3,oneof" json:"request,omitempty"`
 }
 type MetadataKind_Route_ struct {
-	Route *MetadataKind_Route `protobuf:"bytes,2,opt,name=route,proto3,oneof"`
+	Route *MetadataKind_Route `protobuf:"bytes,2,opt,name=route,proto3,oneof" json:"route,omitempty"`
 }
 type MetadataKind_Cluster_ struct {
-	Cluster *MetadataKind_Cluster `protobuf:"bytes,3,opt,name=cluster,proto3,oneof"`
+	Cluster *MetadataKind_Cluster `protobuf:"bytes,3,opt,name=cluster,proto3,oneof" json:"cluster,omitempty"`
 }
 type MetadataKind_Host_ struct {
-	Host *MetadataKind_Host `protobuf:"bytes,4,opt,name=host,proto3,oneof"`
+	Host *MetadataKind_Host `protobuf:"bytes,4,opt,name=host,proto3,oneof" json:"host,omitempty"`
 }
 
 func (*MetadataKind_Request_) isMetadataKind_Kind() {}
@@ -595,7 +595,8 @@ func (m *MetadataKey_PathSegment) MarshalToSizedBuffer(dAtA []byte) (int, error)
 }
 
 func (m *MetadataKey_PathSegment_Key) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *MetadataKey_PathSegment_Key) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -644,7 +645,8 @@ func (m *MetadataKind) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *MetadataKind_Request_) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *MetadataKind_Request_) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -664,7 +666,8 @@ func (m *MetadataKind_Request_) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *MetadataKind_Route_) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *MetadataKind_Route_) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -684,7 +687,8 @@ func (m *MetadataKind_Route_) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *MetadataKind_Cluster_) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *MetadataKind_Cluster_) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -704,7 +708,8 @@ func (m *MetadataKind_Cluster_) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *MetadataKind_Host_) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *MetadataKind_Host_) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1625,6 +1630,7 @@ func (m *MetadataKind_Host) Unmarshal(dAtA []byte) error {
 func skipMetadata(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
+	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -1656,10 +1662,8 @@ func skipMetadata(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			return iNdEx, nil
 		case 1:
 			iNdEx += 8
-			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -1680,55 +1684,30 @@ func skipMetadata(dAtA []byte) (n int, err error) {
 				return 0, ErrInvalidLengthMetadata
 			}
 			iNdEx += length
-			if iNdEx < 0 {
-				return 0, ErrInvalidLengthMetadata
-			}
-			return iNdEx, nil
 		case 3:
-			for {
-				var innerWire uint64
-				var start int = iNdEx
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return 0, ErrIntOverflowMetadata
-					}
-					if iNdEx >= l {
-						return 0, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					innerWire |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				innerWireType := int(innerWire & 0x7)
-				if innerWireType == 4 {
-					break
-				}
-				next, err := skipMetadata(dAtA[start:])
-				if err != nil {
-					return 0, err
-				}
-				iNdEx = start + next
-				if iNdEx < 0 {
-					return 0, ErrInvalidLengthMetadata
-				}
-			}
-			return iNdEx, nil
+			depth++
 		case 4:
-			return iNdEx, nil
+			if depth == 0 {
+				return 0, ErrUnexpectedEndOfGroupMetadata
+			}
+			depth--
 		case 5:
 			iNdEx += 4
-			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
+		if iNdEx < 0 {
+			return 0, ErrInvalidLengthMetadata
+		}
+		if depth == 0 {
+			return iNdEx, nil
+		}
 	}
-	panic("unreachable")
+	return 0, io.ErrUnexpectedEOF
 }
 
 var (
-	ErrInvalidLengthMetadata = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowMetadata   = fmt.Errorf("proto: integer overflow")
+	ErrInvalidLengthMetadata        = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowMetadata          = fmt.Errorf("proto: integer overflow")
+	ErrUnexpectedEndOfGroupMetadata = fmt.Errorf("proto: unexpected end of group")
 )

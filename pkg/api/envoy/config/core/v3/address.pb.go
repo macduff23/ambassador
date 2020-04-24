@@ -185,10 +185,10 @@ type isSocketAddress_PortSpecifier interface {
 }
 
 type SocketAddress_PortValue struct {
-	PortValue uint32 `protobuf:"varint,3,opt,name=port_value,json=portValue,proto3,oneof"`
+	PortValue uint32 `protobuf:"varint,3,opt,name=port_value,json=portValue,proto3,oneof" json:"port_value,omitempty"`
 }
 type SocketAddress_NamedPort struct {
-	NamedPort string `protobuf:"bytes,4,opt,name=named_port,json=namedPort,proto3,oneof"`
+	NamedPort string `protobuf:"bytes,4,opt,name=named_port,json=namedPort,proto3,oneof" json:"named_port,omitempty"`
 }
 
 func (*SocketAddress_PortValue) isSocketAddress_PortSpecifier() {}
@@ -448,10 +448,10 @@ type isAddress_Address interface {
 }
 
 type Address_SocketAddress struct {
-	SocketAddress *SocketAddress `protobuf:"bytes,1,opt,name=socket_address,json=socketAddress,proto3,oneof"`
+	SocketAddress *SocketAddress `protobuf:"bytes,1,opt,name=socket_address,json=socketAddress,proto3,oneof" json:"socket_address,omitempty"`
 }
 type Address_Pipe struct {
-	Pipe *Pipe `protobuf:"bytes,2,opt,name=pipe,proto3,oneof"`
+	Pipe *Pipe `protobuf:"bytes,2,opt,name=pipe,proto3,oneof" json:"pipe,omitempty"`
 }
 
 func (*Address_SocketAddress) isAddress_Address() {}
@@ -555,7 +555,9 @@ func init() {
 	proto.RegisterType((*CidrRange)(nil), "envoy.config.core.v3.CidrRange")
 }
 
-func init() { proto.RegisterFile("envoy/config/core/v3/address.proto", fileDescriptor_73ff5d16d1e342ac) }
+func init() {
+	proto.RegisterFile("envoy/config/core/v3/address.proto", fileDescriptor_73ff5d16d1e342ac)
+}
 
 var fileDescriptor_73ff5d16d1e342ac = []byte{
 	// 795 bytes of a gzipped FileDescriptorProto
@@ -716,7 +718,8 @@ func (m *SocketAddress) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *SocketAddress_PortValue) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *SocketAddress_PortValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -727,7 +730,8 @@ func (m *SocketAddress_PortValue) MarshalToSizedBuffer(dAtA []byte) (int, error)
 	return len(dAtA) - i, nil
 }
 func (m *SocketAddress_NamedPort) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *SocketAddress_NamedPort) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -904,7 +908,8 @@ func (m *Address) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *Address_SocketAddress) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Address_SocketAddress) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -924,7 +929,8 @@ func (m *Address_SocketAddress) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Address_Pipe) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Address_Pipe) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -2067,6 +2073,7 @@ func (m *CidrRange) Unmarshal(dAtA []byte) error {
 func skipAddress(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
+	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -2098,10 +2105,8 @@ func skipAddress(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			return iNdEx, nil
 		case 1:
 			iNdEx += 8
-			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -2122,55 +2127,30 @@ func skipAddress(dAtA []byte) (n int, err error) {
 				return 0, ErrInvalidLengthAddress
 			}
 			iNdEx += length
-			if iNdEx < 0 {
-				return 0, ErrInvalidLengthAddress
-			}
-			return iNdEx, nil
 		case 3:
-			for {
-				var innerWire uint64
-				var start int = iNdEx
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return 0, ErrIntOverflowAddress
-					}
-					if iNdEx >= l {
-						return 0, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					innerWire |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				innerWireType := int(innerWire & 0x7)
-				if innerWireType == 4 {
-					break
-				}
-				next, err := skipAddress(dAtA[start:])
-				if err != nil {
-					return 0, err
-				}
-				iNdEx = start + next
-				if iNdEx < 0 {
-					return 0, ErrInvalidLengthAddress
-				}
-			}
-			return iNdEx, nil
+			depth++
 		case 4:
-			return iNdEx, nil
+			if depth == 0 {
+				return 0, ErrUnexpectedEndOfGroupAddress
+			}
+			depth--
 		case 5:
 			iNdEx += 4
-			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
+		if iNdEx < 0 {
+			return 0, ErrInvalidLengthAddress
+		}
+		if depth == 0 {
+			return iNdEx, nil
+		}
 	}
-	panic("unreachable")
+	return 0, io.ErrUnexpectedEOF
 }
 
 var (
-	ErrInvalidLengthAddress = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowAddress   = fmt.Errorf("proto: integer overflow")
+	ErrInvalidLengthAddress        = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowAddress          = fmt.Errorf("proto: integer overflow")
+	ErrUnexpectedEndOfGroupAddress = fmt.Errorf("proto: unexpected end of group")
 )

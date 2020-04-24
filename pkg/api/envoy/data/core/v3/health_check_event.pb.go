@@ -144,19 +144,19 @@ type isHealthCheckEvent_Event interface {
 }
 
 type HealthCheckEvent_EjectUnhealthyEvent struct {
-	EjectUnhealthyEvent *HealthCheckEjectUnhealthy `protobuf:"bytes,4,opt,name=eject_unhealthy_event,json=ejectUnhealthyEvent,proto3,oneof"`
+	EjectUnhealthyEvent *HealthCheckEjectUnhealthy `protobuf:"bytes,4,opt,name=eject_unhealthy_event,json=ejectUnhealthyEvent,proto3,oneof" json:"eject_unhealthy_event,omitempty"`
 }
 type HealthCheckEvent_AddHealthyEvent struct {
-	AddHealthyEvent *HealthCheckAddHealthy `protobuf:"bytes,5,opt,name=add_healthy_event,json=addHealthyEvent,proto3,oneof"`
+	AddHealthyEvent *HealthCheckAddHealthy `protobuf:"bytes,5,opt,name=add_healthy_event,json=addHealthyEvent,proto3,oneof" json:"add_healthy_event,omitempty"`
 }
 type HealthCheckEvent_HealthCheckFailureEvent struct {
-	HealthCheckFailureEvent *HealthCheckFailure `protobuf:"bytes,7,opt,name=health_check_failure_event,json=healthCheckFailureEvent,proto3,oneof"`
+	HealthCheckFailureEvent *HealthCheckFailure `protobuf:"bytes,7,opt,name=health_check_failure_event,json=healthCheckFailureEvent,proto3,oneof" json:"health_check_failure_event,omitempty"`
 }
 type HealthCheckEvent_DegradedHealthyHost struct {
-	DegradedHealthyHost *DegradedHealthyHost `protobuf:"bytes,8,opt,name=degraded_healthy_host,json=degradedHealthyHost,proto3,oneof"`
+	DegradedHealthyHost *DegradedHealthyHost `protobuf:"bytes,8,opt,name=degraded_healthy_host,json=degradedHealthyHost,proto3,oneof" json:"degraded_healthy_host,omitempty"`
 }
 type HealthCheckEvent_NoLongerDegradedHost struct {
-	NoLongerDegradedHost *NoLongerDegradedHost `protobuf:"bytes,9,opt,name=no_longer_degraded_host,json=noLongerDegradedHost,proto3,oneof"`
+	NoLongerDegradedHost *NoLongerDegradedHost `protobuf:"bytes,9,opt,name=no_longer_degraded_host,json=noLongerDegradedHost,proto3,oneof" json:"no_longer_degraded_host,omitempty"`
 }
 
 func (*HealthCheckEvent_EjectUnhealthyEvent) isHealthCheckEvent_Event()     {}
@@ -619,7 +619,8 @@ func (m *HealthCheckEvent) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *HealthCheckEvent_EjectUnhealthyEvent) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *HealthCheckEvent_EjectUnhealthyEvent) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -639,7 +640,8 @@ func (m *HealthCheckEvent_EjectUnhealthyEvent) MarshalToSizedBuffer(dAtA []byte)
 	return len(dAtA) - i, nil
 }
 func (m *HealthCheckEvent_AddHealthyEvent) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *HealthCheckEvent_AddHealthyEvent) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -659,7 +661,8 @@ func (m *HealthCheckEvent_AddHealthyEvent) MarshalToSizedBuffer(dAtA []byte) (in
 	return len(dAtA) - i, nil
 }
 func (m *HealthCheckEvent_HealthCheckFailureEvent) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *HealthCheckEvent_HealthCheckFailureEvent) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -679,7 +682,8 @@ func (m *HealthCheckEvent_HealthCheckFailureEvent) MarshalToSizedBuffer(dAtA []b
 	return len(dAtA) - i, nil
 }
 func (m *HealthCheckEvent_DegradedHealthyHost) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *HealthCheckEvent_DegradedHealthyHost) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -699,7 +703,8 @@ func (m *HealthCheckEvent_DegradedHealthyHost) MarshalToSizedBuffer(dAtA []byte)
 	return len(dAtA) - i, nil
 }
 func (m *HealthCheckEvent_NoLongerDegradedHost) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *HealthCheckEvent_NoLongerDegradedHost) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1765,6 +1770,7 @@ func (m *NoLongerDegradedHost) Unmarshal(dAtA []byte) error {
 func skipHealthCheckEvent(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
+	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -1796,10 +1802,8 @@ func skipHealthCheckEvent(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			return iNdEx, nil
 		case 1:
 			iNdEx += 8
-			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -1820,55 +1824,30 @@ func skipHealthCheckEvent(dAtA []byte) (n int, err error) {
 				return 0, ErrInvalidLengthHealthCheckEvent
 			}
 			iNdEx += length
-			if iNdEx < 0 {
-				return 0, ErrInvalidLengthHealthCheckEvent
-			}
-			return iNdEx, nil
 		case 3:
-			for {
-				var innerWire uint64
-				var start int = iNdEx
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return 0, ErrIntOverflowHealthCheckEvent
-					}
-					if iNdEx >= l {
-						return 0, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					innerWire |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				innerWireType := int(innerWire & 0x7)
-				if innerWireType == 4 {
-					break
-				}
-				next, err := skipHealthCheckEvent(dAtA[start:])
-				if err != nil {
-					return 0, err
-				}
-				iNdEx = start + next
-				if iNdEx < 0 {
-					return 0, ErrInvalidLengthHealthCheckEvent
-				}
-			}
-			return iNdEx, nil
+			depth++
 		case 4:
-			return iNdEx, nil
+			if depth == 0 {
+				return 0, ErrUnexpectedEndOfGroupHealthCheckEvent
+			}
+			depth--
 		case 5:
 			iNdEx += 4
-			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
+		if iNdEx < 0 {
+			return 0, ErrInvalidLengthHealthCheckEvent
+		}
+		if depth == 0 {
+			return iNdEx, nil
+		}
 	}
-	panic("unreachable")
+	return 0, io.ErrUnexpectedEOF
 }
 
 var (
-	ErrInvalidLengthHealthCheckEvent = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowHealthCheckEvent   = fmt.Errorf("proto: integer overflow")
+	ErrInvalidLengthHealthCheckEvent        = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowHealthCheckEvent          = fmt.Errorf("proto: integer overflow")
+	ErrUnexpectedEndOfGroupHealthCheckEvent = fmt.Errorf("proto: unexpected end of group")
 )

@@ -434,13 +434,13 @@ type isHttpConnectionManager_RouteSpecifier interface {
 }
 
 type HttpConnectionManager_Rds struct {
-	Rds *Rds `protobuf:"bytes,3,opt,name=rds,proto3,oneof"`
+	Rds *Rds `protobuf:"bytes,3,opt,name=rds,proto3,oneof" json:"rds,omitempty"`
 }
 type HttpConnectionManager_RouteConfig struct {
-	RouteConfig *v3.RouteConfiguration `protobuf:"bytes,4,opt,name=route_config,json=routeConfig,proto3,oneof"`
+	RouteConfig *v3.RouteConfiguration `protobuf:"bytes,4,opt,name=route_config,json=routeConfig,proto3,oneof" json:"route_config,omitempty"`
 }
 type HttpConnectionManager_ScopedRoutes struct {
-	ScopedRoutes *ScopedRoutes `protobuf:"bytes,31,opt,name=scoped_routes,json=scopedRoutes,proto3,oneof"`
+	ScopedRoutes *ScopedRoutes `protobuf:"bytes,31,opt,name=scoped_routes,json=scopedRoutes,proto3,oneof" json:"scoped_routes,omitempty"`
 }
 
 func (*HttpConnectionManager_Rds) isHttpConnectionManager_RouteSpecifier()          {}
@@ -1208,10 +1208,10 @@ type isScopedRoutes_ConfigSpecifier interface {
 }
 
 type ScopedRoutes_ScopedRouteConfigurationsList struct {
-	ScopedRouteConfigurationsList *ScopedRouteConfigurationsList `protobuf:"bytes,4,opt,name=scoped_route_configurations_list,json=scopedRouteConfigurationsList,proto3,oneof"`
+	ScopedRouteConfigurationsList *ScopedRouteConfigurationsList `protobuf:"bytes,4,opt,name=scoped_route_configurations_list,json=scopedRouteConfigurationsList,proto3,oneof" json:"scoped_route_configurations_list,omitempty"`
 }
 type ScopedRoutes_ScopedRds struct {
-	ScopedRds *ScopedRds `protobuf:"bytes,5,opt,name=scoped_rds,json=scopedRds,proto3,oneof"`
+	ScopedRds *ScopedRds `protobuf:"bytes,5,opt,name=scoped_rds,json=scopedRds,proto3,oneof" json:"scoped_rds,omitempty"`
 }
 
 func (*ScopedRoutes_ScopedRouteConfigurationsList) isScopedRoutes_ConfigSpecifier() {}
@@ -1378,7 +1378,7 @@ type isScopedRoutes_ScopeKeyBuilder_FragmentBuilder_Type interface {
 }
 
 type ScopedRoutes_ScopeKeyBuilder_FragmentBuilder_HeaderValueExtractor_ struct {
-	HeaderValueExtractor *ScopedRoutes_ScopeKeyBuilder_FragmentBuilder_HeaderValueExtractor `protobuf:"bytes,1,opt,name=header_value_extractor,json=headerValueExtractor,proto3,oneof"`
+	HeaderValueExtractor *ScopedRoutes_ScopeKeyBuilder_FragmentBuilder_HeaderValueExtractor `protobuf:"bytes,1,opt,name=header_value_extractor,json=headerValueExtractor,proto3,oneof" json:"header_value_extractor,omitempty"`
 }
 
 func (*ScopedRoutes_ScopeKeyBuilder_FragmentBuilder_HeaderValueExtractor_) isScopedRoutes_ScopeKeyBuilder_FragmentBuilder_Type() {
@@ -1483,10 +1483,10 @@ type isScopedRoutes_ScopeKeyBuilder_FragmentBuilder_HeaderValueExtractor_Extract
 }
 
 type ScopedRoutes_ScopeKeyBuilder_FragmentBuilder_HeaderValueExtractor_Index struct {
-	Index uint32 `protobuf:"varint,3,opt,name=index,proto3,oneof"`
+	Index uint32 `protobuf:"varint,3,opt,name=index,proto3,oneof" json:"index,omitempty"`
 }
 type ScopedRoutes_ScopeKeyBuilder_FragmentBuilder_HeaderValueExtractor_Element struct {
-	Element *ScopedRoutes_ScopeKeyBuilder_FragmentBuilder_HeaderValueExtractor_KvElement `protobuf:"bytes,4,opt,name=element,proto3,oneof"`
+	Element *ScopedRoutes_ScopeKeyBuilder_FragmentBuilder_HeaderValueExtractor_KvElement `protobuf:"bytes,4,opt,name=element,proto3,oneof" json:"element,omitempty"`
 }
 
 func (*ScopedRoutes_ScopeKeyBuilder_FragmentBuilder_HeaderValueExtractor_Index) isScopedRoutes_ScopeKeyBuilder_FragmentBuilder_HeaderValueExtractor_ExtractType() {
@@ -1706,7 +1706,7 @@ type isHttpFilter_ConfigType interface {
 }
 
 type HttpFilter_TypedConfig struct {
-	TypedConfig *types.Any `protobuf:"bytes,4,opt,name=typed_config,json=typedConfig,proto3,oneof"`
+	TypedConfig *types.Any `protobuf:"bytes,4,opt,name=typed_config,json=typedConfig,proto3,oneof" json:"typed_config,omitempty"`
 }
 
 func (*HttpFilter_TypedConfig) isHttpFilter_ConfigType() {}
@@ -2314,7 +2314,8 @@ func (m *HttpConnectionManager) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *HttpConnectionManager_Rds) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *HttpConnectionManager_Rds) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -2334,7 +2335,8 @@ func (m *HttpConnectionManager_Rds) MarshalToSizedBuffer(dAtA []byte) (int, erro
 	return len(dAtA) - i, nil
 }
 func (m *HttpConnectionManager_RouteConfig) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *HttpConnectionManager_RouteConfig) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -2354,7 +2356,8 @@ func (m *HttpConnectionManager_RouteConfig) MarshalToSizedBuffer(dAtA []byte) (i
 	return len(dAtA) - i, nil
 }
 func (m *HttpConnectionManager_ScopedRoutes) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *HttpConnectionManager_ScopedRoutes) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -2805,7 +2808,8 @@ func (m *ScopedRoutes) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *ScopedRoutes_ScopedRouteConfigurationsList) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *ScopedRoutes_ScopedRouteConfigurationsList) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -2825,7 +2829,8 @@ func (m *ScopedRoutes_ScopedRouteConfigurationsList) MarshalToSizedBuffer(dAtA [
 	return len(dAtA) - i, nil
 }
 func (m *ScopedRoutes_ScopedRds) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *ScopedRoutes_ScopedRds) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -2922,7 +2927,8 @@ func (m *ScopedRoutes_ScopeKeyBuilder_FragmentBuilder) MarshalToSizedBuffer(dAtA
 }
 
 func (m *ScopedRoutes_ScopeKeyBuilder_FragmentBuilder_HeaderValueExtractor_) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *ScopedRoutes_ScopeKeyBuilder_FragmentBuilder_HeaderValueExtractor_) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -2992,7 +2998,8 @@ func (m *ScopedRoutes_ScopeKeyBuilder_FragmentBuilder_HeaderValueExtractor) Mars
 }
 
 func (m *ScopedRoutes_ScopeKeyBuilder_FragmentBuilder_HeaderValueExtractor_Index) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *ScopedRoutes_ScopeKeyBuilder_FragmentBuilder_HeaderValueExtractor_Index) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -3003,7 +3010,8 @@ func (m *ScopedRoutes_ScopeKeyBuilder_FragmentBuilder_HeaderValueExtractor_Index
 	return len(dAtA) - i, nil
 }
 func (m *ScopedRoutes_ScopeKeyBuilder_FragmentBuilder_HeaderValueExtractor_Element) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *ScopedRoutes_ScopeKeyBuilder_FragmentBuilder_HeaderValueExtractor_Element) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -3146,7 +3154,8 @@ func (m *HttpFilter) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *HttpFilter_TypedConfig) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *HttpFilter_TypedConfig) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -6547,6 +6556,7 @@ func (m *HttpFilter) Unmarshal(dAtA []byte) error {
 func skipHttpConnectionManager(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
+	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -6578,10 +6588,8 @@ func skipHttpConnectionManager(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			return iNdEx, nil
 		case 1:
 			iNdEx += 8
-			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -6602,55 +6610,30 @@ func skipHttpConnectionManager(dAtA []byte) (n int, err error) {
 				return 0, ErrInvalidLengthHttpConnectionManager
 			}
 			iNdEx += length
-			if iNdEx < 0 {
-				return 0, ErrInvalidLengthHttpConnectionManager
-			}
-			return iNdEx, nil
 		case 3:
-			for {
-				var innerWire uint64
-				var start int = iNdEx
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return 0, ErrIntOverflowHttpConnectionManager
-					}
-					if iNdEx >= l {
-						return 0, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					innerWire |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				innerWireType := int(innerWire & 0x7)
-				if innerWireType == 4 {
-					break
-				}
-				next, err := skipHttpConnectionManager(dAtA[start:])
-				if err != nil {
-					return 0, err
-				}
-				iNdEx = start + next
-				if iNdEx < 0 {
-					return 0, ErrInvalidLengthHttpConnectionManager
-				}
-			}
-			return iNdEx, nil
+			depth++
 		case 4:
-			return iNdEx, nil
+			if depth == 0 {
+				return 0, ErrUnexpectedEndOfGroupHttpConnectionManager
+			}
+			depth--
 		case 5:
 			iNdEx += 4
-			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
+		if iNdEx < 0 {
+			return 0, ErrInvalidLengthHttpConnectionManager
+		}
+		if depth == 0 {
+			return iNdEx, nil
+		}
 	}
-	panic("unreachable")
+	return 0, io.ErrUnexpectedEOF
 }
 
 var (
-	ErrInvalidLengthHttpConnectionManager = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowHttpConnectionManager   = fmt.Errorf("proto: integer overflow")
+	ErrInvalidLengthHttpConnectionManager        = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowHttpConnectionManager          = fmt.Errorf("proto: integer overflow")
+	ErrUnexpectedEndOfGroupHttpConnectionManager = fmt.Errorf("proto: unexpected end of group")
 )

@@ -76,7 +76,7 @@ type isRegexMatcher_EngineType interface {
 }
 
 type RegexMatcher_GoogleRe2 struct {
-	GoogleRe2 *RegexMatcher_GoogleRE2 `protobuf:"bytes,1,opt,name=google_re2,json=googleRe2,proto3,oneof"`
+	GoogleRe2 *RegexMatcher_GoogleRE2 `protobuf:"bytes,1,opt,name=google_re2,json=googleRe2,proto3,oneof" json:"google_re2,omitempty"`
 }
 
 func (*RegexMatcher_GoogleRe2) isRegexMatcher_EngineType() {}
@@ -238,7 +238,8 @@ func (m *RegexMatcher) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *RegexMatcher_GoogleRe2) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *RegexMatcher_GoogleRe2) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -574,6 +575,7 @@ func (m *RegexMatcher_GoogleRE2) Unmarshal(dAtA []byte) error {
 func skipRegex(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
+	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -605,10 +607,8 @@ func skipRegex(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			return iNdEx, nil
 		case 1:
 			iNdEx += 8
-			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -629,55 +629,30 @@ func skipRegex(dAtA []byte) (n int, err error) {
 				return 0, ErrInvalidLengthRegex
 			}
 			iNdEx += length
-			if iNdEx < 0 {
-				return 0, ErrInvalidLengthRegex
-			}
-			return iNdEx, nil
 		case 3:
-			for {
-				var innerWire uint64
-				var start int = iNdEx
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return 0, ErrIntOverflowRegex
-					}
-					if iNdEx >= l {
-						return 0, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					innerWire |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				innerWireType := int(innerWire & 0x7)
-				if innerWireType == 4 {
-					break
-				}
-				next, err := skipRegex(dAtA[start:])
-				if err != nil {
-					return 0, err
-				}
-				iNdEx = start + next
-				if iNdEx < 0 {
-					return 0, ErrInvalidLengthRegex
-				}
-			}
-			return iNdEx, nil
+			depth++
 		case 4:
-			return iNdEx, nil
+			if depth == 0 {
+				return 0, ErrUnexpectedEndOfGroupRegex
+			}
+			depth--
 		case 5:
 			iNdEx += 4
-			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
+		if iNdEx < 0 {
+			return 0, ErrInvalidLengthRegex
+		}
+		if depth == 0 {
+			return iNdEx, nil
+		}
 	}
-	panic("unreachable")
+	return 0, io.ErrUnexpectedEOF
 }
 
 var (
-	ErrInvalidLengthRegex = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowRegex   = fmt.Errorf("proto: integer overflow")
+	ErrInvalidLengthRegex        = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowRegex          = fmt.Errorf("proto: integer overflow")
+	ErrUnexpectedEndOfGroupRegex = fmt.Errorf("proto: unexpected end of group")
 )

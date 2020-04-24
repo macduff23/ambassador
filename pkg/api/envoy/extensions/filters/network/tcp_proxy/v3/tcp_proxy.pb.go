@@ -114,10 +114,10 @@ type isTcpProxy_ClusterSpecifier interface {
 }
 
 type TcpProxy_Cluster struct {
-	Cluster string `protobuf:"bytes,2,opt,name=cluster,proto3,oneof"`
+	Cluster string `protobuf:"bytes,2,opt,name=cluster,proto3,oneof" json:"cluster,omitempty"`
 }
 type TcpProxy_WeightedClusters struct {
-	WeightedClusters *TcpProxy_WeightedCluster `protobuf:"bytes,10,opt,name=weighted_clusters,json=weightedClusters,proto3,oneof"`
+	WeightedClusters *TcpProxy_WeightedCluster `protobuf:"bytes,10,opt,name=weighted_clusters,json=weightedClusters,proto3,oneof" json:"weighted_clusters,omitempty"`
 }
 
 func (*TcpProxy_Cluster) isTcpProxy_ClusterSpecifier()          {}
@@ -528,7 +528,8 @@ func (m *TcpProxy) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *TcpProxy_Cluster) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *TcpProxy_Cluster) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -541,7 +542,8 @@ func (m *TcpProxy_Cluster) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *TcpProxy_WeightedClusters) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *TcpProxy_WeightedClusters) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1416,6 +1418,7 @@ func (m *TcpProxy_WeightedCluster_ClusterWeight) Unmarshal(dAtA []byte) error {
 func skipTcpProxy(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
+	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -1447,10 +1450,8 @@ func skipTcpProxy(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			return iNdEx, nil
 		case 1:
 			iNdEx += 8
-			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -1471,55 +1472,30 @@ func skipTcpProxy(dAtA []byte) (n int, err error) {
 				return 0, ErrInvalidLengthTcpProxy
 			}
 			iNdEx += length
-			if iNdEx < 0 {
-				return 0, ErrInvalidLengthTcpProxy
-			}
-			return iNdEx, nil
 		case 3:
-			for {
-				var innerWire uint64
-				var start int = iNdEx
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return 0, ErrIntOverflowTcpProxy
-					}
-					if iNdEx >= l {
-						return 0, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					innerWire |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				innerWireType := int(innerWire & 0x7)
-				if innerWireType == 4 {
-					break
-				}
-				next, err := skipTcpProxy(dAtA[start:])
-				if err != nil {
-					return 0, err
-				}
-				iNdEx = start + next
-				if iNdEx < 0 {
-					return 0, ErrInvalidLengthTcpProxy
-				}
-			}
-			return iNdEx, nil
+			depth++
 		case 4:
-			return iNdEx, nil
+			if depth == 0 {
+				return 0, ErrUnexpectedEndOfGroupTcpProxy
+			}
+			depth--
 		case 5:
 			iNdEx += 4
-			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
+		if iNdEx < 0 {
+			return 0, ErrInvalidLengthTcpProxy
+		}
+		if depth == 0 {
+			return iNdEx, nil
+		}
 	}
-	panic("unreachable")
+	return 0, io.ErrUnexpectedEOF
 }
 
 var (
-	ErrInvalidLengthTcpProxy = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowTcpProxy   = fmt.Errorf("proto: integer overflow")
+	ErrInvalidLengthTcpProxy        = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowTcpProxy          = fmt.Errorf("proto: integer overflow")
+	ErrUnexpectedEndOfGroupTcpProxy = fmt.Errorf("proto: unexpected end of group")
 )

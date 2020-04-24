@@ -863,16 +863,16 @@ type isRuntimeLayer_LayerSpecifier interface {
 }
 
 type RuntimeLayer_StaticLayer struct {
-	StaticLayer *types.Struct `protobuf:"bytes,2,opt,name=static_layer,json=staticLayer,proto3,oneof"`
+	StaticLayer *types.Struct `protobuf:"bytes,2,opt,name=static_layer,json=staticLayer,proto3,oneof" json:"static_layer,omitempty"`
 }
 type RuntimeLayer_DiskLayer_ struct {
-	DiskLayer *RuntimeLayer_DiskLayer `protobuf:"bytes,3,opt,name=disk_layer,json=diskLayer,proto3,oneof"`
+	DiskLayer *RuntimeLayer_DiskLayer `protobuf:"bytes,3,opt,name=disk_layer,json=diskLayer,proto3,oneof" json:"disk_layer,omitempty"`
 }
 type RuntimeLayer_AdminLayer_ struct {
-	AdminLayer *RuntimeLayer_AdminLayer `protobuf:"bytes,4,opt,name=admin_layer,json=adminLayer,proto3,oneof"`
+	AdminLayer *RuntimeLayer_AdminLayer `protobuf:"bytes,4,opt,name=admin_layer,json=adminLayer,proto3,oneof" json:"admin_layer,omitempty"`
 }
 type RuntimeLayer_RtdsLayer_ struct {
-	RtdsLayer *RuntimeLayer_RtdsLayer `protobuf:"bytes,5,opt,name=rtds_layer,json=rtdsLayer,proto3,oneof"`
+	RtdsLayer *RuntimeLayer_RtdsLayer `protobuf:"bytes,5,opt,name=rtds_layer,json=rtdsLayer,proto3,oneof" json:"rtds_layer,omitempty"`
 }
 
 func (*RuntimeLayer_StaticLayer) isRuntimeLayer_LayerSpecifier() {}
@@ -2014,7 +2014,8 @@ func (m *RuntimeLayer) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *RuntimeLayer_StaticLayer) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *RuntimeLayer_StaticLayer) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -2034,7 +2035,8 @@ func (m *RuntimeLayer_StaticLayer) MarshalToSizedBuffer(dAtA []byte) (int, error
 	return len(dAtA) - i, nil
 }
 func (m *RuntimeLayer_DiskLayer_) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *RuntimeLayer_DiskLayer_) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -2054,7 +2056,8 @@ func (m *RuntimeLayer_DiskLayer_) MarshalToSizedBuffer(dAtA []byte) (int, error)
 	return len(dAtA) - i, nil
 }
 func (m *RuntimeLayer_AdminLayer_) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *RuntimeLayer_AdminLayer_) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -2074,7 +2077,8 @@ func (m *RuntimeLayer_AdminLayer_) MarshalToSizedBuffer(dAtA []byte) (int, error
 	return len(dAtA) - i, nil
 }
 func (m *RuntimeLayer_RtdsLayer_) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *RuntimeLayer_RtdsLayer_) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -5144,6 +5148,7 @@ func (m *LayeredRuntime) Unmarshal(dAtA []byte) error {
 func skipBootstrap(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
+	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -5175,10 +5180,8 @@ func skipBootstrap(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			return iNdEx, nil
 		case 1:
 			iNdEx += 8
-			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -5199,55 +5202,30 @@ func skipBootstrap(dAtA []byte) (n int, err error) {
 				return 0, ErrInvalidLengthBootstrap
 			}
 			iNdEx += length
-			if iNdEx < 0 {
-				return 0, ErrInvalidLengthBootstrap
-			}
-			return iNdEx, nil
 		case 3:
-			for {
-				var innerWire uint64
-				var start int = iNdEx
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return 0, ErrIntOverflowBootstrap
-					}
-					if iNdEx >= l {
-						return 0, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					innerWire |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				innerWireType := int(innerWire & 0x7)
-				if innerWireType == 4 {
-					break
-				}
-				next, err := skipBootstrap(dAtA[start:])
-				if err != nil {
-					return 0, err
-				}
-				iNdEx = start + next
-				if iNdEx < 0 {
-					return 0, ErrInvalidLengthBootstrap
-				}
-			}
-			return iNdEx, nil
+			depth++
 		case 4:
-			return iNdEx, nil
+			if depth == 0 {
+				return 0, ErrUnexpectedEndOfGroupBootstrap
+			}
+			depth--
 		case 5:
 			iNdEx += 4
-			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
+		if iNdEx < 0 {
+			return 0, ErrInvalidLengthBootstrap
+		}
+		if depth == 0 {
+			return iNdEx, nil
+		}
 	}
-	panic("unreachable")
+	return 0, io.ErrUnexpectedEOF
 }
 
 var (
-	ErrInvalidLengthBootstrap = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowBootstrap   = fmt.Errorf("proto: integer overflow")
+	ErrInvalidLengthBootstrap        = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowBootstrap          = fmt.Errorf("proto: integer overflow")
+	ErrUnexpectedEndOfGroupBootstrap = fmt.Errorf("proto: unexpected end of group")
 )

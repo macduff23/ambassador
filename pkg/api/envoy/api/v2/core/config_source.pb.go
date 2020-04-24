@@ -446,16 +446,16 @@ type isConfigSource_ConfigSourceSpecifier interface {
 }
 
 type ConfigSource_Path struct {
-	Path string `protobuf:"bytes,1,opt,name=path,proto3,oneof"`
+	Path string `protobuf:"bytes,1,opt,name=path,proto3,oneof" json:"path,omitempty"`
 }
 type ConfigSource_ApiConfigSource struct {
-	ApiConfigSource *ApiConfigSource `protobuf:"bytes,2,opt,name=api_config_source,json=apiConfigSource,proto3,oneof"`
+	ApiConfigSource *ApiConfigSource `protobuf:"bytes,2,opt,name=api_config_source,json=apiConfigSource,proto3,oneof" json:"api_config_source,omitempty"`
 }
 type ConfigSource_Ads struct {
-	Ads *AggregatedConfigSource `protobuf:"bytes,3,opt,name=ads,proto3,oneof"`
+	Ads *AggregatedConfigSource `protobuf:"bytes,3,opt,name=ads,proto3,oneof" json:"ads,omitempty"`
 }
 type ConfigSource_Self struct {
-	Self *SelfConfigSource `protobuf:"bytes,5,opt,name=self,proto3,oneof"`
+	Self *SelfConfigSource `protobuf:"bytes,5,opt,name=self,proto3,oneof" json:"self,omitempty"`
 }
 
 func (*ConfigSource_Path) isConfigSource_ConfigSourceSpecifier()            {}
@@ -860,7 +860,8 @@ func (m *ConfigSource) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *ConfigSource_Path) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *ConfigSource_Path) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -873,7 +874,8 @@ func (m *ConfigSource_Path) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *ConfigSource_ApiConfigSource) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *ConfigSource_ApiConfigSource) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -893,7 +895,8 @@ func (m *ConfigSource_ApiConfigSource) MarshalToSizedBuffer(dAtA []byte) (int, e
 	return len(dAtA) - i, nil
 }
 func (m *ConfigSource_Ads) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *ConfigSource_Ads) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -913,7 +916,8 @@ func (m *ConfigSource_Ads) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *ConfigSource_Self) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *ConfigSource_Self) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1876,6 +1880,7 @@ func (m *ConfigSource) Unmarshal(dAtA []byte) error {
 func skipConfigSource(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
+	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -1907,10 +1912,8 @@ func skipConfigSource(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			return iNdEx, nil
 		case 1:
 			iNdEx += 8
-			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -1931,55 +1934,30 @@ func skipConfigSource(dAtA []byte) (n int, err error) {
 				return 0, ErrInvalidLengthConfigSource
 			}
 			iNdEx += length
-			if iNdEx < 0 {
-				return 0, ErrInvalidLengthConfigSource
-			}
-			return iNdEx, nil
 		case 3:
-			for {
-				var innerWire uint64
-				var start int = iNdEx
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return 0, ErrIntOverflowConfigSource
-					}
-					if iNdEx >= l {
-						return 0, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					innerWire |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				innerWireType := int(innerWire & 0x7)
-				if innerWireType == 4 {
-					break
-				}
-				next, err := skipConfigSource(dAtA[start:])
-				if err != nil {
-					return 0, err
-				}
-				iNdEx = start + next
-				if iNdEx < 0 {
-					return 0, ErrInvalidLengthConfigSource
-				}
-			}
-			return iNdEx, nil
+			depth++
 		case 4:
-			return iNdEx, nil
+			if depth == 0 {
+				return 0, ErrUnexpectedEndOfGroupConfigSource
+			}
+			depth--
 		case 5:
 			iNdEx += 4
-			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
+		if iNdEx < 0 {
+			return 0, ErrInvalidLengthConfigSource
+		}
+		if depth == 0 {
+			return iNdEx, nil
+		}
 	}
-	panic("unreachable")
+	return 0, io.ErrUnexpectedEOF
 }
 
 var (
-	ErrInvalidLengthConfigSource = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowConfigSource   = fmt.Errorf("proto: integer overflow")
+	ErrInvalidLengthConfigSource        = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowConfigSource          = fmt.Errorf("proto: integer overflow")
+	ErrUnexpectedEndOfGroupConfigSource = fmt.Errorf("proto: unexpected end of group")
 )

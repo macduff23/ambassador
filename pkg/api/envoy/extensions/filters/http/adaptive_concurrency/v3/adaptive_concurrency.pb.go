@@ -307,7 +307,7 @@ type isAdaptiveConcurrency_ConcurrencyControllerConfig interface {
 }
 
 type AdaptiveConcurrency_GradientControllerConfig struct {
-	GradientControllerConfig *GradientControllerConfig `protobuf:"bytes,1,opt,name=gradient_controller_config,json=gradientControllerConfig,proto3,oneof"`
+	GradientControllerConfig *GradientControllerConfig `protobuf:"bytes,1,opt,name=gradient_controller_config,json=gradientControllerConfig,proto3,oneof" json:"gradient_controller_config,omitempty"`
 }
 
 func (*AdaptiveConcurrency_GradientControllerConfig) isAdaptiveConcurrency_ConcurrencyControllerConfig() {
@@ -655,7 +655,8 @@ func (m *AdaptiveConcurrency) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *AdaptiveConcurrency_GradientControllerConfig) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *AdaptiveConcurrency_GradientControllerConfig) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1449,6 +1450,7 @@ func (m *AdaptiveConcurrency) Unmarshal(dAtA []byte) error {
 func skipAdaptiveConcurrency(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
+	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -1480,10 +1482,8 @@ func skipAdaptiveConcurrency(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			return iNdEx, nil
 		case 1:
 			iNdEx += 8
-			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -1504,55 +1504,30 @@ func skipAdaptiveConcurrency(dAtA []byte) (n int, err error) {
 				return 0, ErrInvalidLengthAdaptiveConcurrency
 			}
 			iNdEx += length
-			if iNdEx < 0 {
-				return 0, ErrInvalidLengthAdaptiveConcurrency
-			}
-			return iNdEx, nil
 		case 3:
-			for {
-				var innerWire uint64
-				var start int = iNdEx
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return 0, ErrIntOverflowAdaptiveConcurrency
-					}
-					if iNdEx >= l {
-						return 0, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					innerWire |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				innerWireType := int(innerWire & 0x7)
-				if innerWireType == 4 {
-					break
-				}
-				next, err := skipAdaptiveConcurrency(dAtA[start:])
-				if err != nil {
-					return 0, err
-				}
-				iNdEx = start + next
-				if iNdEx < 0 {
-					return 0, ErrInvalidLengthAdaptiveConcurrency
-				}
-			}
-			return iNdEx, nil
+			depth++
 		case 4:
-			return iNdEx, nil
+			if depth == 0 {
+				return 0, ErrUnexpectedEndOfGroupAdaptiveConcurrency
+			}
+			depth--
 		case 5:
 			iNdEx += 4
-			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
+		if iNdEx < 0 {
+			return 0, ErrInvalidLengthAdaptiveConcurrency
+		}
+		if depth == 0 {
+			return iNdEx, nil
+		}
 	}
-	panic("unreachable")
+	return 0, io.ErrUnexpectedEOF
 }
 
 var (
-	ErrInvalidLengthAdaptiveConcurrency = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowAdaptiveConcurrency   = fmt.Errorf("proto: integer overflow")
+	ErrInvalidLengthAdaptiveConcurrency        = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowAdaptiveConcurrency          = fmt.Errorf("proto: integer overflow")
+	ErrUnexpectedEndOfGroupAdaptiveConcurrency = fmt.Errorf("proto: unexpected end of group")
 )
