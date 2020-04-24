@@ -546,16 +546,16 @@ type isRoute_Action interface {
 }
 
 type Route_Route struct {
-	Route *RouteAction `protobuf:"bytes,2,opt,name=route,proto3,oneof"`
+	Route *RouteAction `protobuf:"bytes,2,opt,name=route,proto3,oneof" json:"route,omitempty"`
 }
 type Route_Redirect struct {
-	Redirect *RedirectAction `protobuf:"bytes,3,opt,name=redirect,proto3,oneof"`
+	Redirect *RedirectAction `protobuf:"bytes,3,opt,name=redirect,proto3,oneof" json:"redirect,omitempty"`
 }
 type Route_DirectResponse struct {
-	DirectResponse *DirectResponseAction `protobuf:"bytes,7,opt,name=direct_response,json=directResponse,proto3,oneof"`
+	DirectResponse *DirectResponseAction `protobuf:"bytes,7,opt,name=direct_response,json=directResponse,proto3,oneof" json:"direct_response,omitempty"`
 }
 type Route_FilterAction struct {
-	FilterAction *FilterAction `protobuf:"bytes,17,opt,name=filter_action,json=filterAction,proto3,oneof"`
+	FilterAction *FilterAction `protobuf:"bytes,17,opt,name=filter_action,json=filterAction,proto3,oneof" json:"filter_action,omitempty"`
 }
 
 func (*Route_Route) isRoute_Action()          {}
@@ -996,13 +996,13 @@ type isRouteMatch_PathSpecifier interface {
 }
 
 type RouteMatch_Prefix struct {
-	Prefix string `protobuf:"bytes,1,opt,name=prefix,proto3,oneof"`
+	Prefix string `protobuf:"bytes,1,opt,name=prefix,proto3,oneof" json:"prefix,omitempty"`
 }
 type RouteMatch_Path struct {
-	Path string `protobuf:"bytes,2,opt,name=path,proto3,oneof"`
+	Path string `protobuf:"bytes,2,opt,name=path,proto3,oneof" json:"path,omitempty"`
 }
 type RouteMatch_SafeRegex struct {
-	SafeRegex *v31.RegexMatcher `protobuf:"bytes,10,opt,name=safe_regex,json=safeRegex,proto3,oneof"`
+	SafeRegex *v31.RegexMatcher `protobuf:"bytes,10,opt,name=safe_regex,json=safeRegex,proto3,oneof" json:"safe_regex,omitempty"`
 }
 
 func (*RouteMatch_Prefix) isRouteMatch_PathSpecifier()    {}
@@ -1248,7 +1248,7 @@ type isCorsPolicy_EnabledSpecifier interface {
 }
 
 type CorsPolicy_FilterEnabled struct {
-	FilterEnabled *v3.RuntimeFractionalPercent `protobuf:"bytes,9,opt,name=filter_enabled,json=filterEnabled,proto3,oneof"`
+	FilterEnabled *v3.RuntimeFractionalPercent `protobuf:"bytes,9,opt,name=filter_enabled,json=filterEnabled,proto3,oneof" json:"filter_enabled,omitempty"`
 }
 
 func (*CorsPolicy_FilterEnabled) isCorsPolicy_EnabledSpecifier() {}
@@ -1524,22 +1524,22 @@ type isRouteAction_HostRewriteSpecifier interface {
 }
 
 type RouteAction_Cluster struct {
-	Cluster string `protobuf:"bytes,1,opt,name=cluster,proto3,oneof"`
+	Cluster string `protobuf:"bytes,1,opt,name=cluster,proto3,oneof" json:"cluster,omitempty"`
 }
 type RouteAction_ClusterHeader struct {
-	ClusterHeader string `protobuf:"bytes,2,opt,name=cluster_header,json=clusterHeader,proto3,oneof"`
+	ClusterHeader string `protobuf:"bytes,2,opt,name=cluster_header,json=clusterHeader,proto3,oneof" json:"cluster_header,omitempty"`
 }
 type RouteAction_WeightedClusters struct {
-	WeightedClusters *WeightedCluster `protobuf:"bytes,3,opt,name=weighted_clusters,json=weightedClusters,proto3,oneof"`
+	WeightedClusters *WeightedCluster `protobuf:"bytes,3,opt,name=weighted_clusters,json=weightedClusters,proto3,oneof" json:"weighted_clusters,omitempty"`
 }
 type RouteAction_HostRewriteLiteral struct {
-	HostRewriteLiteral string `protobuf:"bytes,6,opt,name=host_rewrite_literal,json=hostRewriteLiteral,proto3,oneof"`
+	HostRewriteLiteral string `protobuf:"bytes,6,opt,name=host_rewrite_literal,json=hostRewriteLiteral,proto3,oneof" json:"host_rewrite_literal,omitempty"`
 }
 type RouteAction_AutoHostRewrite struct {
-	AutoHostRewrite *types.BoolValue `protobuf:"bytes,7,opt,name=auto_host_rewrite,json=autoHostRewrite,proto3,oneof"`
+	AutoHostRewrite *types.BoolValue `protobuf:"bytes,7,opt,name=auto_host_rewrite,json=autoHostRewrite,proto3,oneof" json:"auto_host_rewrite,omitempty"`
 }
 type RouteAction_HostRewriteHeader struct {
-	HostRewriteHeader string `protobuf:"bytes,29,opt,name=host_rewrite_header,json=hostRewriteHeader,proto3,oneof"`
+	HostRewriteHeader string `protobuf:"bytes,29,opt,name=host_rewrite_header,json=hostRewriteHeader,proto3,oneof" json:"host_rewrite_header,omitempty"`
 }
 
 func (*RouteAction_Cluster) isRouteAction_ClusterSpecifier()                {}
@@ -1893,16 +1893,16 @@ type isRouteAction_HashPolicy_PolicySpecifier interface {
 }
 
 type RouteAction_HashPolicy_Header_ struct {
-	Header *RouteAction_HashPolicy_Header `protobuf:"bytes,1,opt,name=header,proto3,oneof"`
+	Header *RouteAction_HashPolicy_Header `protobuf:"bytes,1,opt,name=header,proto3,oneof" json:"header,omitempty"`
 }
 type RouteAction_HashPolicy_Cookie_ struct {
-	Cookie *RouteAction_HashPolicy_Cookie `protobuf:"bytes,2,opt,name=cookie,proto3,oneof"`
+	Cookie *RouteAction_HashPolicy_Cookie `protobuf:"bytes,2,opt,name=cookie,proto3,oneof" json:"cookie,omitempty"`
 }
 type RouteAction_HashPolicy_ConnectionProperties_ struct {
-	ConnectionProperties *RouteAction_HashPolicy_ConnectionProperties `protobuf:"bytes,3,opt,name=connection_properties,json=connectionProperties,proto3,oneof"`
+	ConnectionProperties *RouteAction_HashPolicy_ConnectionProperties `protobuf:"bytes,3,opt,name=connection_properties,json=connectionProperties,proto3,oneof" json:"connection_properties,omitempty"`
 }
 type RouteAction_HashPolicy_QueryParameter_ struct {
-	QueryParameter *RouteAction_HashPolicy_QueryParameter `protobuf:"bytes,5,opt,name=query_parameter,json=queryParameter,proto3,oneof"`
+	QueryParameter *RouteAction_HashPolicy_QueryParameter `protobuf:"bytes,5,opt,name=query_parameter,json=queryParameter,proto3,oneof" json:"query_parameter,omitempty"`
 }
 
 func (*RouteAction_HashPolicy_Header_) isRouteAction_HashPolicy_PolicySpecifier()               {}
@@ -2471,7 +2471,7 @@ type isRetryPolicy_RetryPriority_ConfigType interface {
 }
 
 type RetryPolicy_RetryPriority_TypedConfig struct {
-	TypedConfig *types.Any `protobuf:"bytes,3,opt,name=typed_config,json=typedConfig,proto3,oneof"`
+	TypedConfig *types.Any `protobuf:"bytes,3,opt,name=typed_config,json=typedConfig,proto3,oneof" json:"typed_config,omitempty"`
 }
 
 func (*RetryPolicy_RetryPriority_TypedConfig) isRetryPolicy_RetryPriority_ConfigType() {}
@@ -2554,7 +2554,7 @@ type isRetryPolicy_RetryHostPredicate_ConfigType interface {
 }
 
 type RetryPolicy_RetryHostPredicate_TypedConfig struct {
-	TypedConfig *types.Any `protobuf:"bytes,3,opt,name=typed_config,json=typedConfig,proto3,oneof"`
+	TypedConfig *types.Any `protobuf:"bytes,3,opt,name=typed_config,json=typedConfig,proto3,oneof" json:"typed_config,omitempty"`
 }
 
 func (*RetryPolicy_RetryHostPredicate_TypedConfig) isRetryPolicy_RetryHostPredicate_ConfigType() {}
@@ -2806,16 +2806,16 @@ type isRedirectAction_PathRewriteSpecifier interface {
 }
 
 type RedirectAction_HttpsRedirect struct {
-	HttpsRedirect bool `protobuf:"varint,4,opt,name=https_redirect,json=httpsRedirect,proto3,oneof"`
+	HttpsRedirect bool `protobuf:"varint,4,opt,name=https_redirect,json=httpsRedirect,proto3,oneof" json:"https_redirect,omitempty"`
 }
 type RedirectAction_SchemeRedirect struct {
-	SchemeRedirect string `protobuf:"bytes,7,opt,name=scheme_redirect,json=schemeRedirect,proto3,oneof"`
+	SchemeRedirect string `protobuf:"bytes,7,opt,name=scheme_redirect,json=schemeRedirect,proto3,oneof" json:"scheme_redirect,omitempty"`
 }
 type RedirectAction_PathRedirect struct {
-	PathRedirect string `protobuf:"bytes,2,opt,name=path_redirect,json=pathRedirect,proto3,oneof"`
+	PathRedirect string `protobuf:"bytes,2,opt,name=path_redirect,json=pathRedirect,proto3,oneof" json:"path_redirect,omitempty"`
 }
 type RedirectAction_PrefixRewrite struct {
-	PrefixRewrite string `protobuf:"bytes,5,opt,name=prefix_rewrite,json=prefixRewrite,proto3,oneof"`
+	PrefixRewrite string `protobuf:"bytes,5,opt,name=prefix_rewrite,json=prefixRewrite,proto3,oneof" json:"prefix_rewrite,omitempty"`
 }
 
 func (*RedirectAction_HttpsRedirect) isRedirectAction_SchemeRewriteSpecifier()  {}
@@ -3328,22 +3328,22 @@ type isRateLimit_Action_ActionSpecifier interface {
 }
 
 type RateLimit_Action_SourceCluster_ struct {
-	SourceCluster *RateLimit_Action_SourceCluster `protobuf:"bytes,1,opt,name=source_cluster,json=sourceCluster,proto3,oneof"`
+	SourceCluster *RateLimit_Action_SourceCluster `protobuf:"bytes,1,opt,name=source_cluster,json=sourceCluster,proto3,oneof" json:"source_cluster,omitempty"`
 }
 type RateLimit_Action_DestinationCluster_ struct {
-	DestinationCluster *RateLimit_Action_DestinationCluster `protobuf:"bytes,2,opt,name=destination_cluster,json=destinationCluster,proto3,oneof"`
+	DestinationCluster *RateLimit_Action_DestinationCluster `protobuf:"bytes,2,opt,name=destination_cluster,json=destinationCluster,proto3,oneof" json:"destination_cluster,omitempty"`
 }
 type RateLimit_Action_RequestHeaders_ struct {
-	RequestHeaders *RateLimit_Action_RequestHeaders `protobuf:"bytes,3,opt,name=request_headers,json=requestHeaders,proto3,oneof"`
+	RequestHeaders *RateLimit_Action_RequestHeaders `protobuf:"bytes,3,opt,name=request_headers,json=requestHeaders,proto3,oneof" json:"request_headers,omitempty"`
 }
 type RateLimit_Action_RemoteAddress_ struct {
-	RemoteAddress *RateLimit_Action_RemoteAddress `protobuf:"bytes,4,opt,name=remote_address,json=remoteAddress,proto3,oneof"`
+	RemoteAddress *RateLimit_Action_RemoteAddress `protobuf:"bytes,4,opt,name=remote_address,json=remoteAddress,proto3,oneof" json:"remote_address,omitempty"`
 }
 type RateLimit_Action_GenericKey_ struct {
-	GenericKey *RateLimit_Action_GenericKey `protobuf:"bytes,5,opt,name=generic_key,json=genericKey,proto3,oneof"`
+	GenericKey *RateLimit_Action_GenericKey `protobuf:"bytes,5,opt,name=generic_key,json=genericKey,proto3,oneof" json:"generic_key,omitempty"`
 }
 type RateLimit_Action_HeaderValueMatch_ struct {
-	HeaderValueMatch *RateLimit_Action_HeaderValueMatch `protobuf:"bytes,6,opt,name=header_value_match,json=headerValueMatch,proto3,oneof"`
+	HeaderValueMatch *RateLimit_Action_HeaderValueMatch `protobuf:"bytes,6,opt,name=header_value_match,json=headerValueMatch,proto3,oneof" json:"header_value_match,omitempty"`
 }
 
 func (*RateLimit_Action_SourceCluster_) isRateLimit_Action_ActionSpecifier()      {}
@@ -3846,22 +3846,22 @@ type isHeaderMatcher_HeaderMatchSpecifier interface {
 }
 
 type HeaderMatcher_ExactMatch struct {
-	ExactMatch string `protobuf:"bytes,4,opt,name=exact_match,json=exactMatch,proto3,oneof"`
+	ExactMatch string `protobuf:"bytes,4,opt,name=exact_match,json=exactMatch,proto3,oneof" json:"exact_match,omitempty"`
 }
 type HeaderMatcher_SafeRegexMatch struct {
-	SafeRegexMatch *v31.RegexMatcher `protobuf:"bytes,11,opt,name=safe_regex_match,json=safeRegexMatch,proto3,oneof"`
+	SafeRegexMatch *v31.RegexMatcher `protobuf:"bytes,11,opt,name=safe_regex_match,json=safeRegexMatch,proto3,oneof" json:"safe_regex_match,omitempty"`
 }
 type HeaderMatcher_RangeMatch struct {
-	RangeMatch *v32.Int64Range `protobuf:"bytes,6,opt,name=range_match,json=rangeMatch,proto3,oneof"`
+	RangeMatch *v32.Int64Range `protobuf:"bytes,6,opt,name=range_match,json=rangeMatch,proto3,oneof" json:"range_match,omitempty"`
 }
 type HeaderMatcher_PresentMatch struct {
-	PresentMatch bool `protobuf:"varint,7,opt,name=present_match,json=presentMatch,proto3,oneof"`
+	PresentMatch bool `protobuf:"varint,7,opt,name=present_match,json=presentMatch,proto3,oneof" json:"present_match,omitempty"`
 }
 type HeaderMatcher_PrefixMatch struct {
-	PrefixMatch string `protobuf:"bytes,9,opt,name=prefix_match,json=prefixMatch,proto3,oneof"`
+	PrefixMatch string `protobuf:"bytes,9,opt,name=prefix_match,json=prefixMatch,proto3,oneof" json:"prefix_match,omitempty"`
 }
 type HeaderMatcher_SuffixMatch struct {
-	SuffixMatch string `protobuf:"bytes,10,opt,name=suffix_match,json=suffixMatch,proto3,oneof"`
+	SuffixMatch string `protobuf:"bytes,10,opt,name=suffix_match,json=suffixMatch,proto3,oneof" json:"suffix_match,omitempty"`
 }
 
 func (*HeaderMatcher_ExactMatch) isHeaderMatcher_HeaderMatchSpecifier()     {}
@@ -4002,10 +4002,10 @@ type isQueryParameterMatcher_QueryParameterMatchSpecifier interface {
 }
 
 type QueryParameterMatcher_StringMatch struct {
-	StringMatch *v31.StringMatcher `protobuf:"bytes,5,opt,name=string_match,json=stringMatch,proto3,oneof"`
+	StringMatch *v31.StringMatcher `protobuf:"bytes,5,opt,name=string_match,json=stringMatch,proto3,oneof" json:"string_match,omitempty"`
 }
 type QueryParameterMatcher_PresentMatch struct {
-	PresentMatch bool `protobuf:"varint,6,opt,name=present_match,json=presentMatch,proto3,oneof"`
+	PresentMatch bool `protobuf:"varint,6,opt,name=present_match,json=presentMatch,proto3,oneof" json:"present_match,omitempty"`
 }
 
 func (*QueryParameterMatcher_StringMatch) isQueryParameterMatcher_QueryParameterMatchSpecifier()  {}
@@ -4827,7 +4827,8 @@ func (m *Route) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *Route_Route) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Route_Route) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -4847,7 +4848,8 @@ func (m *Route_Route) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Route_Redirect) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Route_Redirect) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -4867,7 +4869,8 @@ func (m *Route_Redirect) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Route_DirectResponse) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Route_DirectResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -4887,7 +4890,8 @@ func (m *Route_DirectResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Route_FilterAction) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Route_FilterAction) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -5211,7 +5215,8 @@ func (m *RouteMatch) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *RouteMatch_Prefix) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *RouteMatch_Prefix) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -5224,7 +5229,8 @@ func (m *RouteMatch_Prefix) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *RouteMatch_Path) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *RouteMatch_Path) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -5237,7 +5243,8 @@ func (m *RouteMatch_Path) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *RouteMatch_SafeRegex) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *RouteMatch_SafeRegex) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -5425,7 +5432,8 @@ func (m *CorsPolicy) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *CorsPolicy_FilterEnabled) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *CorsPolicy_FilterEnabled) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -5708,7 +5716,8 @@ func (m *RouteAction) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *RouteAction_Cluster) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *RouteAction_Cluster) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -5721,7 +5730,8 @@ func (m *RouteAction_Cluster) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *RouteAction_ClusterHeader) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *RouteAction_ClusterHeader) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -5734,7 +5744,8 @@ func (m *RouteAction_ClusterHeader) MarshalToSizedBuffer(dAtA []byte) (int, erro
 	return len(dAtA) - i, nil
 }
 func (m *RouteAction_WeightedClusters) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *RouteAction_WeightedClusters) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -5754,7 +5765,8 @@ func (m *RouteAction_WeightedClusters) MarshalToSizedBuffer(dAtA []byte) (int, e
 	return len(dAtA) - i, nil
 }
 func (m *RouteAction_HostRewriteLiteral) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *RouteAction_HostRewriteLiteral) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -5767,7 +5779,8 @@ func (m *RouteAction_HostRewriteLiteral) MarshalToSizedBuffer(dAtA []byte) (int,
 	return len(dAtA) - i, nil
 }
 func (m *RouteAction_AutoHostRewrite) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *RouteAction_AutoHostRewrite) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -5787,7 +5800,8 @@ func (m *RouteAction_AutoHostRewrite) MarshalToSizedBuffer(dAtA []byte) (int, er
 	return len(dAtA) - i, nil
 }
 func (m *RouteAction_HostRewriteHeader) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *RouteAction_HostRewriteHeader) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -5894,7 +5908,8 @@ func (m *RouteAction_HashPolicy) MarshalToSizedBuffer(dAtA []byte) (int, error) 
 }
 
 func (m *RouteAction_HashPolicy_Header_) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *RouteAction_HashPolicy_Header_) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -5914,7 +5929,8 @@ func (m *RouteAction_HashPolicy_Header_) MarshalToSizedBuffer(dAtA []byte) (int,
 	return len(dAtA) - i, nil
 }
 func (m *RouteAction_HashPolicy_Cookie_) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *RouteAction_HashPolicy_Cookie_) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -5934,7 +5950,8 @@ func (m *RouteAction_HashPolicy_Cookie_) MarshalToSizedBuffer(dAtA []byte) (int,
 	return len(dAtA) - i, nil
 }
 func (m *RouteAction_HashPolicy_ConnectionProperties_) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *RouteAction_HashPolicy_ConnectionProperties_) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -5954,7 +5971,8 @@ func (m *RouteAction_HashPolicy_ConnectionProperties_) MarshalToSizedBuffer(dAtA
 	return len(dAtA) - i, nil
 }
 func (m *RouteAction_HashPolicy_QueryParameter_) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *RouteAction_HashPolicy_QueryParameter_) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -6368,7 +6386,8 @@ func (m *RetryPolicy_RetryPriority) MarshalToSizedBuffer(dAtA []byte) (int, erro
 }
 
 func (m *RetryPolicy_RetryPriority_TypedConfig) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *RetryPolicy_RetryPriority_TypedConfig) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -6431,7 +6450,8 @@ func (m *RetryPolicy_RetryHostPredicate) MarshalToSizedBuffer(dAtA []byte) (int,
 }
 
 func (m *RetryPolicy_RetryHostPredicate_TypedConfig) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *RetryPolicy_RetryHostPredicate_TypedConfig) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -6635,7 +6655,8 @@ func (m *RedirectAction) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *RedirectAction_PathRedirect) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *RedirectAction_PathRedirect) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -6648,7 +6669,8 @@ func (m *RedirectAction_PathRedirect) MarshalToSizedBuffer(dAtA []byte) (int, er
 	return len(dAtA) - i, nil
 }
 func (m *RedirectAction_HttpsRedirect) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *RedirectAction_HttpsRedirect) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -6664,7 +6686,8 @@ func (m *RedirectAction_HttpsRedirect) MarshalToSizedBuffer(dAtA []byte) (int, e
 	return len(dAtA) - i, nil
 }
 func (m *RedirectAction_PrefixRewrite) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *RedirectAction_PrefixRewrite) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -6677,7 +6700,8 @@ func (m *RedirectAction_PrefixRewrite) MarshalToSizedBuffer(dAtA []byte) (int, e
 	return len(dAtA) - i, nil
 }
 func (m *RedirectAction_SchemeRedirect) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *RedirectAction_SchemeRedirect) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -6989,7 +7013,8 @@ func (m *RateLimit_Action) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *RateLimit_Action_SourceCluster_) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *RateLimit_Action_SourceCluster_) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -7009,7 +7034,8 @@ func (m *RateLimit_Action_SourceCluster_) MarshalToSizedBuffer(dAtA []byte) (int
 	return len(dAtA) - i, nil
 }
 func (m *RateLimit_Action_DestinationCluster_) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *RateLimit_Action_DestinationCluster_) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -7029,7 +7055,8 @@ func (m *RateLimit_Action_DestinationCluster_) MarshalToSizedBuffer(dAtA []byte)
 	return len(dAtA) - i, nil
 }
 func (m *RateLimit_Action_RequestHeaders_) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *RateLimit_Action_RequestHeaders_) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -7049,7 +7076,8 @@ func (m *RateLimit_Action_RequestHeaders_) MarshalToSizedBuffer(dAtA []byte) (in
 	return len(dAtA) - i, nil
 }
 func (m *RateLimit_Action_RemoteAddress_) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *RateLimit_Action_RemoteAddress_) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -7069,7 +7097,8 @@ func (m *RateLimit_Action_RemoteAddress_) MarshalToSizedBuffer(dAtA []byte) (int
 	return len(dAtA) - i, nil
 }
 func (m *RateLimit_Action_GenericKey_) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *RateLimit_Action_GenericKey_) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -7089,7 +7118,8 @@ func (m *RateLimit_Action_GenericKey_) MarshalToSizedBuffer(dAtA []byte) (int, e
 	return len(dAtA) - i, nil
 }
 func (m *RateLimit_Action_HeaderValueMatch_) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *RateLimit_Action_HeaderValueMatch_) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -7378,7 +7408,8 @@ func (m *HeaderMatcher) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *HeaderMatcher_ExactMatch) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *HeaderMatcher_ExactMatch) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -7391,7 +7422,8 @@ func (m *HeaderMatcher_ExactMatch) MarshalToSizedBuffer(dAtA []byte) (int, error
 	return len(dAtA) - i, nil
 }
 func (m *HeaderMatcher_RangeMatch) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *HeaderMatcher_RangeMatch) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -7411,7 +7443,8 @@ func (m *HeaderMatcher_RangeMatch) MarshalToSizedBuffer(dAtA []byte) (int, error
 	return len(dAtA) - i, nil
 }
 func (m *HeaderMatcher_PresentMatch) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *HeaderMatcher_PresentMatch) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -7427,7 +7460,8 @@ func (m *HeaderMatcher_PresentMatch) MarshalToSizedBuffer(dAtA []byte) (int, err
 	return len(dAtA) - i, nil
 }
 func (m *HeaderMatcher_PrefixMatch) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *HeaderMatcher_PrefixMatch) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -7440,7 +7474,8 @@ func (m *HeaderMatcher_PrefixMatch) MarshalToSizedBuffer(dAtA []byte) (int, erro
 	return len(dAtA) - i, nil
 }
 func (m *HeaderMatcher_SuffixMatch) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *HeaderMatcher_SuffixMatch) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -7453,7 +7488,8 @@ func (m *HeaderMatcher_SuffixMatch) MarshalToSizedBuffer(dAtA []byte) (int, erro
 	return len(dAtA) - i, nil
 }
 func (m *HeaderMatcher_SafeRegexMatch) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *HeaderMatcher_SafeRegexMatch) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -7516,7 +7552,8 @@ func (m *QueryParameterMatcher) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *QueryParameterMatcher_StringMatch) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *QueryParameterMatcher_StringMatch) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -7536,7 +7573,8 @@ func (m *QueryParameterMatcher_StringMatch) MarshalToSizedBuffer(dAtA []byte) (i
 	return len(dAtA) - i, nil
 }
 func (m *QueryParameterMatcher_PresentMatch) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *QueryParameterMatcher_PresentMatch) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -16665,6 +16703,7 @@ func (m *QueryParameterMatcher) Unmarshal(dAtA []byte) error {
 func skipRouteComponents(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
+	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -16696,10 +16735,8 @@ func skipRouteComponents(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			return iNdEx, nil
 		case 1:
 			iNdEx += 8
-			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -16720,55 +16757,30 @@ func skipRouteComponents(dAtA []byte) (n int, err error) {
 				return 0, ErrInvalidLengthRouteComponents
 			}
 			iNdEx += length
-			if iNdEx < 0 {
-				return 0, ErrInvalidLengthRouteComponents
-			}
-			return iNdEx, nil
 		case 3:
-			for {
-				var innerWire uint64
-				var start int = iNdEx
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return 0, ErrIntOverflowRouteComponents
-					}
-					if iNdEx >= l {
-						return 0, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					innerWire |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				innerWireType := int(innerWire & 0x7)
-				if innerWireType == 4 {
-					break
-				}
-				next, err := skipRouteComponents(dAtA[start:])
-				if err != nil {
-					return 0, err
-				}
-				iNdEx = start + next
-				if iNdEx < 0 {
-					return 0, ErrInvalidLengthRouteComponents
-				}
-			}
-			return iNdEx, nil
+			depth++
 		case 4:
-			return iNdEx, nil
+			if depth == 0 {
+				return 0, ErrUnexpectedEndOfGroupRouteComponents
+			}
+			depth--
 		case 5:
 			iNdEx += 4
-			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
+		if iNdEx < 0 {
+			return 0, ErrInvalidLengthRouteComponents
+		}
+		if depth == 0 {
+			return iNdEx, nil
+		}
 	}
-	panic("unreachable")
+	return 0, io.ErrUnexpectedEOF
 }
 
 var (
-	ErrInvalidLengthRouteComponents = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowRouteComponents   = fmt.Errorf("proto: integer overflow")
+	ErrInvalidLengthRouteComponents        = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowRouteComponents          = fmt.Errorf("proto: integer overflow")
+	ErrUnexpectedEndOfGroupRouteComponents = fmt.Errorf("proto: unexpected end of group")
 )

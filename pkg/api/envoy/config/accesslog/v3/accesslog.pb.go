@@ -197,7 +197,7 @@ type isAccessLog_ConfigType interface {
 }
 
 type AccessLog_TypedConfig struct {
-	TypedConfig *types.Any `protobuf:"bytes,4,opt,name=typed_config,json=typedConfig,proto3,oneof"`
+	TypedConfig *types.Any `protobuf:"bytes,4,opt,name=typed_config,json=typedConfig,proto3,oneof" json:"typed_config,omitempty"`
 }
 
 func (*AccessLog_TypedConfig) isAccessLog_ConfigType() {}
@@ -297,37 +297,37 @@ type isAccessLogFilter_FilterSpecifier interface {
 }
 
 type AccessLogFilter_StatusCodeFilter struct {
-	StatusCodeFilter *StatusCodeFilter `protobuf:"bytes,1,opt,name=status_code_filter,json=statusCodeFilter,proto3,oneof"`
+	StatusCodeFilter *StatusCodeFilter `protobuf:"bytes,1,opt,name=status_code_filter,json=statusCodeFilter,proto3,oneof" json:"status_code_filter,omitempty"`
 }
 type AccessLogFilter_DurationFilter struct {
-	DurationFilter *DurationFilter `protobuf:"bytes,2,opt,name=duration_filter,json=durationFilter,proto3,oneof"`
+	DurationFilter *DurationFilter `protobuf:"bytes,2,opt,name=duration_filter,json=durationFilter,proto3,oneof" json:"duration_filter,omitempty"`
 }
 type AccessLogFilter_NotHealthCheckFilter struct {
-	NotHealthCheckFilter *NotHealthCheckFilter `protobuf:"bytes,3,opt,name=not_health_check_filter,json=notHealthCheckFilter,proto3,oneof"`
+	NotHealthCheckFilter *NotHealthCheckFilter `protobuf:"bytes,3,opt,name=not_health_check_filter,json=notHealthCheckFilter,proto3,oneof" json:"not_health_check_filter,omitempty"`
 }
 type AccessLogFilter_TraceableFilter struct {
-	TraceableFilter *TraceableFilter `protobuf:"bytes,4,opt,name=traceable_filter,json=traceableFilter,proto3,oneof"`
+	TraceableFilter *TraceableFilter `protobuf:"bytes,4,opt,name=traceable_filter,json=traceableFilter,proto3,oneof" json:"traceable_filter,omitempty"`
 }
 type AccessLogFilter_RuntimeFilter struct {
-	RuntimeFilter *RuntimeFilter `protobuf:"bytes,5,opt,name=runtime_filter,json=runtimeFilter,proto3,oneof"`
+	RuntimeFilter *RuntimeFilter `protobuf:"bytes,5,opt,name=runtime_filter,json=runtimeFilter,proto3,oneof" json:"runtime_filter,omitempty"`
 }
 type AccessLogFilter_AndFilter struct {
-	AndFilter *AndFilter `protobuf:"bytes,6,opt,name=and_filter,json=andFilter,proto3,oneof"`
+	AndFilter *AndFilter `protobuf:"bytes,6,opt,name=and_filter,json=andFilter,proto3,oneof" json:"and_filter,omitempty"`
 }
 type AccessLogFilter_OrFilter struct {
-	OrFilter *OrFilter `protobuf:"bytes,7,opt,name=or_filter,json=orFilter,proto3,oneof"`
+	OrFilter *OrFilter `protobuf:"bytes,7,opt,name=or_filter,json=orFilter,proto3,oneof" json:"or_filter,omitempty"`
 }
 type AccessLogFilter_HeaderFilter struct {
-	HeaderFilter *HeaderFilter `protobuf:"bytes,8,opt,name=header_filter,json=headerFilter,proto3,oneof"`
+	HeaderFilter *HeaderFilter `protobuf:"bytes,8,opt,name=header_filter,json=headerFilter,proto3,oneof" json:"header_filter,omitempty"`
 }
 type AccessLogFilter_ResponseFlagFilter struct {
-	ResponseFlagFilter *ResponseFlagFilter `protobuf:"bytes,9,opt,name=response_flag_filter,json=responseFlagFilter,proto3,oneof"`
+	ResponseFlagFilter *ResponseFlagFilter `protobuf:"bytes,9,opt,name=response_flag_filter,json=responseFlagFilter,proto3,oneof" json:"response_flag_filter,omitempty"`
 }
 type AccessLogFilter_GrpcStatusFilter struct {
-	GrpcStatusFilter *GrpcStatusFilter `protobuf:"bytes,10,opt,name=grpc_status_filter,json=grpcStatusFilter,proto3,oneof"`
+	GrpcStatusFilter *GrpcStatusFilter `protobuf:"bytes,10,opt,name=grpc_status_filter,json=grpcStatusFilter,proto3,oneof" json:"grpc_status_filter,omitempty"`
 }
 type AccessLogFilter_ExtensionFilter struct {
-	ExtensionFilter *ExtensionFilter `protobuf:"bytes,11,opt,name=extension_filter,json=extensionFilter,proto3,oneof"`
+	ExtensionFilter *ExtensionFilter `protobuf:"bytes,11,opt,name=extension_filter,json=extensionFilter,proto3,oneof" json:"extension_filter,omitempty"`
 }
 
 func (*AccessLogFilter_StatusCodeFilter) isAccessLogFilter_FilterSpecifier()     {}
@@ -1078,7 +1078,7 @@ type isExtensionFilter_ConfigType interface {
 }
 
 type ExtensionFilter_TypedConfig struct {
-	TypedConfig *types.Any `protobuf:"bytes,3,opt,name=typed_config,json=typedConfig,proto3,oneof"`
+	TypedConfig *types.Any `protobuf:"bytes,3,opt,name=typed_config,json=typedConfig,proto3,oneof" json:"typed_config,omitempty"`
 }
 
 func (*ExtensionFilter_TypedConfig) isExtensionFilter_ConfigType() {}
@@ -1290,7 +1290,8 @@ func (m *AccessLog) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *AccessLog_TypedConfig) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *AccessLog_TypedConfig) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1346,7 +1347,8 @@ func (m *AccessLogFilter) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *AccessLogFilter_StatusCodeFilter) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *AccessLogFilter_StatusCodeFilter) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1366,7 +1368,8 @@ func (m *AccessLogFilter_StatusCodeFilter) MarshalToSizedBuffer(dAtA []byte) (in
 	return len(dAtA) - i, nil
 }
 func (m *AccessLogFilter_DurationFilter) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *AccessLogFilter_DurationFilter) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1386,7 +1389,8 @@ func (m *AccessLogFilter_DurationFilter) MarshalToSizedBuffer(dAtA []byte) (int,
 	return len(dAtA) - i, nil
 }
 func (m *AccessLogFilter_NotHealthCheckFilter) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *AccessLogFilter_NotHealthCheckFilter) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1406,7 +1410,8 @@ func (m *AccessLogFilter_NotHealthCheckFilter) MarshalToSizedBuffer(dAtA []byte)
 	return len(dAtA) - i, nil
 }
 func (m *AccessLogFilter_TraceableFilter) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *AccessLogFilter_TraceableFilter) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1426,7 +1431,8 @@ func (m *AccessLogFilter_TraceableFilter) MarshalToSizedBuffer(dAtA []byte) (int
 	return len(dAtA) - i, nil
 }
 func (m *AccessLogFilter_RuntimeFilter) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *AccessLogFilter_RuntimeFilter) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1446,7 +1452,8 @@ func (m *AccessLogFilter_RuntimeFilter) MarshalToSizedBuffer(dAtA []byte) (int, 
 	return len(dAtA) - i, nil
 }
 func (m *AccessLogFilter_AndFilter) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *AccessLogFilter_AndFilter) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1466,7 +1473,8 @@ func (m *AccessLogFilter_AndFilter) MarshalToSizedBuffer(dAtA []byte) (int, erro
 	return len(dAtA) - i, nil
 }
 func (m *AccessLogFilter_OrFilter) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *AccessLogFilter_OrFilter) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1486,7 +1494,8 @@ func (m *AccessLogFilter_OrFilter) MarshalToSizedBuffer(dAtA []byte) (int, error
 	return len(dAtA) - i, nil
 }
 func (m *AccessLogFilter_HeaderFilter) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *AccessLogFilter_HeaderFilter) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1506,7 +1515,8 @@ func (m *AccessLogFilter_HeaderFilter) MarshalToSizedBuffer(dAtA []byte) (int, e
 	return len(dAtA) - i, nil
 }
 func (m *AccessLogFilter_ResponseFlagFilter) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *AccessLogFilter_ResponseFlagFilter) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1526,7 +1536,8 @@ func (m *AccessLogFilter_ResponseFlagFilter) MarshalToSizedBuffer(dAtA []byte) (
 	return len(dAtA) - i, nil
 }
 func (m *AccessLogFilter_GrpcStatusFilter) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *AccessLogFilter_GrpcStatusFilter) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1546,7 +1557,8 @@ func (m *AccessLogFilter_GrpcStatusFilter) MarshalToSizedBuffer(dAtA []byte) (in
 	return len(dAtA) - i, nil
 }
 func (m *AccessLogFilter_ExtensionFilter) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *AccessLogFilter_ExtensionFilter) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -2053,7 +2065,8 @@ func (m *ExtensionFilter) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *ExtensionFilter_TypedConfig) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *ExtensionFilter_TypedConfig) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -4247,6 +4260,7 @@ func (m *ExtensionFilter) Unmarshal(dAtA []byte) error {
 func skipAccesslog(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
+	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -4278,10 +4292,8 @@ func skipAccesslog(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			return iNdEx, nil
 		case 1:
 			iNdEx += 8
-			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -4302,55 +4314,30 @@ func skipAccesslog(dAtA []byte) (n int, err error) {
 				return 0, ErrInvalidLengthAccesslog
 			}
 			iNdEx += length
-			if iNdEx < 0 {
-				return 0, ErrInvalidLengthAccesslog
-			}
-			return iNdEx, nil
 		case 3:
-			for {
-				var innerWire uint64
-				var start int = iNdEx
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return 0, ErrIntOverflowAccesslog
-					}
-					if iNdEx >= l {
-						return 0, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					innerWire |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				innerWireType := int(innerWire & 0x7)
-				if innerWireType == 4 {
-					break
-				}
-				next, err := skipAccesslog(dAtA[start:])
-				if err != nil {
-					return 0, err
-				}
-				iNdEx = start + next
-				if iNdEx < 0 {
-					return 0, ErrInvalidLengthAccesslog
-				}
-			}
-			return iNdEx, nil
+			depth++
 		case 4:
-			return iNdEx, nil
+			if depth == 0 {
+				return 0, ErrUnexpectedEndOfGroupAccesslog
+			}
+			depth--
 		case 5:
 			iNdEx += 4
-			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
+		if iNdEx < 0 {
+			return 0, ErrInvalidLengthAccesslog
+		}
+		if depth == 0 {
+			return iNdEx, nil
+		}
 	}
-	panic("unreachable")
+	return 0, io.ErrUnexpectedEOF
 }
 
 var (
-	ErrInvalidLengthAccesslog = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowAccesslog   = fmt.Errorf("proto: integer overflow")
+	ErrInvalidLengthAccesslog        = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowAccesslog          = fmt.Errorf("proto: integer overflow")
+	ErrUnexpectedEndOfGroupAccesslog = fmt.Errorf("proto: unexpected end of group")
 )

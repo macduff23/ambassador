@@ -225,10 +225,10 @@ type isLbEndpoint_HostIdentifier interface {
 }
 
 type LbEndpoint_Endpoint struct {
-	Endpoint *Endpoint `protobuf:"bytes,1,opt,name=endpoint,proto3,oneof"`
+	Endpoint *Endpoint `protobuf:"bytes,1,opt,name=endpoint,proto3,oneof" json:"endpoint,omitempty"`
 }
 type LbEndpoint_EndpointName struct {
-	EndpointName string `protobuf:"bytes,5,opt,name=endpoint_name,json=endpointName,proto3,oneof"`
+	EndpointName string `protobuf:"bytes,5,opt,name=endpoint_name,json=endpointName,proto3,oneof" json:"endpoint_name,omitempty"`
 }
 
 func (*LbEndpoint_Endpoint) isLbEndpoint_HostIdentifier()     {}
@@ -601,7 +601,8 @@ func (m *LbEndpoint) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *LbEndpoint_Endpoint) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *LbEndpoint_Endpoint) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -621,7 +622,8 @@ func (m *LbEndpoint_Endpoint) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *LbEndpoint_EndpointName) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *LbEndpoint_EndpointName) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1477,6 +1479,7 @@ func (m *LocalityLbEndpoints) Unmarshal(dAtA []byte) error {
 func skipEndpointComponents(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
+	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -1508,10 +1511,8 @@ func skipEndpointComponents(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			return iNdEx, nil
 		case 1:
 			iNdEx += 8
-			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -1532,55 +1533,30 @@ func skipEndpointComponents(dAtA []byte) (n int, err error) {
 				return 0, ErrInvalidLengthEndpointComponents
 			}
 			iNdEx += length
-			if iNdEx < 0 {
-				return 0, ErrInvalidLengthEndpointComponents
-			}
-			return iNdEx, nil
 		case 3:
-			for {
-				var innerWire uint64
-				var start int = iNdEx
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return 0, ErrIntOverflowEndpointComponents
-					}
-					if iNdEx >= l {
-						return 0, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					innerWire |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				innerWireType := int(innerWire & 0x7)
-				if innerWireType == 4 {
-					break
-				}
-				next, err := skipEndpointComponents(dAtA[start:])
-				if err != nil {
-					return 0, err
-				}
-				iNdEx = start + next
-				if iNdEx < 0 {
-					return 0, ErrInvalidLengthEndpointComponents
-				}
-			}
-			return iNdEx, nil
+			depth++
 		case 4:
-			return iNdEx, nil
+			if depth == 0 {
+				return 0, ErrUnexpectedEndOfGroupEndpointComponents
+			}
+			depth--
 		case 5:
 			iNdEx += 4
-			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
+		if iNdEx < 0 {
+			return 0, ErrInvalidLengthEndpointComponents
+		}
+		if depth == 0 {
+			return iNdEx, nil
+		}
 	}
-	panic("unreachable")
+	return 0, io.ErrUnexpectedEOF
 }
 
 var (
-	ErrInvalidLengthEndpointComponents = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowEndpointComponents   = fmt.Errorf("proto: integer overflow")
+	ErrInvalidLengthEndpointComponents        = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowEndpointComponents          = fmt.Errorf("proto: integer overflow")
+	ErrUnexpectedEndOfGroupEndpointComponents = fmt.Errorf("proto: unexpected end of group")
 )

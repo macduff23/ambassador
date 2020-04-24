@@ -90,10 +90,10 @@ type isStatsSink_ConfigType interface {
 }
 
 type StatsSink_Config struct {
-	Config *types.Struct `protobuf:"bytes,2,opt,name=config,proto3,oneof"`
+	Config *types.Struct `protobuf:"bytes,2,opt,name=config,proto3,oneof" json:"config,omitempty"`
 }
 type StatsSink_TypedConfig struct {
-	TypedConfig *types.Any `protobuf:"bytes,3,opt,name=typed_config,json=typedConfig,proto3,oneof"`
+	TypedConfig *types.Any `protobuf:"bytes,3,opt,name=typed_config,json=typedConfig,proto3,oneof" json:"typed_config,omitempty"`
 }
 
 func (*StatsSink_Config) isStatsSink_ConfigType()      {}
@@ -273,13 +273,13 @@ type isStatsMatcher_StatsMatcher interface {
 }
 
 type StatsMatcher_RejectAll struct {
-	RejectAll bool `protobuf:"varint,1,opt,name=reject_all,json=rejectAll,proto3,oneof"`
+	RejectAll bool `protobuf:"varint,1,opt,name=reject_all,json=rejectAll,proto3,oneof" json:"reject_all,omitempty"`
 }
 type StatsMatcher_ExclusionList struct {
-	ExclusionList *matcher.ListStringMatcher `protobuf:"bytes,2,opt,name=exclusion_list,json=exclusionList,proto3,oneof"`
+	ExclusionList *matcher.ListStringMatcher `protobuf:"bytes,2,opt,name=exclusion_list,json=exclusionList,proto3,oneof" json:"exclusion_list,omitempty"`
 }
 type StatsMatcher_InclusionList struct {
-	InclusionList *matcher.ListStringMatcher `protobuf:"bytes,3,opt,name=inclusion_list,json=inclusionList,proto3,oneof"`
+	InclusionList *matcher.ListStringMatcher `protobuf:"bytes,3,opt,name=inclusion_list,json=inclusionList,proto3,oneof" json:"inclusion_list,omitempty"`
 }
 
 func (*StatsMatcher_RejectAll) isStatsMatcher_StatsMatcher()     {}
@@ -390,10 +390,10 @@ type isTagSpecifier_TagValue interface {
 }
 
 type TagSpecifier_Regex struct {
-	Regex string `protobuf:"bytes,2,opt,name=regex,proto3,oneof"`
+	Regex string `protobuf:"bytes,2,opt,name=regex,proto3,oneof" json:"regex,omitempty"`
 }
 type TagSpecifier_FixedValue struct {
-	FixedValue string `protobuf:"bytes,3,opt,name=fixed_value,json=fixedValue,proto3,oneof"`
+	FixedValue string `protobuf:"bytes,3,opt,name=fixed_value,json=fixedValue,proto3,oneof" json:"fixed_value,omitempty"`
 }
 
 func (*TagSpecifier_Regex) isTagSpecifier_TagValue()      {}
@@ -515,10 +515,10 @@ type isStatsdSink_StatsdSpecifier interface {
 }
 
 type StatsdSink_Address struct {
-	Address *core.Address `protobuf:"bytes,1,opt,name=address,proto3,oneof"`
+	Address *core.Address `protobuf:"bytes,1,opt,name=address,proto3,oneof" json:"address,omitempty"`
 }
 type StatsdSink_TcpClusterName struct {
-	TcpClusterName string `protobuf:"bytes,2,opt,name=tcp_cluster_name,json=tcpClusterName,proto3,oneof"`
+	TcpClusterName string `protobuf:"bytes,2,opt,name=tcp_cluster_name,json=tcpClusterName,proto3,oneof" json:"tcp_cluster_name,omitempty"`
 }
 
 func (*StatsdSink_Address) isStatsdSink_StatsdSpecifier()        {}
@@ -617,7 +617,7 @@ type isDogStatsdSink_DogStatsdSpecifier interface {
 }
 
 type DogStatsdSink_Address struct {
-	Address *core.Address `protobuf:"bytes,1,opt,name=address,proto3,oneof"`
+	Address *core.Address `protobuf:"bytes,1,opt,name=address,proto3,oneof" json:"address,omitempty"`
 }
 
 func (*DogStatsdSink_Address) isDogStatsdSink_DogStatsdSpecifier() {}
@@ -825,7 +825,8 @@ func (m *StatsSink) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *StatsSink_Config) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *StatsSink_Config) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -845,7 +846,8 @@ func (m *StatsSink_Config) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *StatsSink_TypedConfig) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *StatsSink_TypedConfig) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -966,7 +968,8 @@ func (m *StatsMatcher) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *StatsMatcher_RejectAll) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *StatsMatcher_RejectAll) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -982,7 +985,8 @@ func (m *StatsMatcher_RejectAll) MarshalToSizedBuffer(dAtA []byte) (int, error) 
 	return len(dAtA) - i, nil
 }
 func (m *StatsMatcher_ExclusionList) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *StatsMatcher_ExclusionList) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1002,7 +1006,8 @@ func (m *StatsMatcher_ExclusionList) MarshalToSizedBuffer(dAtA []byte) (int, err
 	return len(dAtA) - i, nil
 }
 func (m *StatsMatcher_InclusionList) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *StatsMatcher_InclusionList) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1065,7 +1070,8 @@ func (m *TagSpecifier) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *TagSpecifier_Regex) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *TagSpecifier_Regex) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1078,7 +1084,8 @@ func (m *TagSpecifier_Regex) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *TagSpecifier_FixedValue) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *TagSpecifier_FixedValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1134,7 +1141,8 @@ func (m *StatsdSink) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *StatsdSink_Address) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *StatsdSink_Address) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1154,7 +1162,8 @@ func (m *StatsdSink_Address) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *StatsdSink_TcpClusterName) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *StatsdSink_TcpClusterName) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1210,7 +1219,8 @@ func (m *DogStatsdSink) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *DogStatsdSink_Address) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *DogStatsdSink_Address) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -2482,6 +2492,7 @@ func (m *HystrixSink) Unmarshal(dAtA []byte) error {
 func skipStats(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
+	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -2513,10 +2524,8 @@ func skipStats(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			return iNdEx, nil
 		case 1:
 			iNdEx += 8
-			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -2537,55 +2546,30 @@ func skipStats(dAtA []byte) (n int, err error) {
 				return 0, ErrInvalidLengthStats
 			}
 			iNdEx += length
-			if iNdEx < 0 {
-				return 0, ErrInvalidLengthStats
-			}
-			return iNdEx, nil
 		case 3:
-			for {
-				var innerWire uint64
-				var start int = iNdEx
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return 0, ErrIntOverflowStats
-					}
-					if iNdEx >= l {
-						return 0, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					innerWire |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				innerWireType := int(innerWire & 0x7)
-				if innerWireType == 4 {
-					break
-				}
-				next, err := skipStats(dAtA[start:])
-				if err != nil {
-					return 0, err
-				}
-				iNdEx = start + next
-				if iNdEx < 0 {
-					return 0, ErrInvalidLengthStats
-				}
-			}
-			return iNdEx, nil
+			depth++
 		case 4:
-			return iNdEx, nil
+			if depth == 0 {
+				return 0, ErrUnexpectedEndOfGroupStats
+			}
+			depth--
 		case 5:
 			iNdEx += 4
-			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
+		if iNdEx < 0 {
+			return 0, ErrInvalidLengthStats
+		}
+		if depth == 0 {
+			return iNdEx, nil
+		}
 	}
-	panic("unreachable")
+	return 0, io.ErrUnexpectedEOF
 }
 
 var (
-	ErrInvalidLengthStats = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowStats   = fmt.Errorf("proto: integer overflow")
+	ErrInvalidLengthStats        = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowStats          = fmt.Errorf("proto: integer overflow")
+	ErrUnexpectedEndOfGroupStats = fmt.Errorf("proto: unexpected end of group")
 )

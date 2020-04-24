@@ -280,10 +280,10 @@ type isRouteAction_ClusterSpecifier interface {
 }
 
 type RouteAction_Cluster struct {
-	Cluster string `protobuf:"bytes,1,opt,name=cluster,proto3,oneof"`
+	Cluster string `protobuf:"bytes,1,opt,name=cluster,proto3,oneof" json:"cluster,omitempty"`
 }
 type RouteAction_WeightedClusters struct {
-	WeightedClusters *route.WeightedCluster `protobuf:"bytes,2,opt,name=weighted_clusters,json=weightedClusters,proto3,oneof"`
+	WeightedClusters *route.WeightedCluster `protobuf:"bytes,2,opt,name=weighted_clusters,json=weightedClusters,proto3,oneof" json:"weighted_clusters,omitempty"`
 }
 
 func (*RouteAction_Cluster) isRouteAction_ClusterSpecifier()          {}
@@ -428,10 +428,10 @@ type isMethodMatch_ParameterMatchSpecifier_ParameterMatchSpecifier interface {
 }
 
 type MethodMatch_ParameterMatchSpecifier_ExactMatch struct {
-	ExactMatch string `protobuf:"bytes,3,opt,name=exact_match,json=exactMatch,proto3,oneof"`
+	ExactMatch string `protobuf:"bytes,3,opt,name=exact_match,json=exactMatch,proto3,oneof" json:"exact_match,omitempty"`
 }
 type MethodMatch_ParameterMatchSpecifier_RangeMatch struct {
-	RangeMatch *_type.Int64Range `protobuf:"bytes,4,opt,name=range_match,json=rangeMatch,proto3,oneof"`
+	RangeMatch *_type.Int64Range `protobuf:"bytes,4,opt,name=range_match,json=rangeMatch,proto3,oneof" json:"range_match,omitempty"`
 }
 
 func (*MethodMatch_ParameterMatchSpecifier_ExactMatch) isMethodMatch_ParameterMatchSpecifier_ParameterMatchSpecifier() {
@@ -741,7 +741,8 @@ func (m *RouteAction) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *RouteAction_Cluster) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *RouteAction_Cluster) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -754,7 +755,8 @@ func (m *RouteAction_Cluster) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *RouteAction_WeightedClusters) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *RouteAction_WeightedClusters) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -873,7 +875,8 @@ func (m *MethodMatch_ParameterMatchSpecifier) MarshalToSizedBuffer(dAtA []byte) 
 }
 
 func (m *MethodMatch_ParameterMatchSpecifier_ExactMatch) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *MethodMatch_ParameterMatchSpecifier_ExactMatch) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -886,7 +889,8 @@ func (m *MethodMatch_ParameterMatchSpecifier_ExactMatch) MarshalToSizedBuffer(dA
 	return len(dAtA) - i, nil
 }
 func (m *MethodMatch_ParameterMatchSpecifier_RangeMatch) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *MethodMatch_ParameterMatchSpecifier_RangeMatch) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -2018,6 +2022,7 @@ func (m *MethodMatch_ParameterMatchSpecifier) Unmarshal(dAtA []byte) error {
 func skipRoute(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
+	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -2049,10 +2054,8 @@ func skipRoute(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			return iNdEx, nil
 		case 1:
 			iNdEx += 8
-			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -2073,55 +2076,30 @@ func skipRoute(dAtA []byte) (n int, err error) {
 				return 0, ErrInvalidLengthRoute
 			}
 			iNdEx += length
-			if iNdEx < 0 {
-				return 0, ErrInvalidLengthRoute
-			}
-			return iNdEx, nil
 		case 3:
-			for {
-				var innerWire uint64
-				var start int = iNdEx
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return 0, ErrIntOverflowRoute
-					}
-					if iNdEx >= l {
-						return 0, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					innerWire |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				innerWireType := int(innerWire & 0x7)
-				if innerWireType == 4 {
-					break
-				}
-				next, err := skipRoute(dAtA[start:])
-				if err != nil {
-					return 0, err
-				}
-				iNdEx = start + next
-				if iNdEx < 0 {
-					return 0, ErrInvalidLengthRoute
-				}
-			}
-			return iNdEx, nil
+			depth++
 		case 4:
-			return iNdEx, nil
+			if depth == 0 {
+				return 0, ErrUnexpectedEndOfGroupRoute
+			}
+			depth--
 		case 5:
 			iNdEx += 4
-			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
+		if iNdEx < 0 {
+			return 0, ErrInvalidLengthRoute
+		}
+		if depth == 0 {
+			return iNdEx, nil
+		}
 	}
-	panic("unreachable")
+	return 0, io.ErrUnexpectedEOF
 }
 
 var (
-	ErrInvalidLengthRoute = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowRoute   = fmt.Errorf("proto: integer overflow")
+	ErrInvalidLengthRoute        = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowRoute          = fmt.Errorf("proto: integer overflow")
+	ErrUnexpectedEndOfGroupRoute = fmt.Errorf("proto: unexpected end of group")
 )

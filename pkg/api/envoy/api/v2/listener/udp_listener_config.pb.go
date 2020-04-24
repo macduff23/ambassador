@@ -81,10 +81,10 @@ type isUdpListenerConfig_ConfigType interface {
 }
 
 type UdpListenerConfig_Config struct {
-	Config *types.Struct `protobuf:"bytes,2,opt,name=config,proto3,oneof"`
+	Config *types.Struct `protobuf:"bytes,2,opt,name=config,proto3,oneof" json:"config,omitempty"`
 }
 type UdpListenerConfig_TypedConfig struct {
-	TypedConfig *types.Any `protobuf:"bytes,3,opt,name=typed_config,json=typedConfig,proto3,oneof"`
+	TypedConfig *types.Any `protobuf:"bytes,3,opt,name=typed_config,json=typedConfig,proto3,oneof" json:"typed_config,omitempty"`
 }
 
 func (*UdpListenerConfig_Config) isUdpListenerConfig_ConfigType()      {}
@@ -245,7 +245,8 @@ func (m *UdpListenerConfig) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *UdpListenerConfig_Config) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *UdpListenerConfig_Config) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -265,7 +266,8 @@ func (m *UdpListenerConfig_Config) MarshalToSizedBuffer(dAtA []byte) (int, error
 	return len(dAtA) - i, nil
 }
 func (m *UdpListenerConfig_TypedConfig) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *UdpListenerConfig_TypedConfig) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -596,6 +598,7 @@ func (m *ActiveRawUdpListenerConfig) Unmarshal(dAtA []byte) error {
 func skipUdpListenerConfig(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
+	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -627,10 +630,8 @@ func skipUdpListenerConfig(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			return iNdEx, nil
 		case 1:
 			iNdEx += 8
-			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -651,55 +652,30 @@ func skipUdpListenerConfig(dAtA []byte) (n int, err error) {
 				return 0, ErrInvalidLengthUdpListenerConfig
 			}
 			iNdEx += length
-			if iNdEx < 0 {
-				return 0, ErrInvalidLengthUdpListenerConfig
-			}
-			return iNdEx, nil
 		case 3:
-			for {
-				var innerWire uint64
-				var start int = iNdEx
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return 0, ErrIntOverflowUdpListenerConfig
-					}
-					if iNdEx >= l {
-						return 0, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					innerWire |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				innerWireType := int(innerWire & 0x7)
-				if innerWireType == 4 {
-					break
-				}
-				next, err := skipUdpListenerConfig(dAtA[start:])
-				if err != nil {
-					return 0, err
-				}
-				iNdEx = start + next
-				if iNdEx < 0 {
-					return 0, ErrInvalidLengthUdpListenerConfig
-				}
-			}
-			return iNdEx, nil
+			depth++
 		case 4:
-			return iNdEx, nil
+			if depth == 0 {
+				return 0, ErrUnexpectedEndOfGroupUdpListenerConfig
+			}
+			depth--
 		case 5:
 			iNdEx += 4
-			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
+		if iNdEx < 0 {
+			return 0, ErrInvalidLengthUdpListenerConfig
+		}
+		if depth == 0 {
+			return iNdEx, nil
+		}
 	}
-	panic("unreachable")
+	return 0, io.ErrUnexpectedEOF
 }
 
 var (
-	ErrInvalidLengthUdpListenerConfig = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowUdpListenerConfig   = fmt.Errorf("proto: integer overflow")
+	ErrInvalidLengthUdpListenerConfig        = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowUdpListenerConfig          = fmt.Errorf("proto: integer overflow")
+	ErrUnexpectedEndOfGroupUdpListenerConfig = fmt.Errorf("proto: unexpected end of group")
 )

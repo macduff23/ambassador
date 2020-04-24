@@ -91,7 +91,7 @@ type isHttpUri_HttpUpstreamType interface {
 }
 
 type HttpUri_Cluster struct {
-	Cluster string `protobuf:"bytes,2,opt,name=cluster,proto3,oneof"`
+	Cluster string `protobuf:"bytes,2,opt,name=cluster,proto3,oneof" json:"cluster,omitempty"`
 }
 
 func (*HttpUri_Cluster) isHttpUri_HttpUpstreamType() {}
@@ -217,7 +217,8 @@ func (m *HttpUri) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *HttpUri_Cluster) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *HttpUri_Cluster) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -437,6 +438,7 @@ func (m *HttpUri) Unmarshal(dAtA []byte) error {
 func skipHttpUri(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
+	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -468,10 +470,8 @@ func skipHttpUri(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			return iNdEx, nil
 		case 1:
 			iNdEx += 8
-			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -492,55 +492,30 @@ func skipHttpUri(dAtA []byte) (n int, err error) {
 				return 0, ErrInvalidLengthHttpUri
 			}
 			iNdEx += length
-			if iNdEx < 0 {
-				return 0, ErrInvalidLengthHttpUri
-			}
-			return iNdEx, nil
 		case 3:
-			for {
-				var innerWire uint64
-				var start int = iNdEx
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return 0, ErrIntOverflowHttpUri
-					}
-					if iNdEx >= l {
-						return 0, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					innerWire |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				innerWireType := int(innerWire & 0x7)
-				if innerWireType == 4 {
-					break
-				}
-				next, err := skipHttpUri(dAtA[start:])
-				if err != nil {
-					return 0, err
-				}
-				iNdEx = start + next
-				if iNdEx < 0 {
-					return 0, ErrInvalidLengthHttpUri
-				}
-			}
-			return iNdEx, nil
+			depth++
 		case 4:
-			return iNdEx, nil
+			if depth == 0 {
+				return 0, ErrUnexpectedEndOfGroupHttpUri
+			}
+			depth--
 		case 5:
 			iNdEx += 4
-			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
+		if iNdEx < 0 {
+			return 0, ErrInvalidLengthHttpUri
+		}
+		if depth == 0 {
+			return iNdEx, nil
+		}
 	}
-	panic("unreachable")
+	return 0, io.ErrUnexpectedEOF
 }
 
 var (
-	ErrInvalidLengthHttpUri = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowHttpUri   = fmt.Errorf("proto: integer overflow")
+	ErrInvalidLengthHttpUri        = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowHttpUri          = fmt.Errorf("proto: integer overflow")
+	ErrUnexpectedEndOfGroupHttpUri = fmt.Errorf("proto: unexpected end of group")
 )

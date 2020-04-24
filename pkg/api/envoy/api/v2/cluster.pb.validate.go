@@ -2072,7 +2072,9 @@ type Cluster_CommonLbConfig_LocalityWeightedLbConfigValidationError struct {
 }
 
 // Field function returns field value.
-func (e Cluster_CommonLbConfig_LocalityWeightedLbConfigValidationError) Field() string { return e.field }
+func (e Cluster_CommonLbConfig_LocalityWeightedLbConfigValidationError) Field() string {
+	return e.field
+}
 
 // Reason function returns reason value.
 func (e Cluster_CommonLbConfig_LocalityWeightedLbConfigValidationError) Reason() string {

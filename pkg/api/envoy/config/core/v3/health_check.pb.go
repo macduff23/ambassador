@@ -198,16 +198,16 @@ type isHealthCheck_HealthChecker interface {
 }
 
 type HealthCheck_HttpHealthCheck_ struct {
-	HttpHealthCheck *HealthCheck_HttpHealthCheck `protobuf:"bytes,8,opt,name=http_health_check,json=httpHealthCheck,proto3,oneof"`
+	HttpHealthCheck *HealthCheck_HttpHealthCheck `protobuf:"bytes,8,opt,name=http_health_check,json=httpHealthCheck,proto3,oneof" json:"http_health_check,omitempty"`
 }
 type HealthCheck_TcpHealthCheck_ struct {
-	TcpHealthCheck *HealthCheck_TcpHealthCheck `protobuf:"bytes,9,opt,name=tcp_health_check,json=tcpHealthCheck,proto3,oneof"`
+	TcpHealthCheck *HealthCheck_TcpHealthCheck `protobuf:"bytes,9,opt,name=tcp_health_check,json=tcpHealthCheck,proto3,oneof" json:"tcp_health_check,omitempty"`
 }
 type HealthCheck_GrpcHealthCheck_ struct {
-	GrpcHealthCheck *HealthCheck_GrpcHealthCheck `protobuf:"bytes,11,opt,name=grpc_health_check,json=grpcHealthCheck,proto3,oneof"`
+	GrpcHealthCheck *HealthCheck_GrpcHealthCheck `protobuf:"bytes,11,opt,name=grpc_health_check,json=grpcHealthCheck,proto3,oneof" json:"grpc_health_check,omitempty"`
 }
 type HealthCheck_CustomHealthCheck_ struct {
-	CustomHealthCheck *HealthCheck_CustomHealthCheck `protobuf:"bytes,13,opt,name=custom_health_check,json=customHealthCheck,proto3,oneof"`
+	CustomHealthCheck *HealthCheck_CustomHealthCheck `protobuf:"bytes,13,opt,name=custom_health_check,json=customHealthCheck,proto3,oneof" json:"custom_health_check,omitempty"`
 }
 
 func (*HealthCheck_HttpHealthCheck_) isHealthCheck_HealthChecker()   {}
@@ -423,10 +423,10 @@ type isHealthCheck_Payload_Payload interface {
 }
 
 type HealthCheck_Payload_Text struct {
-	Text string `protobuf:"bytes,1,opt,name=text,proto3,oneof"`
+	Text string `protobuf:"bytes,1,opt,name=text,proto3,oneof" json:"text,omitempty"`
 }
 type HealthCheck_Payload_Binary struct {
-	Binary []byte `protobuf:"bytes,2,opt,name=binary,proto3,oneof"`
+	Binary []byte `protobuf:"bytes,2,opt,name=binary,proto3,oneof" json:"binary,omitempty"`
 }
 
 func (*HealthCheck_Payload_Text) isHealthCheck_Payload_Payload()   {}
@@ -827,7 +827,7 @@ type isHealthCheck_CustomHealthCheck_ConfigType interface {
 }
 
 type HealthCheck_CustomHealthCheck_TypedConfig struct {
-	TypedConfig *types.Any `protobuf:"bytes,3,opt,name=typed_config,json=typedConfig,proto3,oneof"`
+	TypedConfig *types.Any `protobuf:"bytes,3,opt,name=typed_config,json=typedConfig,proto3,oneof" json:"typed_config,omitempty"`
 }
 
 func (*HealthCheck_CustomHealthCheck_TypedConfig) isHealthCheck_CustomHealthCheck_ConfigType() {}
@@ -1254,7 +1254,8 @@ func (m *HealthCheck) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *HealthCheck_HttpHealthCheck_) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *HealthCheck_HttpHealthCheck_) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1274,7 +1275,8 @@ func (m *HealthCheck_HttpHealthCheck_) MarshalToSizedBuffer(dAtA []byte) (int, e
 	return len(dAtA) - i, nil
 }
 func (m *HealthCheck_TcpHealthCheck_) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *HealthCheck_TcpHealthCheck_) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1294,7 +1296,8 @@ func (m *HealthCheck_TcpHealthCheck_) MarshalToSizedBuffer(dAtA []byte) (int, er
 	return len(dAtA) - i, nil
 }
 func (m *HealthCheck_GrpcHealthCheck_) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *HealthCheck_GrpcHealthCheck_) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1314,7 +1317,8 @@ func (m *HealthCheck_GrpcHealthCheck_) MarshalToSizedBuffer(dAtA []byte) (int, e
 	return len(dAtA) - i, nil
 }
 func (m *HealthCheck_CustomHealthCheck_) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *HealthCheck_CustomHealthCheck_) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1370,7 +1374,8 @@ func (m *HealthCheck_Payload) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *HealthCheck_Payload_Text) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *HealthCheck_Payload_Text) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1383,7 +1388,8 @@ func (m *HealthCheck_Payload_Text) MarshalToSizedBuffer(dAtA []byte) (int, error
 	return len(dAtA) - i, nil
 }
 func (m *HealthCheck_Payload_Binary) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *HealthCheck_Payload_Binary) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1688,7 +1694,8 @@ func (m *HealthCheck_CustomHealthCheck) MarshalToSizedBuffer(dAtA []byte) (int, 
 }
 
 func (m *HealthCheck_CustomHealthCheck_TypedConfig) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *HealthCheck_CustomHealthCheck_TypedConfig) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -3817,6 +3824,7 @@ func (m *HealthCheck_TlsOptions) Unmarshal(dAtA []byte) error {
 func skipHealthCheck(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
+	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -3848,10 +3856,8 @@ func skipHealthCheck(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			return iNdEx, nil
 		case 1:
 			iNdEx += 8
-			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -3872,55 +3878,30 @@ func skipHealthCheck(dAtA []byte) (n int, err error) {
 				return 0, ErrInvalidLengthHealthCheck
 			}
 			iNdEx += length
-			if iNdEx < 0 {
-				return 0, ErrInvalidLengthHealthCheck
-			}
-			return iNdEx, nil
 		case 3:
-			for {
-				var innerWire uint64
-				var start int = iNdEx
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return 0, ErrIntOverflowHealthCheck
-					}
-					if iNdEx >= l {
-						return 0, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					innerWire |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				innerWireType := int(innerWire & 0x7)
-				if innerWireType == 4 {
-					break
-				}
-				next, err := skipHealthCheck(dAtA[start:])
-				if err != nil {
-					return 0, err
-				}
-				iNdEx = start + next
-				if iNdEx < 0 {
-					return 0, ErrInvalidLengthHealthCheck
-				}
-			}
-			return iNdEx, nil
+			depth++
 		case 4:
-			return iNdEx, nil
+			if depth == 0 {
+				return 0, ErrUnexpectedEndOfGroupHealthCheck
+			}
+			depth--
 		case 5:
 			iNdEx += 4
-			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
+		if iNdEx < 0 {
+			return 0, ErrInvalidLengthHealthCheck
+		}
+		if depth == 0 {
+			return iNdEx, nil
+		}
 	}
-	panic("unreachable")
+	return 0, io.ErrUnexpectedEOF
 }
 
 var (
-	ErrInvalidLengthHealthCheck = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowHealthCheck   = fmt.Errorf("proto: integer overflow")
+	ErrInvalidLengthHealthCheck        = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowHealthCheck          = fmt.Errorf("proto: integer overflow")
+	ErrUnexpectedEndOfGroupHealthCheck = fmt.Errorf("proto: unexpected end of group")
 )

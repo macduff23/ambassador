@@ -83,22 +83,22 @@ type isValueMatcher_MatchPattern interface {
 }
 
 type ValueMatcher_NullMatch_ struct {
-	NullMatch *ValueMatcher_NullMatch `protobuf:"bytes,1,opt,name=null_match,json=nullMatch,proto3,oneof"`
+	NullMatch *ValueMatcher_NullMatch `protobuf:"bytes,1,opt,name=null_match,json=nullMatch,proto3,oneof" json:"null_match,omitempty"`
 }
 type ValueMatcher_DoubleMatch struct {
-	DoubleMatch *DoubleMatcher `protobuf:"bytes,2,opt,name=double_match,json=doubleMatch,proto3,oneof"`
+	DoubleMatch *DoubleMatcher `protobuf:"bytes,2,opt,name=double_match,json=doubleMatch,proto3,oneof" json:"double_match,omitempty"`
 }
 type ValueMatcher_StringMatch struct {
-	StringMatch *StringMatcher `protobuf:"bytes,3,opt,name=string_match,json=stringMatch,proto3,oneof"`
+	StringMatch *StringMatcher `protobuf:"bytes,3,opt,name=string_match,json=stringMatch,proto3,oneof" json:"string_match,omitempty"`
 }
 type ValueMatcher_BoolMatch struct {
-	BoolMatch bool `protobuf:"varint,4,opt,name=bool_match,json=boolMatch,proto3,oneof"`
+	BoolMatch bool `protobuf:"varint,4,opt,name=bool_match,json=boolMatch,proto3,oneof" json:"bool_match,omitempty"`
 }
 type ValueMatcher_PresentMatch struct {
-	PresentMatch bool `protobuf:"varint,5,opt,name=present_match,json=presentMatch,proto3,oneof"`
+	PresentMatch bool `protobuf:"varint,5,opt,name=present_match,json=presentMatch,proto3,oneof" json:"present_match,omitempty"`
 }
 type ValueMatcher_ListMatch struct {
-	ListMatch *ListMatcher `protobuf:"bytes,6,opt,name=list_match,json=listMatch,proto3,oneof"`
+	ListMatch *ListMatcher `protobuf:"bytes,6,opt,name=list_match,json=listMatch,proto3,oneof" json:"list_match,omitempty"`
 }
 
 func (*ValueMatcher_NullMatch_) isValueMatcher_MatchPattern()   {}
@@ -259,7 +259,7 @@ type isListMatcher_MatchPattern interface {
 }
 
 type ListMatcher_OneOf struct {
-	OneOf *ValueMatcher `protobuf:"bytes,1,opt,name=one_of,json=oneOf,proto3,oneof"`
+	OneOf *ValueMatcher `protobuf:"bytes,1,opt,name=one_of,json=oneOf,proto3,oneof" json:"one_of,omitempty"`
 }
 
 func (*ListMatcher_OneOf) isListMatcher_MatchPattern() {}
@@ -361,7 +361,8 @@ func (m *ValueMatcher) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *ValueMatcher_NullMatch_) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *ValueMatcher_NullMatch_) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -381,7 +382,8 @@ func (m *ValueMatcher_NullMatch_) MarshalToSizedBuffer(dAtA []byte) (int, error)
 	return len(dAtA) - i, nil
 }
 func (m *ValueMatcher_DoubleMatch) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *ValueMatcher_DoubleMatch) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -401,7 +403,8 @@ func (m *ValueMatcher_DoubleMatch) MarshalToSizedBuffer(dAtA []byte) (int, error
 	return len(dAtA) - i, nil
 }
 func (m *ValueMatcher_StringMatch) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *ValueMatcher_StringMatch) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -421,7 +424,8 @@ func (m *ValueMatcher_StringMatch) MarshalToSizedBuffer(dAtA []byte) (int, error
 	return len(dAtA) - i, nil
 }
 func (m *ValueMatcher_BoolMatch) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *ValueMatcher_BoolMatch) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -437,7 +441,8 @@ func (m *ValueMatcher_BoolMatch) MarshalToSizedBuffer(dAtA []byte) (int, error) 
 	return len(dAtA) - i, nil
 }
 func (m *ValueMatcher_PresentMatch) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *ValueMatcher_PresentMatch) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -453,7 +458,8 @@ func (m *ValueMatcher_PresentMatch) MarshalToSizedBuffer(dAtA []byte) (int, erro
 	return len(dAtA) - i, nil
 }
 func (m *ValueMatcher_ListMatch) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *ValueMatcher_ListMatch) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -536,7 +542,8 @@ func (m *ListMatcher) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *ListMatcher_OneOf) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *ListMatcher_OneOf) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1075,6 +1082,7 @@ func (m *ListMatcher) Unmarshal(dAtA []byte) error {
 func skipValue(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
+	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -1106,10 +1114,8 @@ func skipValue(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			return iNdEx, nil
 		case 1:
 			iNdEx += 8
-			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -1130,55 +1136,30 @@ func skipValue(dAtA []byte) (n int, err error) {
 				return 0, ErrInvalidLengthValue
 			}
 			iNdEx += length
-			if iNdEx < 0 {
-				return 0, ErrInvalidLengthValue
-			}
-			return iNdEx, nil
 		case 3:
-			for {
-				var innerWire uint64
-				var start int = iNdEx
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return 0, ErrIntOverflowValue
-					}
-					if iNdEx >= l {
-						return 0, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					innerWire |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				innerWireType := int(innerWire & 0x7)
-				if innerWireType == 4 {
-					break
-				}
-				next, err := skipValue(dAtA[start:])
-				if err != nil {
-					return 0, err
-				}
-				iNdEx = start + next
-				if iNdEx < 0 {
-					return 0, ErrInvalidLengthValue
-				}
-			}
-			return iNdEx, nil
+			depth++
 		case 4:
-			return iNdEx, nil
+			if depth == 0 {
+				return 0, ErrUnexpectedEndOfGroupValue
+			}
+			depth--
 		case 5:
 			iNdEx += 4
-			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
+		if iNdEx < 0 {
+			return 0, ErrInvalidLengthValue
+		}
+		if depth == 0 {
+			return iNdEx, nil
+		}
 	}
-	panic("unreachable")
+	return 0, io.ErrUnexpectedEOF
 }
 
 var (
-	ErrInvalidLengthValue = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowValue   = fmt.Errorf("proto: integer overflow")
+	ErrInvalidLengthValue        = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowValue          = fmt.Errorf("proto: integer overflow")
+	ErrUnexpectedEndOfGroupValue = fmt.Errorf("proto: unexpected end of group")
 )

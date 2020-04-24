@@ -45,6 +45,10 @@ go 1.13
 //     yourself having to do any hacks with k8s.io library versions
 //     (like doing a `replace` for a dozen different k8s.io/
 //     packages), stop, and ask someone for advice.
+//
+//  5. `go mod tidy` is going to try to remove `github.com/cncf/udpa`--don't let it!
+//     That will break `make generate`. Keep the github.com/cncf/udpa version
+//     in-sync with the github.com/cncf/udpa/go version.
 
 require (
 	git.lukeshu.com/go/libsystemd v0.5.3
@@ -62,6 +66,7 @@ require (
 	github.com/fsnotify/fsnotify v1.4.7
 	github.com/gogo/protobuf v1.3.1
 	github.com/golang/protobuf v1.3.2
+	github.com/google/go-cmp v0.3.1
 	github.com/google/shlex v0.0.0-20191202100458-e7afc7fbc510
 	github.com/google/uuid v1.1.1
 	github.com/gookit/color v1.2.3
@@ -84,7 +89,7 @@ require (
 	golang.org/x/crypto v0.0.0-20191028145041-f83a4685e152
 	golang.org/x/net v0.0.0-20191028085509-fe3aa8a45271
 	golang.org/x/sys v0.0.0-20191028164358-195ce5e7f934
-	google.golang.org/grpc v1.24.0
+	google.golang.org/grpc v1.25.1
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0
 	gopkg.in/yaml.v2 v2.2.7
 	helm.sh/helm/v3 v3.0.2

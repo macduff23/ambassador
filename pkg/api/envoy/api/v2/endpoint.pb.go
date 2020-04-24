@@ -249,8 +249,10 @@ type ClusterLoadAssignment_Policy_DropOverload struct {
 func (m *ClusterLoadAssignment_Policy_DropOverload) Reset() {
 	*m = ClusterLoadAssignment_Policy_DropOverload{}
 }
-func (m *ClusterLoadAssignment_Policy_DropOverload) String() string { return proto.CompactTextString(m) }
-func (*ClusterLoadAssignment_Policy_DropOverload) ProtoMessage()    {}
+func (m *ClusterLoadAssignment_Policy_DropOverload) String() string {
+	return proto.CompactTextString(m)
+}
+func (*ClusterLoadAssignment_Policy_DropOverload) ProtoMessage() {}
 func (*ClusterLoadAssignment_Policy_DropOverload) Descriptor() ([]byte, []int) {
 	return fileDescriptor_8dd3a9d301e6758b, []int{0, 0, 0}
 }
@@ -1250,6 +1252,7 @@ func (m *ClusterLoadAssignment_Policy_DropOverload) Unmarshal(dAtA []byte) error
 func skipEndpoint(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
+	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -1281,10 +1284,8 @@ func skipEndpoint(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			return iNdEx, nil
 		case 1:
 			iNdEx += 8
-			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -1305,55 +1306,30 @@ func skipEndpoint(dAtA []byte) (n int, err error) {
 				return 0, ErrInvalidLengthEndpoint
 			}
 			iNdEx += length
-			if iNdEx < 0 {
-				return 0, ErrInvalidLengthEndpoint
-			}
-			return iNdEx, nil
 		case 3:
-			for {
-				var innerWire uint64
-				var start int = iNdEx
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return 0, ErrIntOverflowEndpoint
-					}
-					if iNdEx >= l {
-						return 0, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					innerWire |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				innerWireType := int(innerWire & 0x7)
-				if innerWireType == 4 {
-					break
-				}
-				next, err := skipEndpoint(dAtA[start:])
-				if err != nil {
-					return 0, err
-				}
-				iNdEx = start + next
-				if iNdEx < 0 {
-					return 0, ErrInvalidLengthEndpoint
-				}
-			}
-			return iNdEx, nil
+			depth++
 		case 4:
-			return iNdEx, nil
+			if depth == 0 {
+				return 0, ErrUnexpectedEndOfGroupEndpoint
+			}
+			depth--
 		case 5:
 			iNdEx += 4
-			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
+		if iNdEx < 0 {
+			return 0, ErrInvalidLengthEndpoint
+		}
+		if depth == 0 {
+			return iNdEx, nil
+		}
 	}
-	panic("unreachable")
+	return 0, io.ErrUnexpectedEOF
 }
 
 var (
-	ErrInvalidLengthEndpoint = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowEndpoint   = fmt.Errorf("proto: integer overflow")
+	ErrInvalidLengthEndpoint        = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowEndpoint          = fmt.Errorf("proto: integer overflow")
+	ErrUnexpectedEndOfGroupEndpoint = fmt.Errorf("proto: unexpected end of group")
 )

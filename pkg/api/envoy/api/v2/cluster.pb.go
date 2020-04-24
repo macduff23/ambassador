@@ -668,19 +668,19 @@ type isCluster_LbConfig interface {
 }
 
 type Cluster_Type struct {
-	Type Cluster_DiscoveryType `protobuf:"varint,2,opt,name=type,proto3,enum=envoy.api.v2.Cluster_DiscoveryType,oneof"`
+	Type Cluster_DiscoveryType `protobuf:"varint,2,opt,name=type,proto3,enum=envoy.api.v2.Cluster_DiscoveryType,oneof" json:"type,omitempty"`
 }
 type Cluster_ClusterType struct {
-	ClusterType *Cluster_CustomClusterType `protobuf:"bytes,38,opt,name=cluster_type,json=clusterType,proto3,oneof"`
+	ClusterType *Cluster_CustomClusterType `protobuf:"bytes,38,opt,name=cluster_type,json=clusterType,proto3,oneof" json:"cluster_type,omitempty"`
 }
 type Cluster_RingHashLbConfig_ struct {
-	RingHashLbConfig *Cluster_RingHashLbConfig `protobuf:"bytes,23,opt,name=ring_hash_lb_config,json=ringHashLbConfig,proto3,oneof"`
+	RingHashLbConfig *Cluster_RingHashLbConfig `protobuf:"bytes,23,opt,name=ring_hash_lb_config,json=ringHashLbConfig,proto3,oneof" json:"ring_hash_lb_config,omitempty"`
 }
 type Cluster_OriginalDstLbConfig_ struct {
-	OriginalDstLbConfig *Cluster_OriginalDstLbConfig `protobuf:"bytes,34,opt,name=original_dst_lb_config,json=originalDstLbConfig,proto3,oneof"`
+	OriginalDstLbConfig *Cluster_OriginalDstLbConfig `protobuf:"bytes,34,opt,name=original_dst_lb_config,json=originalDstLbConfig,proto3,oneof" json:"original_dst_lb_config,omitempty"`
 }
 type Cluster_LeastRequestLbConfig_ struct {
-	LeastRequestLbConfig *Cluster_LeastRequestLbConfig `protobuf:"bytes,37,opt,name=least_request_lb_config,json=leastRequestLbConfig,proto3,oneof"`
+	LeastRequestLbConfig *Cluster_LeastRequestLbConfig `protobuf:"bytes,37,opt,name=least_request_lb_config,json=leastRequestLbConfig,proto3,oneof" json:"least_request_lb_config,omitempty"`
 }
 
 func (*Cluster_Type) isCluster_ClusterDiscoveryType()        {}
@@ -1726,13 +1726,14 @@ type isCluster_CommonLbConfig_LocalityConfigSpecifier interface {
 }
 
 type Cluster_CommonLbConfig_ZoneAwareLbConfig_ struct {
-	ZoneAwareLbConfig *Cluster_CommonLbConfig_ZoneAwareLbConfig `protobuf:"bytes,2,opt,name=zone_aware_lb_config,json=zoneAwareLbConfig,proto3,oneof"`
+	ZoneAwareLbConfig *Cluster_CommonLbConfig_ZoneAwareLbConfig `protobuf:"bytes,2,opt,name=zone_aware_lb_config,json=zoneAwareLbConfig,proto3,oneof" json:"zone_aware_lb_config,omitempty"`
 }
 type Cluster_CommonLbConfig_LocalityWeightedLbConfig_ struct {
-	LocalityWeightedLbConfig *Cluster_CommonLbConfig_LocalityWeightedLbConfig `protobuf:"bytes,3,opt,name=locality_weighted_lb_config,json=localityWeightedLbConfig,proto3,oneof"`
+	LocalityWeightedLbConfig *Cluster_CommonLbConfig_LocalityWeightedLbConfig `protobuf:"bytes,3,opt,name=locality_weighted_lb_config,json=localityWeightedLbConfig,proto3,oneof" json:"locality_weighted_lb_config,omitempty"`
 }
 
-func (*Cluster_CommonLbConfig_ZoneAwareLbConfig_) isCluster_CommonLbConfig_LocalityConfigSpecifier() {}
+func (*Cluster_CommonLbConfig_ZoneAwareLbConfig_) isCluster_CommonLbConfig_LocalityConfigSpecifier() {
+}
 func (*Cluster_CommonLbConfig_LocalityWeightedLbConfig_) isCluster_CommonLbConfig_LocalityConfigSpecifier() {
 }
 
@@ -3026,7 +3027,8 @@ func (m *Cluster) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *Cluster_Type) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Cluster_Type) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -3037,7 +3039,8 @@ func (m *Cluster_Type) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Cluster_RingHashLbConfig_) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Cluster_RingHashLbConfig_) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -3059,7 +3062,8 @@ func (m *Cluster_RingHashLbConfig_) MarshalToSizedBuffer(dAtA []byte) (int, erro
 	return len(dAtA) - i, nil
 }
 func (m *Cluster_OriginalDstLbConfig_) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Cluster_OriginalDstLbConfig_) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -3081,7 +3085,8 @@ func (m *Cluster_OriginalDstLbConfig_) MarshalToSizedBuffer(dAtA []byte) (int, e
 	return len(dAtA) - i, nil
 }
 func (m *Cluster_LeastRequestLbConfig_) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Cluster_LeastRequestLbConfig_) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -3103,7 +3108,8 @@ func (m *Cluster_LeastRequestLbConfig_) MarshalToSizedBuffer(dAtA []byte) (int, 
 	return len(dAtA) - i, nil
 }
 func (m *Cluster_ClusterType) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Cluster_ClusterType) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -3635,7 +3641,8 @@ func (m *Cluster_CommonLbConfig) MarshalToSizedBuffer(dAtA []byte) (int, error) 
 }
 
 func (m *Cluster_CommonLbConfig_ZoneAwareLbConfig_) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Cluster_CommonLbConfig_ZoneAwareLbConfig_) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -3655,7 +3662,8 @@ func (m *Cluster_CommonLbConfig_ZoneAwareLbConfig_) MarshalToSizedBuffer(dAtA []
 	return len(dAtA) - i, nil
 }
 func (m *Cluster_CommonLbConfig_LocalityWeightedLbConfig_) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Cluster_CommonLbConfig_LocalityWeightedLbConfig_) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -8379,6 +8387,7 @@ func (m *UpstreamConnectionOptions) Unmarshal(dAtA []byte) error {
 func skipCluster(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
+	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -8410,10 +8419,8 @@ func skipCluster(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			return iNdEx, nil
 		case 1:
 			iNdEx += 8
-			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -8434,55 +8441,30 @@ func skipCluster(dAtA []byte) (n int, err error) {
 				return 0, ErrInvalidLengthCluster
 			}
 			iNdEx += length
-			if iNdEx < 0 {
-				return 0, ErrInvalidLengthCluster
-			}
-			return iNdEx, nil
 		case 3:
-			for {
-				var innerWire uint64
-				var start int = iNdEx
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return 0, ErrIntOverflowCluster
-					}
-					if iNdEx >= l {
-						return 0, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					innerWire |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				innerWireType := int(innerWire & 0x7)
-				if innerWireType == 4 {
-					break
-				}
-				next, err := skipCluster(dAtA[start:])
-				if err != nil {
-					return 0, err
-				}
-				iNdEx = start + next
-				if iNdEx < 0 {
-					return 0, ErrInvalidLengthCluster
-				}
-			}
-			return iNdEx, nil
+			depth++
 		case 4:
-			return iNdEx, nil
+			if depth == 0 {
+				return 0, ErrUnexpectedEndOfGroupCluster
+			}
+			depth--
 		case 5:
 			iNdEx += 4
-			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
+		if iNdEx < 0 {
+			return 0, ErrInvalidLengthCluster
+		}
+		if depth == 0 {
+			return iNdEx, nil
+		}
 	}
-	panic("unreachable")
+	return 0, io.ErrUnexpectedEOF
 }
 
 var (
-	ErrInvalidLengthCluster = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowCluster   = fmt.Errorf("proto: integer overflow")
+	ErrInvalidLengthCluster        = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowCluster          = fmt.Errorf("proto: integer overflow")
+	ErrUnexpectedEndOfGroupCluster = fmt.Errorf("proto: unexpected end of group")
 )

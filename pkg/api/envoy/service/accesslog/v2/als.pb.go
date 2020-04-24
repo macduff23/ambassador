@@ -127,10 +127,10 @@ type isStreamAccessLogsMessage_LogEntries interface {
 }
 
 type StreamAccessLogsMessage_HttpLogs struct {
-	HttpLogs *StreamAccessLogsMessage_HTTPAccessLogEntries `protobuf:"bytes,2,opt,name=http_logs,json=httpLogs,proto3,oneof"`
+	HttpLogs *StreamAccessLogsMessage_HTTPAccessLogEntries `protobuf:"bytes,2,opt,name=http_logs,json=httpLogs,proto3,oneof" json:"http_logs,omitempty"`
 }
 type StreamAccessLogsMessage_TcpLogs struct {
-	TcpLogs *StreamAccessLogsMessage_TCPAccessLogEntries `protobuf:"bytes,3,opt,name=tcp_logs,json=tcpLogs,proto3,oneof"`
+	TcpLogs *StreamAccessLogsMessage_TCPAccessLogEntries `protobuf:"bytes,3,opt,name=tcp_logs,json=tcpLogs,proto3,oneof" json:"tcp_logs,omitempty"`
 }
 
 func (*StreamAccessLogsMessage_HttpLogs) isStreamAccessLogsMessage_LogEntries() {}
@@ -582,7 +582,8 @@ func (m *StreamAccessLogsMessage) MarshalToSizedBuffer(dAtA []byte) (int, error)
 }
 
 func (m *StreamAccessLogsMessage_HttpLogs) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *StreamAccessLogsMessage_HttpLogs) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -602,7 +603,8 @@ func (m *StreamAccessLogsMessage_HttpLogs) MarshalToSizedBuffer(dAtA []byte) (in
 	return len(dAtA) - i, nil
 }
 func (m *StreamAccessLogsMessage_TcpLogs) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *StreamAccessLogsMessage_TcpLogs) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1392,6 +1394,7 @@ func (m *StreamAccessLogsMessage_TCPAccessLogEntries) Unmarshal(dAtA []byte) err
 func skipAls(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
+	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -1423,10 +1426,8 @@ func skipAls(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			return iNdEx, nil
 		case 1:
 			iNdEx += 8
-			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -1447,55 +1448,30 @@ func skipAls(dAtA []byte) (n int, err error) {
 				return 0, ErrInvalidLengthAls
 			}
 			iNdEx += length
-			if iNdEx < 0 {
-				return 0, ErrInvalidLengthAls
-			}
-			return iNdEx, nil
 		case 3:
-			for {
-				var innerWire uint64
-				var start int = iNdEx
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return 0, ErrIntOverflowAls
-					}
-					if iNdEx >= l {
-						return 0, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					innerWire |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				innerWireType := int(innerWire & 0x7)
-				if innerWireType == 4 {
-					break
-				}
-				next, err := skipAls(dAtA[start:])
-				if err != nil {
-					return 0, err
-				}
-				iNdEx = start + next
-				if iNdEx < 0 {
-					return 0, ErrInvalidLengthAls
-				}
-			}
-			return iNdEx, nil
+			depth++
 		case 4:
-			return iNdEx, nil
+			if depth == 0 {
+				return 0, ErrUnexpectedEndOfGroupAls
+			}
+			depth--
 		case 5:
 			iNdEx += 4
-			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
+		if iNdEx < 0 {
+			return 0, ErrInvalidLengthAls
+		}
+		if depth == 0 {
+			return iNdEx, nil
+		}
 	}
-	panic("unreachable")
+	return 0, io.ErrUnexpectedEOF
 }
 
 var (
-	ErrInvalidLengthAls = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowAls   = fmt.Errorf("proto: integer overflow")
+	ErrInvalidLengthAls        = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowAls          = fmt.Errorf("proto: integer overflow")
+	ErrUnexpectedEndOfGroupAls = fmt.Errorf("proto: unexpected end of group")
 )

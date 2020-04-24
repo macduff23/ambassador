@@ -85,10 +85,10 @@ type isGrpcService_TargetSpecifier interface {
 }
 
 type GrpcService_EnvoyGrpc_ struct {
-	EnvoyGrpc *GrpcService_EnvoyGrpc `protobuf:"bytes,1,opt,name=envoy_grpc,json=envoyGrpc,proto3,oneof"`
+	EnvoyGrpc *GrpcService_EnvoyGrpc `protobuf:"bytes,1,opt,name=envoy_grpc,json=envoyGrpc,proto3,oneof" json:"envoy_grpc,omitempty"`
 }
 type GrpcService_GoogleGrpc_ struct {
-	GoogleGrpc *GrpcService_GoogleGrpc `protobuf:"bytes,2,opt,name=google_grpc,json=googleGrpc,proto3,oneof"`
+	GoogleGrpc *GrpcService_GoogleGrpc `protobuf:"bytes,2,opt,name=google_grpc,json=googleGrpc,proto3,oneof" json:"google_grpc,omitempty"`
 }
 
 func (*GrpcService_EnvoyGrpc_) isGrpcService_TargetSpecifier()  {}
@@ -422,8 +422,10 @@ type GrpcService_GoogleGrpc_ChannelCredentials struct {
 func (m *GrpcService_GoogleGrpc_ChannelCredentials) Reset() {
 	*m = GrpcService_GoogleGrpc_ChannelCredentials{}
 }
-func (m *GrpcService_GoogleGrpc_ChannelCredentials) String() string { return proto.CompactTextString(m) }
-func (*GrpcService_GoogleGrpc_ChannelCredentials) ProtoMessage()    {}
+func (m *GrpcService_GoogleGrpc_ChannelCredentials) String() string {
+	return proto.CompactTextString(m)
+}
+func (*GrpcService_GoogleGrpc_ChannelCredentials) ProtoMessage() {}
 func (*GrpcService_GoogleGrpc_ChannelCredentials) Descriptor() ([]byte, []int) {
 	return fileDescriptor_5fda5a40ec4afc3b, []int{0, 1, 2}
 }
@@ -461,13 +463,13 @@ type isGrpcService_GoogleGrpc_ChannelCredentials_CredentialSpecifier interface {
 }
 
 type GrpcService_GoogleGrpc_ChannelCredentials_SslCredentials struct {
-	SslCredentials *GrpcService_GoogleGrpc_SslCredentials `protobuf:"bytes,1,opt,name=ssl_credentials,json=sslCredentials,proto3,oneof"`
+	SslCredentials *GrpcService_GoogleGrpc_SslCredentials `protobuf:"bytes,1,opt,name=ssl_credentials,json=sslCredentials,proto3,oneof" json:"ssl_credentials,omitempty"`
 }
 type GrpcService_GoogleGrpc_ChannelCredentials_GoogleDefault struct {
-	GoogleDefault *types.Empty `protobuf:"bytes,2,opt,name=google_default,json=googleDefault,proto3,oneof"`
+	GoogleDefault *types.Empty `protobuf:"bytes,2,opt,name=google_default,json=googleDefault,proto3,oneof" json:"google_default,omitempty"`
 }
 type GrpcService_GoogleGrpc_ChannelCredentials_LocalCredentials struct {
-	LocalCredentials *GrpcService_GoogleGrpc_GoogleLocalCredentials `protobuf:"bytes,3,opt,name=local_credentials,json=localCredentials,proto3,oneof"`
+	LocalCredentials *GrpcService_GoogleGrpc_GoogleLocalCredentials `protobuf:"bytes,3,opt,name=local_credentials,json=localCredentials,proto3,oneof" json:"local_credentials,omitempty"`
 }
 
 func (*GrpcService_GoogleGrpc_ChannelCredentials_SslCredentials) isGrpcService_GoogleGrpc_ChannelCredentials_CredentialSpecifier() {
@@ -572,25 +574,25 @@ type isGrpcService_GoogleGrpc_CallCredentials_CredentialSpecifier interface {
 }
 
 type GrpcService_GoogleGrpc_CallCredentials_AccessToken struct {
-	AccessToken string `protobuf:"bytes,1,opt,name=access_token,json=accessToken,proto3,oneof"`
+	AccessToken string `protobuf:"bytes,1,opt,name=access_token,json=accessToken,proto3,oneof" json:"access_token,omitempty"`
 }
 type GrpcService_GoogleGrpc_CallCredentials_GoogleComputeEngine struct {
-	GoogleComputeEngine *types.Empty `protobuf:"bytes,2,opt,name=google_compute_engine,json=googleComputeEngine,proto3,oneof"`
+	GoogleComputeEngine *types.Empty `protobuf:"bytes,2,opt,name=google_compute_engine,json=googleComputeEngine,proto3,oneof" json:"google_compute_engine,omitempty"`
 }
 type GrpcService_GoogleGrpc_CallCredentials_GoogleRefreshToken struct {
-	GoogleRefreshToken string `protobuf:"bytes,3,opt,name=google_refresh_token,json=googleRefreshToken,proto3,oneof"`
+	GoogleRefreshToken string `protobuf:"bytes,3,opt,name=google_refresh_token,json=googleRefreshToken,proto3,oneof" json:"google_refresh_token,omitempty"`
 }
 type GrpcService_GoogleGrpc_CallCredentials_ServiceAccountJwtAccess struct {
-	ServiceAccountJwtAccess *GrpcService_GoogleGrpc_CallCredentials_ServiceAccountJWTAccessCredentials `protobuf:"bytes,4,opt,name=service_account_jwt_access,json=serviceAccountJwtAccess,proto3,oneof"`
+	ServiceAccountJwtAccess *GrpcService_GoogleGrpc_CallCredentials_ServiceAccountJWTAccessCredentials `protobuf:"bytes,4,opt,name=service_account_jwt_access,json=serviceAccountJwtAccess,proto3,oneof" json:"service_account_jwt_access,omitempty"`
 }
 type GrpcService_GoogleGrpc_CallCredentials_GoogleIam struct {
-	GoogleIam *GrpcService_GoogleGrpc_CallCredentials_GoogleIAMCredentials `protobuf:"bytes,5,opt,name=google_iam,json=googleIam,proto3,oneof"`
+	GoogleIam *GrpcService_GoogleGrpc_CallCredentials_GoogleIAMCredentials `protobuf:"bytes,5,opt,name=google_iam,json=googleIam,proto3,oneof" json:"google_iam,omitempty"`
 }
 type GrpcService_GoogleGrpc_CallCredentials_FromPlugin struct {
-	FromPlugin *GrpcService_GoogleGrpc_CallCredentials_MetadataCredentialsFromPlugin `protobuf:"bytes,6,opt,name=from_plugin,json=fromPlugin,proto3,oneof"`
+	FromPlugin *GrpcService_GoogleGrpc_CallCredentials_MetadataCredentialsFromPlugin `protobuf:"bytes,6,opt,name=from_plugin,json=fromPlugin,proto3,oneof" json:"from_plugin,omitempty"`
 }
 type GrpcService_GoogleGrpc_CallCredentials_StsService_ struct {
-	StsService *GrpcService_GoogleGrpc_CallCredentials_StsService `protobuf:"bytes,7,opt,name=sts_service,json=stsService,proto3,oneof"`
+	StsService *GrpcService_GoogleGrpc_CallCredentials_StsService `protobuf:"bytes,7,opt,name=sts_service,json=stsService,proto3,oneof" json:"sts_service,omitempty"`
 }
 
 func (*GrpcService_GoogleGrpc_CallCredentials_AccessToken) isGrpcService_GoogleGrpc_CallCredentials_CredentialSpecifier() {
@@ -849,7 +851,7 @@ type isGrpcService_GoogleGrpc_CallCredentials_MetadataCredentialsFromPlugin_Conf
 }
 
 type GrpcService_GoogleGrpc_CallCredentials_MetadataCredentialsFromPlugin_TypedConfig struct {
-	TypedConfig *types.Any `protobuf:"bytes,3,opt,name=typed_config,json=typedConfig,proto3,oneof"`
+	TypedConfig *types.Any `protobuf:"bytes,3,opt,name=typed_config,json=typedConfig,proto3,oneof" json:"typed_config,omitempty"`
 }
 
 func (*GrpcService_GoogleGrpc_CallCredentials_MetadataCredentialsFromPlugin_TypedConfig) isGrpcService_GoogleGrpc_CallCredentials_MetadataCredentialsFromPlugin_ConfigType() {
@@ -1194,7 +1196,8 @@ func (m *GrpcService) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *GrpcService_EnvoyGrpc_) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *GrpcService_EnvoyGrpc_) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1214,7 +1217,8 @@ func (m *GrpcService_EnvoyGrpc_) MarshalToSizedBuffer(dAtA []byte) (int, error) 
 	return len(dAtA) - i, nil
 }
 func (m *GrpcService_GoogleGrpc_) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *GrpcService_GoogleGrpc_) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1480,7 +1484,8 @@ func (m *GrpcService_GoogleGrpc_ChannelCredentials) MarshalToSizedBuffer(dAtA []
 }
 
 func (m *GrpcService_GoogleGrpc_ChannelCredentials_SslCredentials) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *GrpcService_GoogleGrpc_ChannelCredentials_SslCredentials) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1500,7 +1505,8 @@ func (m *GrpcService_GoogleGrpc_ChannelCredentials_SslCredentials) MarshalToSize
 	return len(dAtA) - i, nil
 }
 func (m *GrpcService_GoogleGrpc_ChannelCredentials_GoogleDefault) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *GrpcService_GoogleGrpc_ChannelCredentials_GoogleDefault) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1520,7 +1526,8 @@ func (m *GrpcService_GoogleGrpc_ChannelCredentials_GoogleDefault) MarshalToSized
 	return len(dAtA) - i, nil
 }
 func (m *GrpcService_GoogleGrpc_ChannelCredentials_LocalCredentials) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *GrpcService_GoogleGrpc_ChannelCredentials_LocalCredentials) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1576,7 +1583,8 @@ func (m *GrpcService_GoogleGrpc_CallCredentials) MarshalToSizedBuffer(dAtA []byt
 }
 
 func (m *GrpcService_GoogleGrpc_CallCredentials_AccessToken) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *GrpcService_GoogleGrpc_CallCredentials_AccessToken) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1589,7 +1597,8 @@ func (m *GrpcService_GoogleGrpc_CallCredentials_AccessToken) MarshalToSizedBuffe
 	return len(dAtA) - i, nil
 }
 func (m *GrpcService_GoogleGrpc_CallCredentials_GoogleComputeEngine) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *GrpcService_GoogleGrpc_CallCredentials_GoogleComputeEngine) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1609,7 +1618,8 @@ func (m *GrpcService_GoogleGrpc_CallCredentials_GoogleComputeEngine) MarshalToSi
 	return len(dAtA) - i, nil
 }
 func (m *GrpcService_GoogleGrpc_CallCredentials_GoogleRefreshToken) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *GrpcService_GoogleGrpc_CallCredentials_GoogleRefreshToken) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1622,7 +1632,8 @@ func (m *GrpcService_GoogleGrpc_CallCredentials_GoogleRefreshToken) MarshalToSiz
 	return len(dAtA) - i, nil
 }
 func (m *GrpcService_GoogleGrpc_CallCredentials_ServiceAccountJwtAccess) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *GrpcService_GoogleGrpc_CallCredentials_ServiceAccountJwtAccess) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1642,7 +1653,8 @@ func (m *GrpcService_GoogleGrpc_CallCredentials_ServiceAccountJwtAccess) Marshal
 	return len(dAtA) - i, nil
 }
 func (m *GrpcService_GoogleGrpc_CallCredentials_GoogleIam) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *GrpcService_GoogleGrpc_CallCredentials_GoogleIam) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1662,7 +1674,8 @@ func (m *GrpcService_GoogleGrpc_CallCredentials_GoogleIam) MarshalToSizedBuffer(
 	return len(dAtA) - i, nil
 }
 func (m *GrpcService_GoogleGrpc_CallCredentials_FromPlugin) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *GrpcService_GoogleGrpc_CallCredentials_FromPlugin) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1682,7 +1695,8 @@ func (m *GrpcService_GoogleGrpc_CallCredentials_FromPlugin) MarshalToSizedBuffer
 	return len(dAtA) - i, nil
 }
 func (m *GrpcService_GoogleGrpc_CallCredentials_StsService_) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *GrpcService_GoogleGrpc_CallCredentials_StsService_) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1825,7 +1839,8 @@ func (m *GrpcService_GoogleGrpc_CallCredentials_MetadataCredentialsFromPlugin) M
 }
 
 func (m *GrpcService_GoogleGrpc_CallCredentials_MetadataCredentialsFromPlugin_TypedConfig) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *GrpcService_GoogleGrpc_CallCredentials_MetadataCredentialsFromPlugin_TypedConfig) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -4247,6 +4262,7 @@ func (m *GrpcService_GoogleGrpc_CallCredentials_StsService) Unmarshal(dAtA []byt
 func skipGrpcService(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
+	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -4278,10 +4294,8 @@ func skipGrpcService(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			return iNdEx, nil
 		case 1:
 			iNdEx += 8
-			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -4302,55 +4316,30 @@ func skipGrpcService(dAtA []byte) (n int, err error) {
 				return 0, ErrInvalidLengthGrpcService
 			}
 			iNdEx += length
-			if iNdEx < 0 {
-				return 0, ErrInvalidLengthGrpcService
-			}
-			return iNdEx, nil
 		case 3:
-			for {
-				var innerWire uint64
-				var start int = iNdEx
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return 0, ErrIntOverflowGrpcService
-					}
-					if iNdEx >= l {
-						return 0, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					innerWire |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				innerWireType := int(innerWire & 0x7)
-				if innerWireType == 4 {
-					break
-				}
-				next, err := skipGrpcService(dAtA[start:])
-				if err != nil {
-					return 0, err
-				}
-				iNdEx = start + next
-				if iNdEx < 0 {
-					return 0, ErrInvalidLengthGrpcService
-				}
-			}
-			return iNdEx, nil
+			depth++
 		case 4:
-			return iNdEx, nil
+			if depth == 0 {
+				return 0, ErrUnexpectedEndOfGroupGrpcService
+			}
+			depth--
 		case 5:
 			iNdEx += 4
-			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
+		if iNdEx < 0 {
+			return 0, ErrInvalidLengthGrpcService
+		}
+		if depth == 0 {
+			return iNdEx, nil
+		}
 	}
-	panic("unreachable")
+	return 0, io.ErrUnexpectedEOF
 }
 
 var (
-	ErrInvalidLengthGrpcService = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowGrpcService   = fmt.Errorf("proto: integer overflow")
+	ErrInvalidLengthGrpcService        = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowGrpcService          = fmt.Errorf("proto: integer overflow")
+	ErrUnexpectedEndOfGroupGrpcService = fmt.Errorf("proto: unexpected end of group")
 )

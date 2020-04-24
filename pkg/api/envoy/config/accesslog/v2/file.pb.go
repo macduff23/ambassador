@@ -81,13 +81,13 @@ type isFileAccessLog_AccessLogFormat interface {
 }
 
 type FileAccessLog_Format struct {
-	Format string `protobuf:"bytes,2,opt,name=format,proto3,oneof"`
+	Format string `protobuf:"bytes,2,opt,name=format,proto3,oneof" json:"format,omitempty"`
 }
 type FileAccessLog_JsonFormat struct {
-	JsonFormat *types.Struct `protobuf:"bytes,3,opt,name=json_format,json=jsonFormat,proto3,oneof"`
+	JsonFormat *types.Struct `protobuf:"bytes,3,opt,name=json_format,json=jsonFormat,proto3,oneof" json:"json_format,omitempty"`
 }
 type FileAccessLog_TypedJsonFormat struct {
-	TypedJsonFormat *types.Struct `protobuf:"bytes,4,opt,name=typed_json_format,json=typedJsonFormat,proto3,oneof"`
+	TypedJsonFormat *types.Struct `protobuf:"bytes,4,opt,name=typed_json_format,json=typedJsonFormat,proto3,oneof" json:"typed_json_format,omitempty"`
 }
 
 func (*FileAccessLog_Format) isFileAccessLog_AccessLogFormat()          {}
@@ -216,7 +216,8 @@ func (m *FileAccessLog) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *FileAccessLog_Format) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *FileAccessLog_Format) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -229,7 +230,8 @@ func (m *FileAccessLog_Format) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *FileAccessLog_JsonFormat) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *FileAccessLog_JsonFormat) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -249,7 +251,8 @@ func (m *FileAccessLog_JsonFormat) MarshalToSizedBuffer(dAtA []byte) (int, error
 	return len(dAtA) - i, nil
 }
 func (m *FileAccessLog_TypedJsonFormat) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *FileAccessLog_TypedJsonFormat) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -530,6 +533,7 @@ func (m *FileAccessLog) Unmarshal(dAtA []byte) error {
 func skipFile(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
+	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -561,10 +565,8 @@ func skipFile(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			return iNdEx, nil
 		case 1:
 			iNdEx += 8
-			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -585,55 +587,30 @@ func skipFile(dAtA []byte) (n int, err error) {
 				return 0, ErrInvalidLengthFile
 			}
 			iNdEx += length
-			if iNdEx < 0 {
-				return 0, ErrInvalidLengthFile
-			}
-			return iNdEx, nil
 		case 3:
-			for {
-				var innerWire uint64
-				var start int = iNdEx
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return 0, ErrIntOverflowFile
-					}
-					if iNdEx >= l {
-						return 0, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					innerWire |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				innerWireType := int(innerWire & 0x7)
-				if innerWireType == 4 {
-					break
-				}
-				next, err := skipFile(dAtA[start:])
-				if err != nil {
-					return 0, err
-				}
-				iNdEx = start + next
-				if iNdEx < 0 {
-					return 0, ErrInvalidLengthFile
-				}
-			}
-			return iNdEx, nil
+			depth++
 		case 4:
-			return iNdEx, nil
+			if depth == 0 {
+				return 0, ErrUnexpectedEndOfGroupFile
+			}
+			depth--
 		case 5:
 			iNdEx += 4
-			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
+		if iNdEx < 0 {
+			return 0, ErrInvalidLengthFile
+		}
+		if depth == 0 {
+			return iNdEx, nil
+		}
 	}
-	panic("unreachable")
+	return 0, io.ErrUnexpectedEOF
 }
 
 var (
-	ErrInvalidLengthFile = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowFile   = fmt.Errorf("proto: integer overflow")
+	ErrInvalidLengthFile        = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowFile          = fmt.Errorf("proto: integer overflow")
+	ErrUnexpectedEndOfGroupFile = fmt.Errorf("proto: unexpected end of group")
 )

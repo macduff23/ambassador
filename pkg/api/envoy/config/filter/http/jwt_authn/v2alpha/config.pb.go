@@ -197,10 +197,10 @@ type isJwtProvider_JwksSourceSpecifier interface {
 }
 
 type JwtProvider_RemoteJwks struct {
-	RemoteJwks *RemoteJwks `protobuf:"bytes,3,opt,name=remote_jwks,json=remoteJwks,proto3,oneof"`
+	RemoteJwks *RemoteJwks `protobuf:"bytes,3,opt,name=remote_jwks,json=remoteJwks,proto3,oneof" json:"remote_jwks,omitempty"`
 }
 type JwtProvider_LocalJwks struct {
-	LocalJwks *core.DataSource `protobuf:"bytes,4,opt,name=local_jwks,json=localJwks,proto3,oneof"`
+	LocalJwks *core.DataSource `protobuf:"bytes,4,opt,name=local_jwks,json=localJwks,proto3,oneof" json:"local_jwks,omitempty"`
 }
 
 func (*JwtProvider_RemoteJwks) isJwtProvider_JwksSourceSpecifier() {}
@@ -579,22 +579,22 @@ type isJwtRequirement_RequiresType interface {
 }
 
 type JwtRequirement_ProviderName struct {
-	ProviderName string `protobuf:"bytes,1,opt,name=provider_name,json=providerName,proto3,oneof"`
+	ProviderName string `protobuf:"bytes,1,opt,name=provider_name,json=providerName,proto3,oneof" json:"provider_name,omitempty"`
 }
 type JwtRequirement_ProviderAndAudiences struct {
-	ProviderAndAudiences *ProviderWithAudiences `protobuf:"bytes,2,opt,name=provider_and_audiences,json=providerAndAudiences,proto3,oneof"`
+	ProviderAndAudiences *ProviderWithAudiences `protobuf:"bytes,2,opt,name=provider_and_audiences,json=providerAndAudiences,proto3,oneof" json:"provider_and_audiences,omitempty"`
 }
 type JwtRequirement_RequiresAny struct {
-	RequiresAny *JwtRequirementOrList `protobuf:"bytes,3,opt,name=requires_any,json=requiresAny,proto3,oneof"`
+	RequiresAny *JwtRequirementOrList `protobuf:"bytes,3,opt,name=requires_any,json=requiresAny,proto3,oneof" json:"requires_any,omitempty"`
 }
 type JwtRequirement_RequiresAll struct {
-	RequiresAll *JwtRequirementAndList `protobuf:"bytes,4,opt,name=requires_all,json=requiresAll,proto3,oneof"`
+	RequiresAll *JwtRequirementAndList `protobuf:"bytes,4,opt,name=requires_all,json=requiresAll,proto3,oneof" json:"requires_all,omitempty"`
 }
 type JwtRequirement_AllowMissingOrFailed struct {
-	AllowMissingOrFailed *types.Empty `protobuf:"bytes,5,opt,name=allow_missing_or_failed,json=allowMissingOrFailed,proto3,oneof"`
+	AllowMissingOrFailed *types.Empty `protobuf:"bytes,5,opt,name=allow_missing_or_failed,json=allowMissingOrFailed,proto3,oneof" json:"allow_missing_or_failed,omitempty"`
 }
 type JwtRequirement_AllowMissing struct {
-	AllowMissing *types.Empty `protobuf:"bytes,6,opt,name=allow_missing,json=allowMissing,proto3,oneof"`
+	AllowMissing *types.Empty `protobuf:"bytes,6,opt,name=allow_missing,json=allowMissing,proto3,oneof" json:"allow_missing,omitempty"`
 }
 
 func (*JwtRequirement_ProviderName) isJwtRequirement_RequiresType()         {}
@@ -1289,7 +1289,8 @@ func (m *JwtProvider) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *JwtProvider_RemoteJwks) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *JwtProvider_RemoteJwks) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1309,7 +1310,8 @@ func (m *JwtProvider_RemoteJwks) MarshalToSizedBuffer(dAtA []byte) (int, error) 
 	return len(dAtA) - i, nil
 }
 func (m *JwtProvider_LocalJwks) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *JwtProvider_LocalJwks) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1500,7 +1502,8 @@ func (m *JwtRequirement) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *JwtRequirement_ProviderName) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *JwtRequirement_ProviderName) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1513,7 +1516,8 @@ func (m *JwtRequirement_ProviderName) MarshalToSizedBuffer(dAtA []byte) (int, er
 	return len(dAtA) - i, nil
 }
 func (m *JwtRequirement_ProviderAndAudiences) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *JwtRequirement_ProviderAndAudiences) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1533,7 +1537,8 @@ func (m *JwtRequirement_ProviderAndAudiences) MarshalToSizedBuffer(dAtA []byte) 
 	return len(dAtA) - i, nil
 }
 func (m *JwtRequirement_RequiresAny) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *JwtRequirement_RequiresAny) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1553,7 +1558,8 @@ func (m *JwtRequirement_RequiresAny) MarshalToSizedBuffer(dAtA []byte) (int, err
 	return len(dAtA) - i, nil
 }
 func (m *JwtRequirement_RequiresAll) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *JwtRequirement_RequiresAll) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1573,7 +1579,8 @@ func (m *JwtRequirement_RequiresAll) MarshalToSizedBuffer(dAtA []byte) (int, err
 	return len(dAtA) - i, nil
 }
 func (m *JwtRequirement_AllowMissingOrFailed) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *JwtRequirement_AllowMissingOrFailed) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1593,7 +1600,8 @@ func (m *JwtRequirement_AllowMissingOrFailed) MarshalToSizedBuffer(dAtA []byte) 
 	return len(dAtA) - i, nil
 }
 func (m *JwtRequirement_AllowMissing) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *JwtRequirement_AllowMissing) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -4007,6 +4015,7 @@ func (m *JwtAuthentication) Unmarshal(dAtA []byte) error {
 func skipConfig(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
+	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -4038,10 +4047,8 @@ func skipConfig(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			return iNdEx, nil
 		case 1:
 			iNdEx += 8
-			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -4062,55 +4069,30 @@ func skipConfig(dAtA []byte) (n int, err error) {
 				return 0, ErrInvalidLengthConfig
 			}
 			iNdEx += length
-			if iNdEx < 0 {
-				return 0, ErrInvalidLengthConfig
-			}
-			return iNdEx, nil
 		case 3:
-			for {
-				var innerWire uint64
-				var start int = iNdEx
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return 0, ErrIntOverflowConfig
-					}
-					if iNdEx >= l {
-						return 0, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					innerWire |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				innerWireType := int(innerWire & 0x7)
-				if innerWireType == 4 {
-					break
-				}
-				next, err := skipConfig(dAtA[start:])
-				if err != nil {
-					return 0, err
-				}
-				iNdEx = start + next
-				if iNdEx < 0 {
-					return 0, ErrInvalidLengthConfig
-				}
-			}
-			return iNdEx, nil
+			depth++
 		case 4:
-			return iNdEx, nil
+			if depth == 0 {
+				return 0, ErrUnexpectedEndOfGroupConfig
+			}
+			depth--
 		case 5:
 			iNdEx += 4
-			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
+		if iNdEx < 0 {
+			return 0, ErrInvalidLengthConfig
+		}
+		if depth == 0 {
+			return iNdEx, nil
+		}
 	}
-	panic("unreachable")
+	return 0, io.ErrUnexpectedEOF
 }
 
 var (
-	ErrInvalidLengthConfig = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowConfig   = fmt.Errorf("proto: integer overflow")
+	ErrInvalidLengthConfig        = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowConfig          = fmt.Errorf("proto: integer overflow")
+	ErrUnexpectedEndOfGroupConfig = fmt.Errorf("proto: unexpected end of group")
 )

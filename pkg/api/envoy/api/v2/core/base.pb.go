@@ -497,10 +497,10 @@ type isNode_UserAgentVersionType interface {
 }
 
 type Node_UserAgentVersion struct {
-	UserAgentVersion string `protobuf:"bytes,7,opt,name=user_agent_version,json=userAgentVersion,proto3,oneof"`
+	UserAgentVersion string `protobuf:"bytes,7,opt,name=user_agent_version,json=userAgentVersion,proto3,oneof" json:"user_agent_version,omitempty"`
 }
 type Node_UserAgentBuildVersion struct {
-	UserAgentBuildVersion *BuildVersion `protobuf:"bytes,8,opt,name=user_agent_build_version,json=userAgentBuildVersion,proto3,oneof"`
+	UserAgentBuildVersion *BuildVersion `protobuf:"bytes,8,opt,name=user_agent_build_version,json=userAgentBuildVersion,proto3,oneof" json:"user_agent_build_version,omitempty"`
 }
 
 func (*Node_UserAgentVersion) isNode_UserAgentVersionType()      {}
@@ -1002,13 +1002,13 @@ type isDataSource_Specifier interface {
 }
 
 type DataSource_Filename struct {
-	Filename string `protobuf:"bytes,1,opt,name=filename,proto3,oneof"`
+	Filename string `protobuf:"bytes,1,opt,name=filename,proto3,oneof" json:"filename,omitempty"`
 }
 type DataSource_InlineBytes struct {
-	InlineBytes []byte `protobuf:"bytes,2,opt,name=inline_bytes,json=inlineBytes,proto3,oneof"`
+	InlineBytes []byte `protobuf:"bytes,2,opt,name=inline_bytes,json=inlineBytes,proto3,oneof" json:"inline_bytes,omitempty"`
 }
 type DataSource_InlineString struct {
-	InlineString string `protobuf:"bytes,3,opt,name=inline_string,json=inlineString,proto3,oneof"`
+	InlineString string `protobuf:"bytes,3,opt,name=inline_string,json=inlineString,proto3,oneof" json:"inline_string,omitempty"`
 }
 
 func (*DataSource_Filename) isDataSource_Specifier()     {}
@@ -1161,10 +1161,10 @@ type isAsyncDataSource_Specifier interface {
 }
 
 type AsyncDataSource_Local struct {
-	Local *DataSource `protobuf:"bytes,1,opt,name=local,proto3,oneof"`
+	Local *DataSource `protobuf:"bytes,1,opt,name=local,proto3,oneof" json:"local,omitempty"`
 }
 type AsyncDataSource_Remote struct {
-	Remote *RemoteDataSource `protobuf:"bytes,2,opt,name=remote,proto3,oneof"`
+	Remote *RemoteDataSource `protobuf:"bytes,2,opt,name=remote,proto3,oneof" json:"remote,omitempty"`
 }
 
 func (*AsyncDataSource_Local) isAsyncDataSource_Specifier()  {}
@@ -1259,10 +1259,10 @@ type isTransportSocket_ConfigType interface {
 }
 
 type TransportSocket_Config struct {
-	Config *types.Struct `protobuf:"bytes,2,opt,name=config,proto3,oneof"`
+	Config *types.Struct `protobuf:"bytes,2,opt,name=config,proto3,oneof" json:"config,omitempty"`
 }
 type TransportSocket_TypedConfig struct {
-	TypedConfig *types.Any `protobuf:"bytes,3,opt,name=typed_config,json=typedConfig,proto3,oneof"`
+	TypedConfig *types.Any `protobuf:"bytes,3,opt,name=typed_config,json=typedConfig,proto3,oneof" json:"typed_config,omitempty"`
 }
 
 func (*TransportSocket_Config) isTransportSocket_ConfigType()      {}
@@ -1368,10 +1368,10 @@ type isSocketOption_Value interface {
 }
 
 type SocketOption_IntValue struct {
-	IntValue int64 `protobuf:"varint,4,opt,name=int_value,json=intValue,proto3,oneof"`
+	IntValue int64 `protobuf:"varint,4,opt,name=int_value,json=intValue,proto3,oneof" json:"int_value,omitempty"`
 }
 type SocketOption_BufValue struct {
-	BufValue []byte `protobuf:"bytes,5,opt,name=buf_value,json=bufValue,proto3,oneof"`
+	BufValue []byte `protobuf:"bytes,5,opt,name=buf_value,json=bufValue,proto3,oneof" json:"buf_value,omitempty"`
 }
 
 func (*SocketOption_IntValue) isSocketOption_Value() {}
@@ -1962,7 +1962,8 @@ func (m *Node) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *Node_UserAgentVersion) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Node_UserAgentVersion) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1975,7 +1976,8 @@ func (m *Node_UserAgentVersion) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *Node_UserAgentBuildVersion) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *Node_UserAgentBuildVersion) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -2302,7 +2304,8 @@ func (m *DataSource) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *DataSource_Filename) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *DataSource_Filename) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -2315,7 +2318,8 @@ func (m *DataSource_Filename) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *DataSource_InlineBytes) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *DataSource_InlineBytes) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -2330,7 +2334,8 @@ func (m *DataSource_InlineBytes) MarshalToSizedBuffer(dAtA []byte) (int, error) 
 	return len(dAtA) - i, nil
 }
 func (m *DataSource_InlineString) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *DataSource_InlineString) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -2425,7 +2430,8 @@ func (m *AsyncDataSource) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *AsyncDataSource_Local) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *AsyncDataSource_Local) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -2445,7 +2451,8 @@ func (m *AsyncDataSource_Local) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *AsyncDataSource_Remote) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *AsyncDataSource_Remote) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -2508,7 +2515,8 @@ func (m *TransportSocket) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *TransportSocket_Config) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *TransportSocket_Config) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -2528,7 +2536,8 @@ func (m *TransportSocket_Config) MarshalToSizedBuffer(dAtA []byte) (int, error) 
 	return len(dAtA) - i, nil
 }
 func (m *TransportSocket_TypedConfig) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *TransportSocket_TypedConfig) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -2606,7 +2615,8 @@ func (m *SocketOption) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *SocketOption_IntValue) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *SocketOption_IntValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -2617,7 +2627,8 @@ func (m *SocketOption_IntValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *SocketOption_BufValue) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *SocketOption_BufValue) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -5803,6 +5814,7 @@ func (m *ControlPlane) Unmarshal(dAtA []byte) error {
 func skipBase(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
+	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -5834,10 +5846,8 @@ func skipBase(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			return iNdEx, nil
 		case 1:
 			iNdEx += 8
-			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -5858,55 +5868,30 @@ func skipBase(dAtA []byte) (n int, err error) {
 				return 0, ErrInvalidLengthBase
 			}
 			iNdEx += length
-			if iNdEx < 0 {
-				return 0, ErrInvalidLengthBase
-			}
-			return iNdEx, nil
 		case 3:
-			for {
-				var innerWire uint64
-				var start int = iNdEx
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return 0, ErrIntOverflowBase
-					}
-					if iNdEx >= l {
-						return 0, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					innerWire |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				innerWireType := int(innerWire & 0x7)
-				if innerWireType == 4 {
-					break
-				}
-				next, err := skipBase(dAtA[start:])
-				if err != nil {
-					return 0, err
-				}
-				iNdEx = start + next
-				if iNdEx < 0 {
-					return 0, ErrInvalidLengthBase
-				}
-			}
-			return iNdEx, nil
+			depth++
 		case 4:
-			return iNdEx, nil
+			if depth == 0 {
+				return 0, ErrUnexpectedEndOfGroupBase
+			}
+			depth--
 		case 5:
 			iNdEx += 4
-			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
+		if iNdEx < 0 {
+			return 0, ErrInvalidLengthBase
+		}
+		if depth == 0 {
+			return iNdEx, nil
+		}
 	}
-	panic("unreachable")
+	return 0, io.ErrUnexpectedEOF
 }
 
 var (
-	ErrInvalidLengthBase = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowBase   = fmt.Errorf("proto: integer overflow")
+	ErrInvalidLengthBase        = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowBase          = fmt.Errorf("proto: integer overflow")
+	ErrUnexpectedEndOfGroupBase = fmt.Errorf("proto: unexpected end of group")
 )

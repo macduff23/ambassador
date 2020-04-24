@@ -79,16 +79,16 @@ type isStringMatcher_MatchPattern interface {
 }
 
 type StringMatcher_Exact struct {
-	Exact string `protobuf:"bytes,1,opt,name=exact,proto3,oneof"`
+	Exact string `protobuf:"bytes,1,opt,name=exact,proto3,oneof" json:"exact,omitempty"`
 }
 type StringMatcher_Prefix struct {
-	Prefix string `protobuf:"bytes,2,opt,name=prefix,proto3,oneof"`
+	Prefix string `protobuf:"bytes,2,opt,name=prefix,proto3,oneof" json:"prefix,omitempty"`
 }
 type StringMatcher_Suffix struct {
-	Suffix string `protobuf:"bytes,3,opt,name=suffix,proto3,oneof"`
+	Suffix string `protobuf:"bytes,3,opt,name=suffix,proto3,oneof" json:"suffix,omitempty"`
 }
 type StringMatcher_SafeRegex struct {
-	SafeRegex *RegexMatcher `protobuf:"bytes,5,opt,name=safe_regex,json=safeRegex,proto3,oneof"`
+	SafeRegex *RegexMatcher `protobuf:"bytes,5,opt,name=safe_regex,json=safeRegex,proto3,oneof" json:"safe_regex,omitempty"`
 }
 
 func (*StringMatcher_Exact) isStringMatcher_MatchPattern()     {}
@@ -194,7 +194,9 @@ func init() {
 	proto.RegisterType((*ListStringMatcher)(nil), "envoy.type.matcher.v3.ListStringMatcher")
 }
 
-func init() { proto.RegisterFile("envoy/type/matcher/v3/string.proto", fileDescriptor_e33cffa01bf36e0e) }
+func init() {
+	proto.RegisterFile("envoy/type/matcher/v3/string.proto", fileDescriptor_e33cffa01bf36e0e)
+}
 
 var fileDescriptor_e33cffa01bf36e0e = []byte{
 	// 387 bytes of a gzipped FileDescriptorProto
@@ -262,7 +264,8 @@ func (m *StringMatcher) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *StringMatcher_Exact) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *StringMatcher_Exact) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -275,7 +278,8 @@ func (m *StringMatcher_Exact) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *StringMatcher_Prefix) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *StringMatcher_Prefix) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -288,7 +292,8 @@ func (m *StringMatcher_Prefix) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *StringMatcher_Suffix) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *StringMatcher_Suffix) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -301,7 +306,8 @@ func (m *StringMatcher_Suffix) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *StringMatcher_SafeRegex) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *StringMatcher_SafeRegex) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -729,6 +735,7 @@ func (m *ListStringMatcher) Unmarshal(dAtA []byte) error {
 func skipString(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
+	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -760,10 +767,8 @@ func skipString(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			return iNdEx, nil
 		case 1:
 			iNdEx += 8
-			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -784,55 +789,30 @@ func skipString(dAtA []byte) (n int, err error) {
 				return 0, ErrInvalidLengthString
 			}
 			iNdEx += length
-			if iNdEx < 0 {
-				return 0, ErrInvalidLengthString
-			}
-			return iNdEx, nil
 		case 3:
-			for {
-				var innerWire uint64
-				var start int = iNdEx
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return 0, ErrIntOverflowString
-					}
-					if iNdEx >= l {
-						return 0, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					innerWire |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				innerWireType := int(innerWire & 0x7)
-				if innerWireType == 4 {
-					break
-				}
-				next, err := skipString(dAtA[start:])
-				if err != nil {
-					return 0, err
-				}
-				iNdEx = start + next
-				if iNdEx < 0 {
-					return 0, ErrInvalidLengthString
-				}
-			}
-			return iNdEx, nil
+			depth++
 		case 4:
-			return iNdEx, nil
+			if depth == 0 {
+				return 0, ErrUnexpectedEndOfGroupString
+			}
+			depth--
 		case 5:
 			iNdEx += 4
-			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
+		if iNdEx < 0 {
+			return 0, ErrInvalidLengthString
+		}
+		if depth == 0 {
+			return iNdEx, nil
+		}
 	}
-	panic("unreachable")
+	return 0, io.ErrUnexpectedEOF
 }
 
 var (
-	ErrInvalidLengthString = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowString   = fmt.Errorf("proto: integer overflow")
+	ErrInvalidLengthString        = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowString          = fmt.Errorf("proto: integer overflow")
+	ErrUnexpectedEndOfGroupString = fmt.Errorf("proto: unexpected end of group")
 )

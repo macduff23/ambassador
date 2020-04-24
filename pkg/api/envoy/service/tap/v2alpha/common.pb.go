@@ -222,28 +222,28 @@ type isMatchPredicate_Rule interface {
 }
 
 type MatchPredicate_OrMatch struct {
-	OrMatch *MatchPredicate_MatchSet `protobuf:"bytes,1,opt,name=or_match,json=orMatch,proto3,oneof"`
+	OrMatch *MatchPredicate_MatchSet `protobuf:"bytes,1,opt,name=or_match,json=orMatch,proto3,oneof" json:"or_match,omitempty"`
 }
 type MatchPredicate_AndMatch struct {
-	AndMatch *MatchPredicate_MatchSet `protobuf:"bytes,2,opt,name=and_match,json=andMatch,proto3,oneof"`
+	AndMatch *MatchPredicate_MatchSet `protobuf:"bytes,2,opt,name=and_match,json=andMatch,proto3,oneof" json:"and_match,omitempty"`
 }
 type MatchPredicate_NotMatch struct {
-	NotMatch *MatchPredicate `protobuf:"bytes,3,opt,name=not_match,json=notMatch,proto3,oneof"`
+	NotMatch *MatchPredicate `protobuf:"bytes,3,opt,name=not_match,json=notMatch,proto3,oneof" json:"not_match,omitempty"`
 }
 type MatchPredicate_AnyMatch struct {
-	AnyMatch bool `protobuf:"varint,4,opt,name=any_match,json=anyMatch,proto3,oneof"`
+	AnyMatch bool `protobuf:"varint,4,opt,name=any_match,json=anyMatch,proto3,oneof" json:"any_match,omitempty"`
 }
 type MatchPredicate_HttpRequestHeadersMatch struct {
-	HttpRequestHeadersMatch *HttpHeadersMatch `protobuf:"bytes,5,opt,name=http_request_headers_match,json=httpRequestHeadersMatch,proto3,oneof"`
+	HttpRequestHeadersMatch *HttpHeadersMatch `protobuf:"bytes,5,opt,name=http_request_headers_match,json=httpRequestHeadersMatch,proto3,oneof" json:"http_request_headers_match,omitempty"`
 }
 type MatchPredicate_HttpRequestTrailersMatch struct {
-	HttpRequestTrailersMatch *HttpHeadersMatch `protobuf:"bytes,6,opt,name=http_request_trailers_match,json=httpRequestTrailersMatch,proto3,oneof"`
+	HttpRequestTrailersMatch *HttpHeadersMatch `protobuf:"bytes,6,opt,name=http_request_trailers_match,json=httpRequestTrailersMatch,proto3,oneof" json:"http_request_trailers_match,omitempty"`
 }
 type MatchPredicate_HttpResponseHeadersMatch struct {
-	HttpResponseHeadersMatch *HttpHeadersMatch `protobuf:"bytes,7,opt,name=http_response_headers_match,json=httpResponseHeadersMatch,proto3,oneof"`
+	HttpResponseHeadersMatch *HttpHeadersMatch `protobuf:"bytes,7,opt,name=http_response_headers_match,json=httpResponseHeadersMatch,proto3,oneof" json:"http_response_headers_match,omitempty"`
 }
 type MatchPredicate_HttpResponseTrailersMatch struct {
-	HttpResponseTrailersMatch *HttpHeadersMatch `protobuf:"bytes,8,opt,name=http_response_trailers_match,json=httpResponseTrailersMatch,proto3,oneof"`
+	HttpResponseTrailersMatch *HttpHeadersMatch `protobuf:"bytes,8,opt,name=http_response_trailers_match,json=httpResponseTrailersMatch,proto3,oneof" json:"http_response_trailers_match,omitempty"`
 }
 
 func (*MatchPredicate_OrMatch) isMatchPredicate_Rule()                   {}
@@ -572,13 +572,13 @@ type isOutputSink_OutputSinkType interface {
 }
 
 type OutputSink_StreamingAdmin struct {
-	StreamingAdmin *StreamingAdminSink `protobuf:"bytes,2,opt,name=streaming_admin,json=streamingAdmin,proto3,oneof"`
+	StreamingAdmin *StreamingAdminSink `protobuf:"bytes,2,opt,name=streaming_admin,json=streamingAdmin,proto3,oneof" json:"streaming_admin,omitempty"`
 }
 type OutputSink_FilePerTap struct {
-	FilePerTap *FilePerTapSink `protobuf:"bytes,3,opt,name=file_per_tap,json=filePerTap,proto3,oneof"`
+	FilePerTap *FilePerTapSink `protobuf:"bytes,3,opt,name=file_per_tap,json=filePerTap,proto3,oneof" json:"file_per_tap,omitempty"`
 }
 type OutputSink_StreamingGrpc struct {
-	StreamingGrpc *StreamingGrpcSink `protobuf:"bytes,4,opt,name=streaming_grpc,json=streamingGrpc,proto3,oneof"`
+	StreamingGrpc *StreamingGrpcSink `protobuf:"bytes,4,opt,name=streaming_grpc,json=streamingGrpc,proto3,oneof" json:"streaming_grpc,omitempty"`
 }
 
 func (*OutputSink_StreamingAdmin) isOutputSink_OutputSinkType() {}
@@ -966,7 +966,8 @@ func (m *MatchPredicate) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *MatchPredicate_OrMatch) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *MatchPredicate_OrMatch) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -986,7 +987,8 @@ func (m *MatchPredicate_OrMatch) MarshalToSizedBuffer(dAtA []byte) (int, error) 
 	return len(dAtA) - i, nil
 }
 func (m *MatchPredicate_AndMatch) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *MatchPredicate_AndMatch) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1006,7 +1008,8 @@ func (m *MatchPredicate_AndMatch) MarshalToSizedBuffer(dAtA []byte) (int, error)
 	return len(dAtA) - i, nil
 }
 func (m *MatchPredicate_NotMatch) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *MatchPredicate_NotMatch) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1026,7 +1029,8 @@ func (m *MatchPredicate_NotMatch) MarshalToSizedBuffer(dAtA []byte) (int, error)
 	return len(dAtA) - i, nil
 }
 func (m *MatchPredicate_AnyMatch) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *MatchPredicate_AnyMatch) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1042,7 +1046,8 @@ func (m *MatchPredicate_AnyMatch) MarshalToSizedBuffer(dAtA []byte) (int, error)
 	return len(dAtA) - i, nil
 }
 func (m *MatchPredicate_HttpRequestHeadersMatch) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *MatchPredicate_HttpRequestHeadersMatch) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1062,7 +1067,8 @@ func (m *MatchPredicate_HttpRequestHeadersMatch) MarshalToSizedBuffer(dAtA []byt
 	return len(dAtA) - i, nil
 }
 func (m *MatchPredicate_HttpRequestTrailersMatch) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *MatchPredicate_HttpRequestTrailersMatch) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1082,7 +1088,8 @@ func (m *MatchPredicate_HttpRequestTrailersMatch) MarshalToSizedBuffer(dAtA []by
 	return len(dAtA) - i, nil
 }
 func (m *MatchPredicate_HttpResponseHeadersMatch) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *MatchPredicate_HttpResponseHeadersMatch) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1102,7 +1109,8 @@ func (m *MatchPredicate_HttpResponseHeadersMatch) MarshalToSizedBuffer(dAtA []by
 	return len(dAtA) - i, nil
 }
 func (m *MatchPredicate_HttpResponseTrailersMatch) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *MatchPredicate_HttpResponseTrailersMatch) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1320,7 +1328,8 @@ func (m *OutputSink) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *OutputSink_StreamingAdmin) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *OutputSink_StreamingAdmin) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1340,7 +1349,8 @@ func (m *OutputSink_StreamingAdmin) MarshalToSizedBuffer(dAtA []byte) (int, erro
 	return len(dAtA) - i, nil
 }
 func (m *OutputSink_FilePerTap) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *OutputSink_FilePerTap) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1360,7 +1370,8 @@ func (m *OutputSink_FilePerTap) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 func (m *OutputSink_StreamingGrpc) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *OutputSink_StreamingGrpc) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -3083,6 +3094,7 @@ func (m *StreamingGrpcSink) Unmarshal(dAtA []byte) error {
 func skipCommon(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
+	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -3114,10 +3126,8 @@ func skipCommon(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			return iNdEx, nil
 		case 1:
 			iNdEx += 8
-			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -3138,55 +3148,30 @@ func skipCommon(dAtA []byte) (n int, err error) {
 				return 0, ErrInvalidLengthCommon
 			}
 			iNdEx += length
-			if iNdEx < 0 {
-				return 0, ErrInvalidLengthCommon
-			}
-			return iNdEx, nil
 		case 3:
-			for {
-				var innerWire uint64
-				var start int = iNdEx
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return 0, ErrIntOverflowCommon
-					}
-					if iNdEx >= l {
-						return 0, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					innerWire |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				innerWireType := int(innerWire & 0x7)
-				if innerWireType == 4 {
-					break
-				}
-				next, err := skipCommon(dAtA[start:])
-				if err != nil {
-					return 0, err
-				}
-				iNdEx = start + next
-				if iNdEx < 0 {
-					return 0, ErrInvalidLengthCommon
-				}
-			}
-			return iNdEx, nil
+			depth++
 		case 4:
-			return iNdEx, nil
+			if depth == 0 {
+				return 0, ErrUnexpectedEndOfGroupCommon
+			}
+			depth--
 		case 5:
 			iNdEx += 4
-			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
+		if iNdEx < 0 {
+			return 0, ErrInvalidLengthCommon
+		}
+		if depth == 0 {
+			return iNdEx, nil
+		}
 	}
-	panic("unreachable")
+	return 0, io.ErrUnexpectedEOF
 }
 
 var (
-	ErrInvalidLengthCommon = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowCommon   = fmt.Errorf("proto: integer overflow")
+	ErrInvalidLengthCommon        = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowCommon          = fmt.Errorf("proto: integer overflow")
+	ErrUnexpectedEndOfGroupCommon = fmt.Errorf("proto: unexpected end of group")
 )

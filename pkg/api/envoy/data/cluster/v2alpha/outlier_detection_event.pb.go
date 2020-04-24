@@ -195,13 +195,13 @@ type isOutlierDetectionEvent_Event interface {
 }
 
 type OutlierDetectionEvent_EjectSuccessRateEvent struct {
-	EjectSuccessRateEvent *OutlierEjectSuccessRate `protobuf:"bytes,9,opt,name=eject_success_rate_event,json=ejectSuccessRateEvent,proto3,oneof"`
+	EjectSuccessRateEvent *OutlierEjectSuccessRate `protobuf:"bytes,9,opt,name=eject_success_rate_event,json=ejectSuccessRateEvent,proto3,oneof" json:"eject_success_rate_event,omitempty"`
 }
 type OutlierDetectionEvent_EjectConsecutiveEvent struct {
-	EjectConsecutiveEvent *OutlierEjectConsecutive `protobuf:"bytes,10,opt,name=eject_consecutive_event,json=ejectConsecutiveEvent,proto3,oneof"`
+	EjectConsecutiveEvent *OutlierEjectConsecutive `protobuf:"bytes,10,opt,name=eject_consecutive_event,json=ejectConsecutiveEvent,proto3,oneof" json:"eject_consecutive_event,omitempty"`
 }
 type OutlierDetectionEvent_EjectFailurePercentageEvent struct {
-	EjectFailurePercentageEvent *OutlierEjectFailurePercentage `protobuf:"bytes,11,opt,name=eject_failure_percentage_event,json=ejectFailurePercentageEvent,proto3,oneof"`
+	EjectFailurePercentageEvent *OutlierEjectFailurePercentage `protobuf:"bytes,11,opt,name=eject_failure_percentage_event,json=ejectFailurePercentageEvent,proto3,oneof" json:"eject_failure_percentage_event,omitempty"`
 }
 
 func (*OutlierDetectionEvent_EjectSuccessRateEvent) isOutlierDetectionEvent_Event()       {}
@@ -624,7 +624,8 @@ func (m *OutlierDetectionEvent) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 }
 
 func (m *OutlierDetectionEvent_EjectSuccessRateEvent) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *OutlierDetectionEvent_EjectSuccessRateEvent) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -644,7 +645,8 @@ func (m *OutlierDetectionEvent_EjectSuccessRateEvent) MarshalToSizedBuffer(dAtA 
 	return len(dAtA) - i, nil
 }
 func (m *OutlierDetectionEvent_EjectConsecutiveEvent) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *OutlierDetectionEvent_EjectConsecutiveEvent) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -664,7 +666,8 @@ func (m *OutlierDetectionEvent_EjectConsecutiveEvent) MarshalToSizedBuffer(dAtA 
 	return len(dAtA) - i, nil
 }
 func (m *OutlierDetectionEvent_EjectFailurePercentageEvent) MarshalTo(dAtA []byte) (int, error) {
-	return m.MarshalToSizedBuffer(dAtA[:m.Size()])
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
 func (m *OutlierDetectionEvent_EjectFailurePercentageEvent) MarshalToSizedBuffer(dAtA []byte) (int, error) {
@@ -1541,6 +1544,7 @@ func (m *OutlierEjectFailurePercentage) Unmarshal(dAtA []byte) error {
 func skipOutlierDetectionEvent(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
+	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -1572,10 +1576,8 @@ func skipOutlierDetectionEvent(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			return iNdEx, nil
 		case 1:
 			iNdEx += 8
-			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -1596,55 +1598,30 @@ func skipOutlierDetectionEvent(dAtA []byte) (n int, err error) {
 				return 0, ErrInvalidLengthOutlierDetectionEvent
 			}
 			iNdEx += length
-			if iNdEx < 0 {
-				return 0, ErrInvalidLengthOutlierDetectionEvent
-			}
-			return iNdEx, nil
 		case 3:
-			for {
-				var innerWire uint64
-				var start int = iNdEx
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return 0, ErrIntOverflowOutlierDetectionEvent
-					}
-					if iNdEx >= l {
-						return 0, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					innerWire |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				innerWireType := int(innerWire & 0x7)
-				if innerWireType == 4 {
-					break
-				}
-				next, err := skipOutlierDetectionEvent(dAtA[start:])
-				if err != nil {
-					return 0, err
-				}
-				iNdEx = start + next
-				if iNdEx < 0 {
-					return 0, ErrInvalidLengthOutlierDetectionEvent
-				}
-			}
-			return iNdEx, nil
+			depth++
 		case 4:
-			return iNdEx, nil
+			if depth == 0 {
+				return 0, ErrUnexpectedEndOfGroupOutlierDetectionEvent
+			}
+			depth--
 		case 5:
 			iNdEx += 4
-			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
+		if iNdEx < 0 {
+			return 0, ErrInvalidLengthOutlierDetectionEvent
+		}
+		if depth == 0 {
+			return iNdEx, nil
+		}
 	}
-	panic("unreachable")
+	return 0, io.ErrUnexpectedEOF
 }
 
 var (
-	ErrInvalidLengthOutlierDetectionEvent = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowOutlierDetectionEvent   = fmt.Errorf("proto: integer overflow")
+	ErrInvalidLengthOutlierDetectionEvent        = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowOutlierDetectionEvent          = fmt.Errorf("proto: integer overflow")
+	ErrUnexpectedEndOfGroupOutlierDetectionEvent = fmt.Errorf("proto: unexpected end of group")
 )
